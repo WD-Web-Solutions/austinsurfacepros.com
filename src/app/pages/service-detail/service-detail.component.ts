@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink
-} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+import { RouterLink } from '@angular/router';
 
 import { SERVICES } from '../../core/data/services.data';
 
 import { Service } from '../../core/models/service.model';
+
+import { SeoService } from '../../core/services/seo.service';
 
 
 
@@ -25,51 +25,71 @@ import { Service } from '../../core/models/service.model';
   ],
 
   templateUrl:
+
     './service-detail.component.html',
 
   styleUrl:
+
     './service-detail.component.css'
 
 })
 export class ServiceDetailComponent {
 
 
-  service?: Service;
+service?: Service;
 
 
 
-  constructor(
+constructor(
 
-    private route: ActivatedRoute,
+private route: ActivatedRoute,
 
-    private router: Router
+private seoService: SeoService
 
-  ) {
-
-
-    const slug =
-      this.route.snapshot.paramMap.get('slug');
+) {
 
 
 
-    this.service =
-      SERVICES.find(
+const slug =
 
-        service =>
-          service.slug === slug
-
-      );
+this.route.snapshot.paramMap.get('slug');
 
 
 
-    if (!this.service) {
 
-      this.router.navigate(['/services']);
+if(slug)
 
-    }
+{
+
+this.service = SERVICES.find(
+
+(service) => service.slug === slug
+
+);
 
 
-  }
+
+if(this.service)
+
+{
+
+this.seoService.updatePage(
+
+`${this.service.title} | Austin Surface Pros`,
+
+this.service.description
+
+);
+
+
+}
+
+}
+
+
+
+}
+
 
 
 }

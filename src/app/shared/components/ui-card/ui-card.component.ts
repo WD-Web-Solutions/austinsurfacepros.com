@@ -28,39 +28,39 @@ import { RouterLink } from '@angular/router';
 export class UiCardComponent {
 
 
-@Input()
+  @Input()
 
-title = '';
-
-
-
-@Input()
-
-description = '';
+  title = '';
 
 
 
-@Input()
+  @Input()
 
-category = '';
-
-
-
-@Input()
-
-image = '';
+  description = '';
 
 
 
-@Input()
+  @Input()
 
-link = '';
+  category = '';
 
 
 
-@Input()
+  @Input()
 
-icon = '';
+  image?: string;
+
+
+
+  @Input()
+
+  link = '';
+
+
+
+  @Input()
+
+  icon = '';
 
 
 
