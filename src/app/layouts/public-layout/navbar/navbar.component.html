@@ -1,90 +1,253 @@
-<nav class="bg-white shadow-md">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-  
-      <!-- Logo -->
-              <a
-        routerLink="/"
-        class="
-        flex
-        items-center
-        gap-3
-        ">
+<header
+  class="
+    sticky
+    top-0
+    z-50
+    bg-white
+    shadow-md
+  "
+>
 
-        <img
-        src="/assets/images/Austin_Surface_Pros_Logo.svg"
-        alt="Austin Surface Pros Logo"
-        class="
-        h-14
-        w-auto
-        "
-        />
 
-        </a>
-  
-      <!-- Desktop Navigation -->
-      <div class="hidden items-center gap-6 md:flex">
-  
-        <a
-          routerLink="/"
-          class="text-gray-700 transition hover:text-blue-700">
-          Home
-        </a>
-  
-        <a
-          routerLink="/about"
-          class="text-gray-700 transition hover:text-blue-700">
-          About
-        </a>
-  
-        <a
-          routerLink="/services"
-          class="text-gray-700 transition hover:text-blue-700">
-          Services
-        </a>
-  
-        <a
-          routerLink="/gallery"
-          class="text-gray-700 transition hover:text-blue-700">
-          Gallery
-        </a>
-  
-        <a
-          routerLink="/contact"
-          class="text-gray-700 transition hover:text-blue-700">
-          Contact
-        </a>
-  
-        <!-- Auth Links -->
-        <div class="ml-4 flex items-center gap-3 border-l pl-6">
-  
-          <a
-            routerLink="/login"
-            class="
-            rounded-lg
-            px-4
-            py-2
-            text-gray-700
-            transition
-            hover:bg-gray-100">
-            Login
-          </a>
-  
-          <a
-            routerLink="/register"
-            class="
-            rounded-lg
-            bg-blue-700
-            px-4
-            py-2
-            text-white
-            transition
-            hover:bg-blue-800">
-            Register
-          </a>
-  
-        </div>
-  
-      </div>
-  
-    </div>
-  </nav>
+<nav
+  class="
+    mx-auto
+    flex
+    max-w-7xl
+    items-center
+    justify-between
+    px-6
+    py-4
+  "
+>
+
+
+<!-- Logo -->
+
+<a
+  routerLink="/"
+  class="
+    flex
+    items-center
+  "
+>
+
+<img
+
+src="/assets/images/Austin_Surface_Pros_Logo.svg"
+
+alt="Austin Surface Pros"
+
+class="
+h-16
+w-auto
+"
+
+>
+
+</a>
+
+
+
+
+<!-- Desktop Navigation -->
+
+<div
+
+class="
+hidden
+items-center
+gap-8
+lg:flex
+"
+
+>
+
+
+<a
+
+routerLink="/"
+
+routerLinkActive="text-blue-600"
+
+class="
+font-medium
+text-gray-700
+transition
+hover:text-blue-600
+"
+
+>
+Home
+</a>
+
+
+
+<a
+
+routerLink="/about"
+
+routerLinkActive="text-blue-600"
+
+class="
+font-medium
+text-gray-700
+transition
+hover:text-blue-600
+"
+
+>
+About
+</a>
+
+
+
+
+<a
+
+routerLink="/services"
+
+routerLinkActive="text-blue-600"
+
+class="
+font-medium
+text-gray-700
+transition
+hover:text-blue-600
+"
+
+>
+Services
+</a>
+
+
+
+
+<a
+
+routerLink="/gallery"
+
+routerLinkActive="text-blue-600"
+
+class="
+font-medium
+text-gray-700
+transition
+hover:text-blue-600
+"
+
+>
+Gallery
+</a>
+
+
+
+
+<a
+
+routerLink="/resources"
+
+routerLinkActive="text-blue-600"
+
+class="
+font-medium
+text-gray-700
+transition
+hover:text-blue-600
+"
+
+>
+Resources
+</a>
+
+
+
+
+<a
+
+routerLink="/contact"
+
+class="
+rounded-lg
+bg-blue-600
+px-5
+py-3
+font-semibold
+text-white
+transition
+hover:bg-blue-700
+"
+
+>
+Request Estimate
+</a>
+
+
+
+</div>
+
+
+
+
+
+<!-- Future Authentication -->
+
+<div
+
+class="
+hidden
+items-center
+gap-4
+lg:flex
+"
+
+>
+
+
+<a
+
+routerLink="/login"
+
+class="
+text-sm
+font-medium
+text-gray-600
+hover:text-blue-600
+"
+
+>
+Login
+</a>
+
+
+
+<a
+
+routerLink="/register"
+
+class="
+rounded-lg
+border
+border-blue-600
+px-4
+py-2
+text-sm
+font-semibold
+text-blue-600
+hover:bg-blue-50
+"
+
+>
+Register
+</a>
+
+
+
+</div>
+
+
+
+</nav>
+
+
+</header>
