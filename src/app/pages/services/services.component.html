@@ -1,1 +1,160 @@
-<p>services works!</p>
+<!-- Services Hero -->
+
+<section
+  class="
+    bg-gray-900
+    py-24
+  "
+>
+
+  <div
+    class="
+      mx-auto
+      max-w-7xl
+      px-6
+      text-center
+    "
+  >
+
+    <h1
+      class="
+        text-5xl
+        font-bold
+        text-white
+        md:text-6xl
+      "
+    >
+      Our Services
+    </h1>
+
+
+    <p
+      class="
+        mx-auto
+        mt-6
+        max-w-3xl
+        text-xl
+        text-gray-300
+      "
+    >
+      Professional asphalt, concrete, striping,
+      and commercial surface solutions.
+    </p>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- Services Grid -->
+
+<section
+  class="
+    py-20
+  "
+>
+
+  <div
+    class="
+      mx-auto
+      max-w-7xl
+      px-6
+    "
+  >
+
+
+    <div
+      class="
+        grid
+        gap-8
+        md:grid-cols-2
+        lg:grid-cols-3
+      "
+    >
+
+      @for(service of services; track service.id)
+      {
+
+        <app-service-card
+
+          [title]="service.title"
+
+          [description]="service.description"
+
+          [image]="service.image"
+
+        />
+
+      }
+
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- CTA -->
+
+<section
+  class="
+    bg-primary
+    py-16
+  "
+>
+
+  <div
+    class="
+      mx-auto
+      max-w-5xl
+      px-6
+      text-center
+    "
+  >
+
+    <h2
+      class="
+        text-4xl
+        font-bold
+        text-white
+      "
+    >
+      Need A Commercial Estimate?
+    </h2>
+
+
+    <p
+      class="
+        mt-4
+        text-blue-100
+      "
+    >
+      Contact Austin Surface Pros today.
+    </p>
+
+
+    <a
+      routerLink="/contact"
+      class="
+        mt-8
+        inline-block
+        rounded-lg
+        bg-white
+        px-8
+        py-4
+        font-semibold
+        text-primary
+      "
+    >
+      Request Estimate
+    </a>
+
+
+  </div>
+
+</section>
