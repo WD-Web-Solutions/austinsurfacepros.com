@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
@@ -28,6 +28,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './home.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
 
     './home.component.css'

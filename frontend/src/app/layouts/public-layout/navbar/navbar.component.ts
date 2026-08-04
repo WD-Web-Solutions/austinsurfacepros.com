@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import {
   RouterLink,
@@ -25,6 +25,7 @@ import {
 
     './navbar.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
 
     './navbar.component.css'

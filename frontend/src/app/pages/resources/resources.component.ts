@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RESOURCES } from '../../core/data/resources.data';
 
@@ -16,6 +16,7 @@ import { RESOURCES } from '../../core/data/resources.data';
 
     './resources.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
 
     './resources.component.css'

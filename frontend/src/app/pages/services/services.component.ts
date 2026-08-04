@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 
@@ -24,6 +24,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './services.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
 
     './services.component.css'

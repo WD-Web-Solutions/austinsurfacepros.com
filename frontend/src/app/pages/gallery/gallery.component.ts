@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
@@ -25,6 +25,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
 
     './gallery.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
 
     './gallery.component.css'

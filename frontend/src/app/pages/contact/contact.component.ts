@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
 
-import { Component } from '@angular/core';
+
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import {
   FormBuilder,
@@ -26,13 +26,13 @@ import {
   standalone: true,
 
   imports: [
-    CommonModule,
     ReactiveFormsModule
-  ],
+],
 
   templateUrl:
     './contact.component.html',
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl:
     './contact.component.css'
 
