@@ -1,0 +1,6 @@
+name: austinsurfacepros-infra
+description: Serverless AWS infrastructure for Austin Surface Pros
+runtime:
+  name: python
+  options:
+    virtualenv: .venv
