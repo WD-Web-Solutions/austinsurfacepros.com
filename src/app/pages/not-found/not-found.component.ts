@@ -8,7 +8,7 @@ import { SeoService } from '../../core/services/seo.service';
 
 @Component({
 
-  selector: 'app-about',
+  selector: 'app-not-found',
 
   standalone: true,
 
@@ -20,14 +20,14 @@ import { SeoService } from '../../core/services/seo.service';
 
   templateUrl:
 
-    './about.component.html',
+    './not-found.component.html',
 
   styleUrl:
 
-    './about.component.css'
+    './not-found.component.css'
 
 })
-export class AboutComponent {
+export class NotFoundComponent {
 
 
 
@@ -41,9 +41,9 @@ private seoService: SeoService
 
 this.seoService.updatePage(
 
-'About Austin Surface Pros | Local Surface Experts',
+'Page Not Found | Austin Surface Pros',
 
-'Learn about Austin Surface Pros, our family story, experience, and commitment to quality commercial surface solutions.'
+'The page you are looking for could not be found.'
 
 );
 

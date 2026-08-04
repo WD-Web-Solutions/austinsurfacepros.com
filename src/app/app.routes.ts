@@ -97,8 +97,15 @@ export const routes: Routes = [
           import('./pages/terms/terms.component')
             .then(m => m.TermsComponent)
 
-      }
-
+      },
+      {
+        path: '**',
+        loadComponent: () =>
+        import('./pages/not-found/not-found.component')
+        .then(
+        component => component.NotFoundComponent
+        )
+       }
     ]
 
   },

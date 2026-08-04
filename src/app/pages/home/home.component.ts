@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
+import { SeoService } from '../../core/services/seo.service';
+
 
 
 @Component({
@@ -26,6 +28,28 @@ import { RouterLink } from '@angular/router';
 
 })
 export class HomeComponent {
+
+
+
+constructor(
+
+private seoService: SeoService
+
+) {
+
+
+
+this.seoService.updatePage(
+
+'Austin Surface Pros | Commercial Asphalt & Surface Solutions',
+
+'Professional asphalt, striping, coatings, and commercial surface improvement services serving Central Texas.'
+
+);
+
+
+}
+
 
 
 }
