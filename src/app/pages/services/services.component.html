@@ -1,160 +1,166 @@
-<!-- Services Hero -->
-
 <section
-  class="
-    bg-gray-900
-    py-24
-  "
+class="
+bg-gray-900
+py-24
+"
 >
 
-  <div
-    class="
-      mx-auto
-      max-w-7xl
-      px-6
-      text-center
-    "
-  >
-
-    <h1
-      class="
-        text-5xl
-        font-bold
-        text-white
-        md:text-6xl
-      "
-    >
-      Our Services
-    </h1>
+<div
+class="
+mx-auto
+max-w-7xl
+px-6
+text-center
+"
+>
 
 
-    <p
-      class="
-        mx-auto
-        mt-6
-        max-w-3xl
-        text-xl
-        text-gray-300
-      "
-    >
-      Professional asphalt, concrete, striping,
-      and commercial surface solutions.
-    </p>
+<p
+class="
+text-sm
+font-semibold
+uppercase
+tracking-widest
+text-orange-400
+"
+>
+Our Services
+</p>
 
 
-  </div>
+
+<h1
+class="
+mt-4
+text-5xl
+font-bold
+text-white
+"
+>
+Commercial Surface Solutions
+</h1>
+
+
+
+<p
+class="
+mx-auto
+mt-6
+max-w-3xl
+text-xl
+text-gray-300
+"
+>
+From parking lot striping to asphalt maintenance,
+Austin Surface Pros provides professional commercial
+surface improvements throughout Central Texas.
+</p>
+
+
+
+</div>
 
 </section>
 
 
 
-<!-- Services Grid -->
+
 
 <section
-  class="
-    py-20
-  "
+class="
+py-20
+"
 >
 
-  <div
-    class="
-      mx-auto
-      max-w-7xl
-      px-6
-    "
-  >
 
-
-    <div
-      class="
-        grid
-        gap-8
-        md:grid-cols-2
-        lg:grid-cols-3
-      "
-    >
-
-      @for(service of services; track service.id)
-      {
-
-        <app-service-card
-
-          [title]="service.title"
-
-          [description]="service.description"
-
-          [image]="service.image"
-
-        />
-
-      }
-
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- CTA -->
-
-<section
-  class="
-    bg-primary
-    py-16
-  "
+<div
+class="
+mx-auto
+grid
+max-w-7xl
+gap-8
+px-6
+md:grid-cols-2
+lg:grid-cols-3
+"
 >
 
-  <div
-    class="
-      mx-auto
-      max-w-5xl
-      px-6
-      text-center
-    "
-  >
 
-    <h2
-      class="
-        text-4xl
-        font-bold
-        text-white
-      "
-    >
-      Need A Commercial Estimate?
-    </h2>
+@for(service of services; track service.slug)
+{
 
 
-    <p
-      class="
-        mt-4
-        text-blue-100
-      "
-    >
-      Contact Austin Surface Pros today.
-    </p>
+<div
+class="
+rounded-xl
+bg-white
+p-8
+shadow-lg
+transition
+hover:-translate-y-1
+hover:shadow-xl
+"
+>
 
 
-    <a
-      routerLink="/contact"
-      class="
-        mt-8
-        inline-block
-        rounded-lg
-        bg-white
-        px-8
-        py-4
-        font-semibold
-        text-primary
-      "
-    >
-      Request Estimate
-    </a>
+<div
+class="
+text-5xl
+"
+>
+{{service.icon}}
+</div>
 
 
-  </div>
+
+<h2
+class="
+mt-5
+text-2xl
+font-bold
+text-gray-900
+"
+>
+{{service.title}}
+</h2>
+
+
+
+<p
+class="
+mt-4
+text-gray-600
+"
+>
+{{service.description}}
+</p>
+
+
+
+<a
+
+routerLink="/contact"
+
+class="
+mt-6
+inline-block
+font-semibold
+text-blue-600
+hover:underline
+"
+
+>
+Request Estimate →
+</a>
+
+
+</div>
+
+
+}
+
+
+</div>
+
 
 </section>

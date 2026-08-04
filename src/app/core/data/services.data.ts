@@ -1,64 +1,114 @@
 import { Service } from '../models/service.model';
 
+
 export const SERVICES: Service[] = [
 
+
   {
-    id: 1,
-    title: 'Steel Coating & Striping',
+
+    title:
+      'Steel Coating & Striping',
+
     description:
-      'Professional parking lot striping, steel coating, fire lanes, handicap markings, and commercial pavement layouts.',
-    image: '/assets/images/services/striping.jpg',
-    slug: 'steel-coating-striping'
+      'Our core specialty. Durable steel coatings and professional striping solutions designed for commercial parking areas, safety zones, and long-lasting visibility.',
+
+    icon:
+      '🏗️',
+
+    slug:
+      'steel-coating-striping'
+
   },
 
 
+
   {
-    id: 2,
-    title: 'Seal Coat & Asphalt',
+
+    title:
+      'Asphalt Seal Coating',
+
     description:
-      'Protect and extend the life of asphalt surfaces with professional seal coating and maintenance services.',
-    image: '/assets/images/services/asphalt.jpg',
-    slug: 'seal-coat-asphalt'
+      'Protect asphalt surfaces from weather, traffic, and deterioration with professional seal coating applications.',
+
+    icon:
+      '🛣️',
+
+    slug:
+      'asphalt-seal-coating'
+
   },
 
 
+
   {
-    id: 3,
-    title: 'Concrete Repairs',
+
+    title:
+      'Parking Lot Striping',
+
     description:
-      'Repair damaged concrete surfaces including sidewalks, parking areas, and commercial walkways.',
-    image: '/assets/images/services/concrete.jpg',
-    slug: 'concrete-repairs'
+      'Professional parking layouts including parking lanes, fire lanes, ADA markings, and safety markings.',
+
+    icon:
+      '🚧',
+
+    slug:
+      'parking-lot-striping'
+
   },
 
 
+
   {
-    id: 4,
-    title: 'Parking Lot Maintenance',
+
+    title:
+      'Concrete & Asphalt Repairs',
+
     description:
-      'Keep commercial properties safe, clean, and professional with ongoing pavement maintenance.',
-    image: '/assets/images/services/parking.jpg',
-    slug: 'parking-lot-maintenance'
+      'Repair damaged commercial surfaces to improve safety, appearance, and longevity.',
+
+    icon:
+      '🔧',
+
+    slug:
+      'surface-repairs'
+
   },
 
 
+
   {
-    id: 5,
-    title: 'Commercial Signage',
+
+    title:
+      'Commercial Signage',
+
     description:
-      'Professional installation of parking signs, safety signs, and property markings.',
-    image: '/assets/images/services/signage.jpg',
-    slug: 'commercial-signage'
+      'Installation of commercial signs, safety signs, and property identification solutions.',
+
+    icon:
+      '🪧',
+
+    slug:
+      'commercial-signage'
+
   },
 
 
+
   {
-    id: 6,
-    title: 'Wheel Stops & Speed Bumps',
+
+    title:
+      'Wheel Stops & Speed Bumps',
+
     description:
-      'Improve parking lot safety with durable wheel stops and speed control solutions.',
-    image: '/assets/images/services/safety.jpg',
-    slug: 'wheel-stops-speed-bumps'
+      'Improve parking lot safety with professionally installed traffic control solutions.',
+
+    icon:
+      '🚗',
+
+    slug:
+      'wheel-stops-speed-bumps'
+
   }
+
 
 ];
