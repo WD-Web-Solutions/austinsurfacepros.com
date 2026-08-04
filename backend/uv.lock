@@ -51,7 +51,6 @@ name = "austin-surface-pros-api"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "alembic" },
     { name = "email-validator" },
     { name = "fastapi" },
     { name = "loguru" },
@@ -59,21 +58,21 @@ dependencies = [
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic-settings" },
     { name = "sqlalchemy", extra = ["asyncio"] },
-    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.dev-dependencies]
 dev = [
+    { name = "alembic" },
     { name = "httpx" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pytest-cov" },
     { name = "ruff" },
+    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "alembic", specifier = ">=1.16,<2" },
     { name = "email-validator", specifier = ">=2.2,<3" },
     { name = "fastapi", specifier = ">=0.116,<1" },
     { name = "loguru", specifier = ">=0.7,<1" },
@@ -81,16 +80,17 @@ requires-dist = [
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
     { name = "pydantic-settings", specifier = ">=2.10,<3" },
     { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0,<3" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.35,<1" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "alembic", specifier = ">=1.16,<2" },
     { name = "httpx", specifier = ">=0.28,<1" },
     { name = "pytest", specifier = ">=8.4,<10" },
     { name = "pytest-asyncio", specifier = ">=1.1,<2" },
     { name = "pytest-cov", specifier = ">=6.2,<8" },
     { name = "ruff", specifier = ">=0.12,<1" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.35,<1" },
 ]
 
 [[package]]
