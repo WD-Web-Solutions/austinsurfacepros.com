@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { GALLERY_ITEMS } from '../../core/data/gallery.data';
+import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 
 
 
@@ -12,11 +13,13 @@ import { GALLERY_ITEMS } from '../../core/data/gallery.data';
 
   standalone: true,
 
-  imports: [
+  imports:[
 
-    RouterLink
-
-  ],
+    RouterLink,
+    
+    UiCardComponent
+    
+    ],
 
   templateUrl:
 

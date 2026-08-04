@@ -4,166 +4,96 @@ import { Service } from '../models/service.model';
 
 export const SERVICES: Service[] = [
 
+  {
+    title: 'Asphalt Services',
 
-{
-title:
-'Steel Coating & Striping',
+    slug: 'asphalt-services',
 
-description:
-'Durable steel coatings and professional striping solutions designed for commercial properties.',
+    category: 'Asphalt',
 
-icon:
-'🏗️',
+    description:
+      'Professional asphalt installation, repairs, maintenance, and restoration solutions for commercial properties.',
 
-image:
-'/assets/images/services/steel-coating.jpg',
+    details:
+      'Austin Surface Pros provides commercial asphalt solutions designed to improve safety, appearance, and longevity. Our services include asphalt repairs, resurfacing, maintenance, and property improvements.',
 
-slug:
-'steel-coating-striping',
+    icon:
+      '🛣️',
 
-details:
-`
-Austin Surface Pros specializes in steel coating and striping
-solutions that improve durability, visibility, and safety for
-commercial properties.
+    image:
+      '/assets/images/services/asphalt.jpg'
 
-Our services help businesses maintain professional-looking
-parking areas, safety zones, and high-traffic surfaces.
-`
-
-},
+  },
 
 
+  {
+    title: 'Parking Lot Striping',
 
-{
-title:
-'Asphalt Seal Coating',
+    slug: 'parking-lot-striping',
 
-description:
-'Protect asphalt surfaces from weather, traffic, and deterioration.',
+    category: 'Striping',
 
-icon:
-'🛣️',
+    description:
+      'Professional parking lot layouts, ADA compliance markings, and safety striping solutions.',
 
-image:
-'/assets/images/services/asphalt.jpg',
+    details:
+      'Our parking lot striping services help businesses maintain safe, organized, and professional-looking properties. We provide layouts, ADA markings, re-striping, and custom parking solutions.',
 
-slug:
-'asphalt-seal-coating',
+    icon:
+      '🅿️',
 
-details:
-`
-Seal coating extends the life of asphalt surfaces by providing
-a protective barrier against weather damage, oxidation,
-and daily traffic.
-`
+    image:
+      '/assets/images/services/striping.jpg'
 
-},
+  },
 
 
+  {
+    title: 'Concrete Services',
 
-{
-title:
-'Parking Lot Striping',
+    slug:
+      'concrete-services',
 
-description:
-'Professional parking layouts including lanes, fire zones, and ADA markings.',
+    category:
+      'Concrete',
 
-icon:
-'🚧',
+    description:
+      'Concrete repair, replacement, and improvement services designed for commercial properties.',
 
-image:
-'/assets/images/services/striping.jpg',
+    details:
+      'From repairs to new installations, Austin Surface Pros delivers durable concrete solutions built for commercial environments.',
 
-slug:
-'parking-lot-striping',
+    icon:
+      '🏗️',
 
-details:
-`
-Professional striping improves safety, traffic flow,
-and the appearance of commercial properties.
-`
+    image:
+      '/assets/images/services/concrete.jpg'
 
-},
+  },
 
 
+  {
+    title:
+      'Surface Coatings',
 
-{
-title:
-'Concrete & Asphalt Repairs',
+    slug:
+      'surface-coatings',
 
-description:
-'Repair damaged surfaces to improve safety and longevity.',
+    category:
+      'Coatings',
 
-icon:
-'🔧',
+    description:
+      'Durable protective coatings designed to extend the life of commercial surfaces.',
 
-image:
-'/assets/images/services/repairs.jpg',
+    details:
+      'Protective coatings help commercial properties maintain durability, appearance, and resistance against heavy traffic and weather conditions.',
 
-slug:
-'surface-repairs',
+    icon:
+      '🏢',
 
-details:
-`
-From damaged pavement to surface deterioration,
-we provide repair solutions that restore commercial
-properties.
-`
+    image:
+      '/assets/images/services/coatings.jpg'
 
-},
-
-
-
-{
-title:
-'Commercial Signage',
-
-description:
-'Install safety signs and commercial property signage.',
-
-icon:
-'🪧',
-
-image:
-'/assets/images/services/signage.jpg',
-
-slug:
-'commercial-signage',
-
-details:
-`
-Professional signage installation helps businesses improve
-navigation, safety, and compliance.
-`
-
-},
-
-
-
-{
-title:
-'Wheel Stops & Speed Bumps',
-
-description:
-'Parking safety solutions for commercial properties.',
-
-icon:
-'🚗',
-
-image:
-'/assets/images/services/safety.jpg',
-
-slug:
-'wheel-stops-speed-bumps',
-
-details:
-`
-Traffic control solutions designed to improve parking lot
-safety and organization.
-`
-
-}
-
+  }
 
 ];

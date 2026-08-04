@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { RouterLink } from '@angular/router';
+import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 
 import { SERVICES } from '../../core/data/services.data';
 
@@ -16,7 +16,7 @@ import { SeoService } from '../../core/services/seo.service';
 
   imports: [
 
-    RouterLink
+    UiCardComponent
 
   ],
 
@@ -32,31 +32,27 @@ import { SeoService } from '../../core/services/seo.service';
 export class ServicesComponent {
 
 
-
-services =
-SERVICES;
+  services = SERVICES;
 
 
 
-constructor(
+  constructor(
 
-private seoService: SeoService
+    private seoService: SeoService
 
-) {
-
-
-
-this.seoService.updatePage(
-
-'Commercial Asphalt & Striping Services | Austin Surface Pros',
-
-'Explore professional asphalt maintenance, parking lot striping, coatings, repairs, and commercial property improvement services.'
-
-);
+  ) {
 
 
-}
+    this.seoService.updatePage(
 
+      'Commercial Asphalt & Surface Services | Austin Surface Pros',
+
+      'Professional asphalt, striping, coating, and commercial surface improvement services in Central Texas.'
+
+    );
+
+
+  }
 
 
 }

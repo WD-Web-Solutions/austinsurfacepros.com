@@ -1,74 +1,60 @@
-<!-- HERO -->
-
+<!-- Gallery Hero -->
 
 <section
-
-class="
-bg-gray-900
-py-24
-"
-
+  class="
+    bg-gray-900
+    py-24
+  "
 >
 
-<div
+  <div
+    class="
+      mx-auto
+      max-w-7xl
+      px-6
+    "
+  >
 
-class="
-mx-auto
-max-w-7xl
-px-6
-"
-
->
-
-
-<p
-
-class="
-text-sm
-font-semibold
-uppercase
-tracking-widest
-text-orange-400
-"
-
->
-Our Work
-</p>
+    <p
+      class="
+        text-sm
+        font-semibold
+        uppercase
+        tracking-widest
+        text-orange-400
+      "
+    >
+      Our Work
+    </p>
 
 
-
-<h1
-
-class="
-mt-5
-text-5xl
-font-bold
-text-white
-"
-
->
-Commercial Surface Projects
-</h1>
+    <h1
+      class="
+        mt-5
+        text-5xl
+        font-bold
+        text-white
+      "
+    >
+      Commercial Surface Projects
+    </h1>
 
 
+    <p
+      class="
+        mt-6
+        max-w-3xl
+        text-xl
+        leading-relaxed
+        text-gray-300
+      "
+    >
+      Explore examples of asphalt maintenance, parking lot
+      striping, coatings, repairs, and commercial surface
+      improvement projects completed by Austin Surface Pros.
+    </p>
 
-<p
-
-class="
-mt-6
-max-w-3xl
-text-xl
-text-gray-300
-"
-
->
-Explore examples of asphalt, striping, coatings,
-and commercial improvement projects.
-</p>
-
-
-
-</div>
+  </div>
 
 </section>
 
@@ -76,138 +62,61 @@ and commercial improvement projects.
 
 
 
-
-
-<!-- GALLERY GRID -->
-
+<!-- Gallery Projects -->
 
 <section
-
-class="
-py-20
-"
-
+  class="
+    py-20
+  "
 >
 
-
-<div
-
-class="
-mx-auto
-grid
-max-w-7xl
-gap-8
-px-6
-md:grid-cols-2
-lg:grid-cols-3
-"
-
->
+  <div
+    class="
+      mx-auto
+      max-w-7xl
+      px-6
+    "
+  >
 
 
-
-@for(item of galleryItems; track item.title)
-{
-
-
-<div
-
-class="
-overflow-hidden
-rounded-xl
-bg-white
-shadow-lg
-transition
-duration-300
-hover:-translate-y-2
-hover:shadow-2xl
-"
-
->
+    <div
+      class="
+        grid
+        gap-8
+        md:grid-cols-2
+        lg:grid-cols-3
+      "
+    >
 
 
-<img
+      @for(item of galleryItems; track item.title)
+      {
 
-[src]="item.image"
+        <app-ui-card
 
-[alt]="item.title"
+          [title]="item.title"
 
-class="
-h-64
-w-full
-object-cover
-"
+          [description]="item.description"
 
->
+          [category]="item.category"
 
+          [image]="item.image"
 
-
-
-<div
-
-class="
-p-6
-"
-
->
+        >
+        </app-ui-card>
 
 
-<p
-
-class="
-text-sm
-font-semibold
-text-blue-600
-"
-
->
-{{item.category}}
-</p>
+      }
 
 
-
-<h2
-
-class="
-mt-2
-text-2xl
-font-bold
-text-gray-900
-"
-
->
-{{item.title}}
-</h2>
+    </div>
 
 
-
-
-<p
-
-class="
-mt-4
-text-gray-600
-"
-
->
-{{item.description}}
-</p>
-
-
-
-</div>
-
-
-</div>
-
-
-}
-
-
-</div>
+  </div>
 
 
 </section>
+
 
 
 
@@ -216,68 +125,81 @@ text-gray-600
 
 <!-- CTA -->
 
-
 <section
-
-class="
-bg-blue-600
-py-20
-"
-
+  class="
+    bg-blue-600
+    py-20
+  "
 >
 
 
-<div
-
-class="
-mx-auto
-max-w-5xl
-px-6
-text-center
-"
-
->
+  <div
+    class="
+      mx-auto
+      max-w-5xl
+      px-6
+      text-center
+    "
+  >
 
 
-<h2
-
-class="
-text-4xl
-font-bold
-text-white
-"
-
->
-Have a Project in Mind?
-</h2>
+    <h2
+      class="
+        text-4xl
+        font-bold
+        text-white
+      "
+    >
+      Have a Project in Mind?
+    </h2>
 
 
 
-<a
-
-routerLink="/contact"
-
-class="
-mt-8
-inline-block
-rounded-lg
-bg-white
-px-8
-py-4
-font-semibold
-text-blue-600
-transition
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-"
-
->
-Request Estimate
-</a>
+    <p
+      class="
+        mx-auto
+        mt-5
+        max-w-2xl
+        text-lg
+        text-blue-100
+      "
+    >
+      Contact Austin Surface Pros today for a professional
+      estimate on your commercial surface project.
+    </p>
 
 
-</div>
+
+
+    <a
+
+      routerLink="/contact"
+
+      class="
+        mt-8
+        inline-flex
+        items-center
+        rounded-lg
+        bg-white
+        px-8
+        py-4
+        font-semibold
+        text-blue-600
+
+        transition
+        duration-300
+
+        hover:-translate-y-1
+        hover:shadow-xl
+      "
+
+    >
+      Request Estimate
+
+    </a>
+
+
+  </div>
 
 
 </section>
