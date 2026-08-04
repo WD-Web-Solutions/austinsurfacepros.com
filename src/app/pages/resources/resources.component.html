@@ -1,20 +1,28 @@
+<!-- HERO -->
+
+
 <section
-  class="
-    bg-gray-900
-    py-24
-  "
+
+class="
+bg-gray-900
+py-24
+"
+
 >
 
 <div
+
 class="
 mx-auto
 max-w-7xl
 px-6
-text-center
 "
+
 >
 
+
 <p
+
 class="
 text-sm
 font-semibold
@@ -22,171 +30,227 @@ uppercase
 tracking-widest
 text-orange-400
 "
+
 >
 Resources
 </p>
 
 
+
 <h1
+
 class="
-mt-4
+mt-5
 text-5xl
 font-bold
 text-white
 "
+
 >
-Resources for Commercial Property Professionals
+Commercial Property Resources
 </h1>
 
 
+
 <p
+
 class="
-mx-auto
 mt-6
 max-w-3xl
 text-xl
 text-gray-300
 "
+
 >
-Resources designed for property managers, contractors,
-and businesses planning commercial surface projects.
+Helpful guides and information for property managers,
+business owners, and commercial contractors.
 </p>
 
 
 </div>
+
 
 </section>
 
 
 
 
+
+
+
+<!-- RESOURCE CARDS -->
+
+
 <section
+
 class="
 py-20
 "
+
 >
 
+
 <div
+
 class="
 mx-auto
 grid
 max-w-7xl
 gap-8
 px-6
-md:grid-cols-3
+md:grid-cols-2
+lg:grid-cols-4
 "
+
 >
 
 
+@for(resource of resources; track resource.slug)
+{
+
+
 <div
+
 class="
 rounded-xl
 bg-white
 p-8
 shadow-lg
+transition
+duration-300
+hover:-translate-y-2
+hover:shadow-2xl
 "
+
 >
-
-<h2
-class="
-text-2xl
-font-bold
-text-gray-900
-"
->
-Commercial Property Managers
-</h2>
-
-
-<p
-class="
-mt-4
-text-gray-600
-"
->
-Information for managing parking lots, walkways,
-safety markings, repairs, and long-term maintenance
-planning.
-</p>
-
-
-</div>
-
-
 
 
 <div
+
 class="
-rounded-xl
-bg-white
-p-8
-shadow-lg
+text-5xl
 "
+
 >
+{{resource.icon}}
+</div>
+
+
+
+<p
+
+class="
+mt-5
+text-sm
+font-semibold
+text-blue-600
+"
+
+>
+{{resource.category}}
+</p>
+
+
 
 <h2
+
 class="
+mt-3
 text-2xl
 font-bold
 text-gray-900
 "
+
 >
-Commercial Contractors
+{{resource.title}}
 </h2>
 
 
+
 <p
+
 class="
 mt-4
 text-gray-600
 "
+
 >
-Partner with Austin Surface Pros for striping,
-surface preparation, coatings, and commercial
-property improvements.
+{{resource.description}}
 </p>
+
 
 
 </div>
 
 
+}
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- FUTURE BLOG CTA -->
+
+
+<section
+
+class="
+bg-gray-100
+py-20
+"
+
+>
 
 
 <div
+
 class="
-rounded-xl
-bg-white
-p-8
-shadow-lg
+mx-auto
+max-w-5xl
+px-6
+text-center
 "
+
 >
 
+
 <h2
+
 class="
-text-2xl
+text-4xl
 font-bold
 text-gray-900
 "
+
 >
-Project Planning
+Stay Updated With Surface Tips
 </h2>
 
 
+
 <p
+
 class="
-mt-4
-text-gray-600
+mt-5
+text-lg
+text-gray-700
 "
+
 >
-Learn what information helps us prepare accurate
-estimates including measurements, photos,
-and project requirements.
+Future articles will cover asphalt maintenance,
+commercial property improvements, and project planning.
 </p>
 
 
 </div>
 
-
-</div>
 
 </section>
