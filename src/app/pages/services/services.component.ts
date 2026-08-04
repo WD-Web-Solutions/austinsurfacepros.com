@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
+import { RouterLink } from '@angular/router';
+
 import { SERVICES } from '../../core/data/services.data';
+
 
 
 @Component({
@@ -9,7 +12,11 @@ import { SERVICES } from '../../core/data/services.data';
 
   standalone: true,
 
-  imports: [],
+  imports: [
+
+    RouterLink
+
+  ],
 
   templateUrl:
     './services.component.html',

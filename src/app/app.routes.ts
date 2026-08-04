@@ -21,7 +21,14 @@ export const routes: Routes = [
             .then(m => m.HomeComponent)
 
       },
-
+      {
+        path:'services/:slug',
+        
+        loadComponent:()=> 
+        import('./pages/service-detail/service-detail.component')
+        .then(m=>m.ServiceDetailComponent)
+        
+        },
 
       {
         path: 'about',

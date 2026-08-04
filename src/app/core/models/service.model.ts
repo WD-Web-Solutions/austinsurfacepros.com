@@ -6,8 +6,10 @@ export interface Service {
   
     icon: string;
   
-    image?: string;
+    image: string;
   
     slug: string;
+  
+    details: string;
   
   }
