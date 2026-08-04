@@ -1,21 +1,35 @@
 @if(service)
 {
 
+<main>
+
 
 <section
 class="
 bg-gray-900
-py-24
+py-20
 "
 >
 
 <div
 class="
 mx-auto
-max-w-5xl
+max-w-7xl
 px-6
 "
 >
+
+<div
+class="
+grid
+items-center
+gap-12
+lg:grid-cols-2
+"
+>
+
+
+<div>
 
 
 <p
@@ -27,21 +41,23 @@ tracking-widest
 text-orange-400
 "
 >
-Austin Surface Pros
+{{service.category}}
 </p>
 
 
 
 <h1
 class="
-mt-4
+mt-5
 text-5xl
 font-bold
+leading-tight
 text-white
 "
 >
 {{service.title}}
 </h1>
+
 
 
 
@@ -57,9 +73,85 @@ text-gray-300
 </p>
 
 
+
+
+<a
+
+routerLink="/contact"
+
+class="
+mt-8
+inline-flex
+rounded-lg
+bg-blue-600
+px-8
+py-4
+font-semibold
+text-white
+
+transition
+duration-300
+
+hover:-translate-y-1
+hover:bg-blue-700
+hover:shadow-xl
+"
+>
+
+Request Estimate
+
+</a>
+
+
 </div>
 
+
+
+
+@if(service.image)
+{
+
+<div
+
+class="
+overflow-hidden
+rounded-xl
+shadow-xl
+"
+
+>
+
+<img
+
+[src]="service.image"
+
+[alt]="service.title"
+
+class="
+w-full
+object-cover
+
+transition
+duration-500
+
+hover:scale-105
+"
+
+>
+
+</div>
+
+}
+
+
+</div>
+
+
+</div>
+
+
 </section>
+
 
 
 
@@ -71,39 +163,31 @@ py-20
 "
 >
 
-
 <div
 class="
 mx-auto
-max-w-5xl
+max-w-4xl
 px-6
 "
 >
 
 
-<img
-
-[src]="service.image"
-
-[alt]="service.title"
-
+<h2
 class="
-h-96
-w-full
-rounded-xl
-object-cover
-shadow-lg
+text-3xl
+font-bold
+text-gray-900
 "
-
 >
+About {{service.title}}
+</h2>
 
 
 
-
-<div
+<p
 
 class="
-mt-10
+mt-6
 text-lg
 leading-relaxed
 text-gray-700
@@ -111,32 +195,71 @@ text-gray-700
 
 >
 
-<p
-
-class="
-whitespace-pre-line
-"
-
->
 {{service.details}}
+
 </p>
+
 
 </div>
 
+</section>
 
 
 
+
+
+<section
+
+class="
+bg-blue-600
+py-16
+"
+
+>
 
 <div
 
 class="
-mt-10
-flex
-flex-wrap
-gap-4
+mx-auto
+max-w-5xl
+px-6
+text-center
 "
 
 >
+
+
+<h2
+
+class="
+text-4xl
+font-bold
+text-white
+"
+
+>
+
+Ready to Improve Your Property?
+
+</h2>
+
+
+
+<p
+
+class="
+mt-5
+text-lg
+text-blue-100
+"
+
+>
+
+Contact Austin Surface Pros today for a professional consultation and estimate.
+
+</p>
+
+
 
 
 <a
@@ -144,57 +267,67 @@ gap-4
 routerLink="/contact"
 
 class="
+mt-8
+inline-flex
 rounded-lg
-bg-blue-600
+bg-white
 px-8
 py-4
+
 font-semibold
-text-white
+text-blue-600
+
 transition
 duration-300
+
 hover:-translate-y-1
-hover:bg-blue-700
 hover:shadow-xl
+
 "
 
 >
-Request Estimate
-</a>
 
+Get Started
 
-
-
-<a
-
-routerLink="/services"
-
-class="
-rounded-lg
-border
-border-gray-300
-px-8
-py-4
-font-semibold
-text-gray-700
-transition
-duration-300
-hover:-translate-y-1
-hover:bg-gray-100
-hover:shadow-md
-"
-
->
-Back to Services
 </a>
 
 
 </div>
-
-
-</div>
-
 
 </section>
 
+
+
+</main>
+
+}
+
+@else
+{
+
+<div
+
+class="
+flex
+min-h-[50vh]
+items-center
+justify-center
+"
+
+>
+
+<p
+
+class="
+text-xl
+text-gray-600
+"
+
+>
+Loading service information...
+</p>
+
+
+</div>
 
 }
