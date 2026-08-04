@@ -1,53 +1,115 @@
 import { GalleryItem } from '../models/gallery-item.model';
 
 
+
 export const GALLERY_ITEMS: GalleryItem[] = [
 
-  {
-    id: 1,
-    title: 'Commercial Parking Lot Striping',
-    description:
-      'Professional parking lot striping and pavement markings for commercial properties.',
-    image:
-      '/assets/images/gallery/project-1.jpg',
-    category:
-      'Striping'
-  },
+
+{
+
+title:
+'Commercial Parking Lot Striping',
+
+category:
+'Striping',
+
+description:
+'Professional parking layouts designed for safety and visibility.',
+
+image:
+'/assets/images/gallery/striping.jpg'
+
+},
 
 
-  {
-    id: 2,
-    title: 'Asphalt Seal Coating',
-    description:
-      'Protective asphalt maintenance solutions designed to extend pavement life.',
-    image:
-      '/assets/images/gallery/project-2.jpg',
-    category:
-      'Asphalt'
-  },
+
+{
+
+title:
+'Asphalt Maintenance Project',
+
+category:
+'Asphalt',
+
+description:
+'Commercial asphalt protection and restoration services.',
+
+image:
+'/assets/images/gallery/asphalt.jpg'
+
+},
 
 
-  {
-    id: 3,
-    title: 'Concrete Repair Project',
-    description:
-      'Commercial concrete repairs improving safety and appearance.',
-    image:
-      '/assets/images/gallery/project-3.jpg',
-    category:
-      'Concrete'
-  },
+
+{
+
+title:
+'Steel Coating Application',
+
+category:
+'Coatings',
+
+description:
+'Durable coating solutions designed for high traffic areas.',
+
+image:
+'/assets/images/gallery/coating.jpg'
+
+},
 
 
-  {
-    id: 4,
-    title: 'Parking Safety Improvements',
-    description:
-      'Wheel stops, signage, and safety upgrades for commercial properties.',
-    image:
-      '/assets/images/gallery/project-4.jpg',
-    category:
-      'Safety'
-  }
+
+{
+
+title:
+'Commercial Surface Repair',
+
+category:
+'Repairs',
+
+description:
+'Restoring damaged surfaces for safer properties.',
+
+image:
+'/assets/images/gallery/repair.jpg'
+
+},
+
+
+
+{
+
+title:
+'Parking Safety Improvements',
+
+category:
+'Safety',
+
+description:
+'Wheel stops, markings, and property safety upgrades.',
+
+image:
+'/assets/images/gallery/safety.jpg'
+
+},
+
+
+
+{
+
+title:
+'Commercial Property Upgrade',
+
+category:
+'Commercial',
+
+description:
+'Complete surface improvement solutions.',
+
+image:
+'/assets/images/gallery/commercial.jpg'
+
+}
+
 
 ];
