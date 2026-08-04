@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
-
-import { RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import { SERVICES } from '../../core/data/services.data';
+
+import { Service } from '../../core/models/service.model';
 
 
 
@@ -30,13 +34,15 @@ import { SERVICES } from '../../core/data/services.data';
 export class ServiceDetailComponent {
 
 
-  service;
+  service?: Service;
 
 
 
   constructor(
 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+
+    private router: Router
 
   ) {
 
@@ -48,9 +54,19 @@ export class ServiceDetailComponent {
 
     this.service =
       SERVICES.find(
+
         service =>
           service.slug === slug
+
       );
+
+
+
+    if (!this.service) {
+
+      this.router.navigate(['/services']);
+
+    }
 
 
   }

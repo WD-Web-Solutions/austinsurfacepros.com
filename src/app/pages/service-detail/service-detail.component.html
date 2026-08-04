@@ -1,183 +1,197 @@
 @if(service)
 {
 
+
 <section
-  class="
-    bg-gray-900
-    py-24
-  "
+class="
+bg-gray-900
+py-24
+"
 >
 
-  <div
-    class="
-      mx-auto
-      max-w-5xl
-      px-6
-    "
-  >
-
-    <p
-      class="
-        text-sm
-        font-semibold
-        uppercase
-        tracking-widest
-        text-orange-400
-      "
-    >
-      Austin Surface Pros
-    </p>
+<div
+class="
+mx-auto
+max-w-5xl
+px-6
+"
+>
 
 
-    <h1
-      class="
-        mt-4
-        text-5xl
-        font-bold
-        text-white
-      "
-    >
-      {{service.title}}
-    </h1>
+<p
+class="
+text-sm
+font-semibold
+uppercase
+tracking-widest
+text-orange-400
+"
+>
+Austin Surface Pros
+</p>
 
 
-    <p
-      class="
-        mt-6
-        text-xl
-        leading-relaxed
-        text-gray-300
-      "
-    >
-      {{service.description}}
-    </p>
+
+<h1
+class="
+mt-4
+text-5xl
+font-bold
+text-white
+"
+>
+{{service.title}}
+</h1>
 
 
-  </div>
+
+<p
+class="
+mt-6
+text-xl
+leading-relaxed
+text-gray-300
+"
+>
+{{service.description}}
+</p>
+
+
+</div>
 
 </section>
 
 
 
 
+
 <section
-  class="
-    py-20
-  "
+class="
+py-20
+"
 >
 
-  <div
-    class="
-      mx-auto
-      max-w-5xl
-      px-6
-    "
-  >
+
+<div
+class="
+mx-auto
+max-w-5xl
+px-6
+"
+>
 
 
-    <img
+<img
 
-      [src]="service.image"
+[src]="service.image"
 
-      [alt]="service.title"
+[alt]="service.title"
 
-      class="
-        h-96
-        w-full
-        rounded-xl
-        object-cover
-        shadow-lg
-      "
+class="
+h-96
+w-full
+rounded-xl
+object-cover
+shadow-lg
+"
 
-    >
-
-
-
-
-    <div
-      class="
-        mt-10
-        text-lg
-        leading-relaxed
-        text-gray-700
-      "
-    >
-
-      <p
-        class="
-          whitespace-pre-line
-        "
-      >
-        {{service.details}}
-      </p>
-
-    </div>
+>
 
 
 
 
-    <a
+<div
 
-      routerLink="/contact"
+class="
+mt-10
+text-lg
+leading-relaxed
+text-gray-700
+"
 
-      class="
-        mt-10
-        inline-block
-        rounded-lg
-        bg-blue-600
-        px-8
-        py-4
-        font-semibold
-        text-white
-        transition
-        duration-300
-        ease-in-out
-        hover:-translate-y-1
-        hover:bg-blue-700
-        hover:shadow-xl
-      "
+>
 
-    >
+<p
 
-      Request Estimate
+class="
+whitespace-pre-line
+"
 
-    </a>
+>
+{{service.details}}
+</p>
+
+</div>
 
 
 
 
-    <a
 
-      routerLink="/services"
+<div
 
-      class="
-        ml-4
-        mt-10
-        inline-block
-        rounded-lg
-        border
-        border-gray-300
-        px-8
-        py-4
-        font-semibold
-        text-gray-700
-        transition
-        duration-300
-        ease-in-out
-        hover:-translate-y-1
-        hover:bg-gray-100
-        hover:shadow-md
-      "
+class="
+mt-10
+flex
+flex-wrap
+gap-4
+"
 
-    >
-
-      Back to Services
-
-    </a>
+>
 
 
+<a
 
-  </div>
+routerLink="/contact"
+
+class="
+rounded-lg
+bg-blue-600
+px-8
+py-4
+font-semibold
+text-white
+transition
+duration-300
+hover:-translate-y-1
+hover:bg-blue-700
+hover:shadow-xl
+"
+
+>
+Request Estimate
+</a>
+
+
+
+
+<a
+
+routerLink="/services"
+
+class="
+rounded-lg
+border
+border-gray-300
+px-8
+py-4
+font-semibold
+text-gray-700
+transition
+duration-300
+hover:-translate-y-1
+hover:bg-gray-100
+hover:shadow-md
+"
+
+>
+Back to Services
+</a>
+
+
+</div>
+
+
+</div>
 
 
 </section>
