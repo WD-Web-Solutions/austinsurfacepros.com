@@ -33,4 +33,25 @@ import {
 export class NavbarComponent {
 
 
+  mobileMenuOpen = false;
+
+
+
+  toggleMenu(): void {
+
+    this.mobileMenuOpen =
+      !this.mobileMenuOpen;
+
+  }
+
+
+
+  closeMenu(): void {
+
+    this.mobileMenuOpen =
+      false;
+
+  }
+
+
 }

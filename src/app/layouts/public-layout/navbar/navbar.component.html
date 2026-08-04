@@ -1,17 +1,15 @@
 <header
-  class="
-    sticky
-    top-0
-    z-50
-    border-b
-    border-gray-200
-    bg-white
-  "
+class="
+sticky
+top-0
+z-50
+border-b
+border-gray-200
+bg-white
+"
 >
 
-
 <nav
-
 class="
 mx-auto
 flex
@@ -21,21 +19,18 @@ justify-between
 px-6
 py-4
 "
-
 >
-
 
 <!-- LOGO -->
 
 <a
-
 routerLink="/"
-
+(click)="closeMenu()"
 class="
+group
 flex
 items-center
 "
-
 >
 
 <img
@@ -47,6 +42,9 @@ alt="Austin Surface Pros"
 class="
 h-16
 w-auto
+transition
+duration-300
+group-hover:scale-105
 "
 
 >
@@ -55,115 +53,147 @@ w-auto
 
 
 
-
-
-<!-- DESKTOP NAVIGATION -->
+<!-- DESKTOP NAV -->
 
 <div
-
 class="
 hidden
 items-center
 gap-8
 lg:flex
 "
-
 >
 
 
 <a
-
 routerLink="/"
-
 routerLinkActive="text-blue-600"
-
 class="
+relative
 font-medium
 text-gray-700
 transition
+duration-300
 hover:text-blue-600
-"
 
+after:absolute
+after:-bottom-2
+after:left-0
+after:h-0.5
+after:w-0
+after:bg-blue-600
+after:transition-all
+after:duration-300
+hover:after:w-full
+"
 >
 Home
 </a>
 
 
 
-
 <a
-
 routerLink="/about"
-
 routerLinkActive="text-blue-600"
-
 class="
+relative
 font-medium
 text-gray-700
 transition
+duration-300
 hover:text-blue-600
-"
 
+after:absolute
+after:-bottom-2
+after:left-0
+after:h-0.5
+after:w-0
+after:bg-blue-600
+after:transition-all
+after:duration-300
+hover:after:w-full
+"
 >
 About
 </a>
 
 
 
-
 <a
-
 routerLink="/services"
-
 routerLinkActive="text-blue-600"
-
 class="
+relative
 font-medium
 text-gray-700
 transition
+duration-300
 hover:text-blue-600
-"
 
+after:absolute
+after:-bottom-2
+after:left-0
+after:h-0.5
+after:w-0
+after:bg-blue-600
+after:transition-all
+after:duration-300
+hover:after:w-full
+"
 >
 Services
 </a>
 
 
 
-
 <a
-
 routerLink="/gallery"
-
 routerLinkActive="text-blue-600"
-
 class="
+relative
 font-medium
 text-gray-700
 transition
+duration-300
 hover:text-blue-600
-"
 
+after:absolute
+after:-bottom-2
+after:left-0
+after:h-0.5
+after:w-0
+after:bg-blue-600
+after:transition-all
+after:duration-300
+hover:after:w-full
+"
 >
 Gallery
 </a>
 
 
 
-
 <a
-
 routerLink="/resources"
-
 routerLinkActive="text-blue-600"
-
 class="
+relative
 font-medium
 text-gray-700
 transition
+duration-300
 hover:text-blue-600
-"
 
+after:absolute
+after:-bottom-2
+after:left-0
+after:h-0.5
+after:w-0
+after:bg-blue-600
+after:transition-all
+after:duration-300
+hover:after:w-full
+"
 >
 Resources
 </a>
@@ -175,17 +205,15 @@ Resources
 
 
 
-<!-- RIGHT ACTIONS -->
+<!-- ACTION BUTTONS -->
 
 <div
-
 class="
 hidden
 items-center
 gap-4
 lg:flex
 "
-
 >
 
 
@@ -194,13 +222,12 @@ lg:flex
 routerLink="/login"
 
 class="
-text-sm
 font-medium
 text-gray-600
 transition
+duration-300
 hover:text-blue-600
 "
-
 >
 Login
 </a>
@@ -218,14 +245,16 @@ border
 border-blue-600
 px-4
 py-2
-text-sm
 font-semibold
 text-blue-600
 transition
+duration-300
+
+hover:-translate-y-1
 hover:bg-blue-600
 hover:text-white
+hover:shadow-lg
 "
-
 >
 Register
 </a>
@@ -244,13 +273,14 @@ px-5
 py-3
 font-semibold
 text-white
+
 transition
 duration-300
+
 hover:-translate-y-1
 hover:bg-blue-700
-hover:shadow-lg
+hover:shadow-xl
 "
-
 >
 Request Estimate
 </a>
@@ -260,7 +290,157 @@ Request Estimate
 
 
 
+
+
+<!-- MOBILE BUTTON -->
+
+<button
+
+(click)="toggleMenu()"
+
+class="
+text-3xl
+text-gray-700
+transition
+duration-300
+hover:text-blue-600
+lg:hidden
+"
+
+>
+
+☰
+
+</button>
+
+
 </nav>
 
+
+
+
+
+<!-- MOBILE MENU -->
+
+@if(mobileMenuOpen)
+{
+
+<div
+
+class="
+border-t
+border-gray-200
+bg-white
+px-6
+py-6
+lg:hidden
+"
+
+>
+
+
+<div
+
+class="
+space-y-5
+"
+
+>
+
+
+<a
+routerLink="/"
+(click)="closeMenu()"
+class="
+block
+transition
+hover:text-blue-600
+"
+>
+Home
+</a>
+
+
+<a
+routerLink="/about"
+(click)="closeMenu()"
+class="
+block
+transition
+hover:text-blue-600
+"
+>
+About
+</a>
+
+
+<a
+routerLink="/services"
+(click)="closeMenu()"
+class="
+block
+transition
+hover:text-blue-600
+"
+>
+Services
+</a>
+
+
+<a
+routerLink="/gallery"
+(click)="closeMenu()"
+class="
+block
+transition
+hover:text-blue-600
+"
+>
+Gallery
+</a>
+
+
+<a
+routerLink="/resources"
+(click)="closeMenu()"
+class="
+block
+transition
+hover:text-blue-600
+"
+>
+Resources
+</a>
+
+
+<a
+routerLink="/contact"
+(click)="closeMenu()"
+class="
+block
+rounded-lg
+bg-blue-600
+px-5
+py-3
+text-center
+font-semibold
+text-white
+transition
+duration-300
+hover:-translate-y-1
+hover:bg-blue-700
+hover:shadow-xl
+"
+>
+Request Estimate
+</a>
+
+
+</div>
+
+
+</div>
+
+}
 
 </header>
