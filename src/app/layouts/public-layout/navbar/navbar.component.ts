@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
+
 
 
 @Component({
@@ -18,9 +22,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   ],
 
   templateUrl:
+
     './navbar.component.html',
 
   styleUrl:
+
     './navbar.component.css'
 
 })

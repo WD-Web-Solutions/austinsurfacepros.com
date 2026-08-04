@@ -3,33 +3,39 @@
     sticky
     top-0
     z-50
+    border-b
+    border-gray-200
     bg-white
-    shadow-md
   "
 >
 
 
 <nav
-  class="
-    mx-auto
-    flex
-    max-w-7xl
-    items-center
-    justify-between
-    px-6
-    py-4
-  "
+
+class="
+mx-auto
+flex
+max-w-7xl
+items-center
+justify-between
+px-6
+py-4
+"
+
 >
 
 
-<!-- Logo -->
+<!-- LOGO -->
 
 <a
-  routerLink="/"
-  class="
-    flex
-    items-center
-  "
+
+routerLink="/"
+
+class="
+flex
+items-center
+"
+
 >
 
 <img
@@ -50,7 +56,8 @@ w-auto
 
 
 
-<!-- Desktop Navigation -->
+
+<!-- DESKTOP NAVIGATION -->
 
 <div
 
@@ -80,6 +87,7 @@ hover:text-blue-600
 >
 Home
 </a>
+
 
 
 
@@ -161,36 +169,13 @@ Resources
 </a>
 
 
-
-
-<a
-
-routerLink="/contact"
-
-class="
-rounded-lg
-bg-blue-600
-px-5
-py-3
-font-semibold
-text-white
-transition
-hover:bg-blue-700
-"
-
->
-Request Estimate
-</a>
-
-
-
 </div>
 
 
 
 
 
-<!-- Future Authentication -->
+<!-- RIGHT ACTIONS -->
 
 <div
 
@@ -212,12 +197,14 @@ class="
 text-sm
 font-medium
 text-gray-600
+transition
 hover:text-blue-600
 "
 
 >
 Login
 </a>
+
 
 
 
@@ -234,13 +221,39 @@ py-2
 text-sm
 font-semibold
 text-blue-600
-hover:bg-blue-50
+transition
+hover:bg-blue-600
+hover:text-white
 "
 
 >
 Register
 </a>
 
+
+
+
+<a
+
+routerLink="/contact"
+
+class="
+rounded-lg
+bg-blue-600
+px-5
+py-3
+font-semibold
+text-white
+transition
+duration-300
+hover:-translate-y-1
+hover:bg-blue-700
+hover:shadow-lg
+"
+
+>
+Request Estimate
+</a>
 
 
 </div>
