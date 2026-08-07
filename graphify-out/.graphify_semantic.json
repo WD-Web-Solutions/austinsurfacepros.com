@@ -1,0 +1,1204 @@
+{
+  "nodes": [
+    {
+      "id": "readme_overview",
+      "label": "Austinsurfacepros README",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_angularcli",
+      "label": "Angular CLI",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_app_component_appcomponent",
+      "label": "AppComponent Root Shell Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/app.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_app_component_routeroutletrouting",
+      "label": "Router Outlet Routing Mechanism",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/app.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "label": "FooterComponent Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_layouts_public_layout_footer_footer_component_companycontactinfo",
+      "label": "Austin Surface Pros Contact Info (Address/Email)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "label": "NavbarComponent Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_layouts_public_layout_public_layout_component_publiclayoutcomponent",
+      "label": "PublicLayoutComponent Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/public-layout.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_about_about_component_aboutpage",
+      "label": "About Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/about/about.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_contact_contact_component_contactpage",
+      "label": "Contact Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/contact/contact.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_contact_contact_component_serviceslist",
+      "label": "Services We Provide (Static List)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/contact/contact.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_gallery_gallery_component_gallerypage",
+      "label": "Gallery Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/gallery/gallery.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_home_home_component_homepage",
+      "label": "Home Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_home_home_component_servicessection",
+      "label": "Our Services Section (Dynamic ui-card Grid)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_login_login_component_loginpage",
+      "label": "Login Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/login/login.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_not_found_not_found_component_notfoundpage",
+      "label": "Not Found (404) Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/not-found/not-found.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_privacy_policy_privacy_policy_component_privacypolicypage",
+      "label": "Privacy Policy Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/privacy-policy/privacy-policy.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_register_register_component_registerpage",
+      "label": "Register Page Template",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/register/register.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_resources_resources_component_resourcespage",
+      "label": "Resources Page",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_resources_resources_component_resourcecardsgrid",
+      "label": "Resource Cards Grid Section",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_resources_resources_component_futureblogcta",
+      "label": "Future Blog CTA Section",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_service_detail_service_detail_component_servicedetailpage",
+      "label": "Service Detail Page",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/service-detail/service-detail.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_service_detail_service_detail_component_loadingstate",
+      "label": "Service Loading State (text fallback)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/service-detail/service-detail.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_service_detail_service_detail_component_contactroute",
+      "label": "Contact Route (/contact)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/service-detail/service-detail.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_services_services_component_servicespage",
+      "label": "Services Page",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/services/services.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_terms_terms_component_termspage",
+      "label": "Terms & Conditions Page",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_terms_terms_component_estimatesandproposals",
+      "label": "Estimates and Proposals Section",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_terms_terms_component_servicesterms",
+      "label": "Services Section (Terms)",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_terms_terms_component_payments",
+      "label": "Payments Section",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_pages_terms_terms_component_websiteuse",
+      "label": "Website Use Section",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_button_button_component_buttoncomponent",
+      "label": "Button Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/button/button.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_loading_spinner_loading_spinner_component_loadingspinnercomponent",
+      "label": "Loading Spinner Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/loading-spinner/loading-spinner.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_page_container_page_container_component_pagecontainercomponent",
+      "label": "Page Container Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/page-container/page-container.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_section_header_section_header_component_sectionheadercomponent",
+      "label": "Section Header Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/section-header/section-header.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_section_title_section_title_component_sectiontitlecomponent",
+      "label": "Section Title Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/section-title/section-title.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_service_card_service_card_component_servicecardcomponent",
+      "label": "Service Card Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/service-card/service-card.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_ui_button_ui_button_component_uibuttoncomponent",
+      "label": "UI Button Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/ui-button/ui-button.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "label": "UI Card Component",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/ui-card/ui-card.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_index_index",
+      "label": "Index HTML App Shell",
+      "file_type": "document",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_logo",
+      "label": "Austin Surface Pros Logo (SVG)",
+      "file_type": "image",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+      "label": "Austin Surface Pros (brand name)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_concrete",
+      "label": "Concrete (service line)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_stone",
+      "label": "Stone (service line)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_asphalt",
+      "label": "Asphalt (service line)",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_badge_emblem_design",
+      "label": "Circular badge emblem design",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_trowel_striping_tool_icon",
+      "label": "Trowel / striping-tool icon",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_assets_images_austin_surface_pros_logo_asphalt_stripe_imagery",
+      "label": "Perspective asphalt lane-stripe imagery",
+      "file_type": "concept",
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "readme_overview",
+      "target": "readme_angularcli",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app_component_appcomponent",
+      "target": "src_app_app_component_routeroutletrouting",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/app.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "target": "src_app_pages_services_services_component_servicespage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "target": "src_app_pages_resources_resources_component_resourcespage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "target": "src_app_pages_contact_contact_component_contactpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "target": "src_app_layouts_public_layout_footer_footer_component_companycontactinfo",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/footer/footer.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_home_home_component_homepage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_about_about_component_aboutpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_services_services_component_servicespage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_gallery_gallery_component_gallerypage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_resources_resources_component_resourcespage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_login_login_component_loginpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_register_register_component_registerpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "target": "src_app_pages_contact_contact_component_contactpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/navbar/navbar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_public_layout_component_publiclayoutcomponent",
+      "target": "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/public-layout.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_public_layout_component_publiclayoutcomponent",
+      "target": "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/public-layout.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_layouts_public_layout_public_layout_component_publiclayoutcomponent",
+      "target": "src_app_app_component_routeroutletrouting",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/public-layout.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_about_about_component_aboutpage",
+      "target": "src_app_pages_contact_contact_component_contactpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/about/about.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_contact_contact_component_contactpage",
+      "target": "src_app_pages_contact_contact_component_serviceslist",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/contact/contact.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_contact_contact_component_contactpage",
+      "target": "src_app_layouts_public_layout_footer_footer_component_companycontactinfo",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/contact/contact.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_contact_contact_component_serviceslist",
+      "target": "src_app_pages_home_home_component_servicessection",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/contact/contact.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_gallery_gallery_component_gallerypage",
+      "target": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/gallery/gallery.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_gallery_gallery_component_gallerypage",
+      "target": "src_app_pages_contact_contact_component_contactpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/gallery/gallery.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_home_home_component_homepage",
+      "target": "src_app_pages_contact_contact_component_contactpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_home_home_component_homepage",
+      "target": "src_app_pages_services_services_component_servicespage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_home_home_component_homepage",
+      "target": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_home_home_component_homepage",
+      "target": "src_app_pages_home_home_component_servicessection",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_not_found_not_found_component_notfoundpage",
+      "target": "src_app_pages_home_home_component_homepage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/not-found/not-found.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_privacy_policy_privacy_policy_component_privacypolicypage",
+      "target": "src_app_layouts_public_layout_footer_footer_component_companycontactinfo",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/privacy-policy/privacy-policy.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_resources_resources_component_resourcespage",
+      "target": "src_app_pages_resources_resources_component_resourcecardsgrid",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_resources_resources_component_resourcespage",
+      "target": "src_app_pages_resources_resources_component_futureblogcta",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_resources_resources_component_resourcecardsgrid",
+      "target": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/resources/resources.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_service_detail_service_detail_component_servicedetailpage",
+      "target": "src_app_pages_service_detail_service_detail_component_loadingstate",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/service-detail/service-detail.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_service_detail_service_detail_component_servicedetailpage",
+      "target": "src_app_pages_service_detail_service_detail_component_contactroute",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/service-detail/service-detail.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_services_services_component_servicespage",
+      "target": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/services/services.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_services_services_component_servicespage",
+      "target": "src_app_pages_service_detail_service_detail_component_servicedetailpage",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/services/services.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_terms_terms_component_termspage",
+      "target": "src_app_pages_terms_terms_component_estimatesandproposals",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_terms_terms_component_termspage",
+      "target": "src_app_pages_terms_terms_component_servicesterms",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_terms_terms_component_termspage",
+      "target": "src_app_pages_terms_terms_component_payments",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_pages_terms_terms_component_termspage",
+      "target": "src_app_pages_terms_terms_component_websiteuse",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/terms/terms.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_shared_components_button_button_component_buttoncomponent",
+      "target": "src_app_shared_components_ui_button_ui_button_component_uibuttoncomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/button/button.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_shared_components_loading_spinner_loading_spinner_component_loadingspinnercomponent",
+      "target": "src_app_pages_service_detail_service_detail_component_loadingstate",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/loading-spinner/loading-spinner.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_shared_components_section_header_section_header_component_sectionheadercomponent",
+      "target": "src_app_shared_components_section_title_section_title_component_sectiontitlecomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/section-header/section-header.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_shared_components_service_card_service_card_component_servicecardcomponent",
+      "target": "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/service-card/service-card.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_index_index",
+      "target": "src_app_app_component_appcomponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_concrete",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_stone",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_asphalt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_badge_emblem_design",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_trowel_striping_tool_icon",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_logo",
+      "target": "public_assets_images_austin_surface_pros_logo_asphalt_stripe_imagery",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+      "target": "public_assets_images_austin_surface_pros_logo_concrete",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+      "target": "public_assets_images_austin_surface_pros_logo_stone",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+      "target": "public_assets_images_austin_surface_pros_logo_asphalt",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_trowel_striping_tool_icon",
+      "target": "public_assets_images_austin_surface_pros_logo_asphalt",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_assets_images_austin_surface_pros_logo_asphalt_stripe_imagery",
+      "target": "public_assets_images_austin_surface_pros_logo_asphalt",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "public_layout_shell_composition",
+      "label": "Public Layout Shell Composition",
+      "nodes": [
+        "src_app_layouts_public_layout_public_layout_component_publiclayoutcomponent",
+        "src_app_layouts_public_layout_navbar_navbar_component_navbarcomponent",
+        "src_app_layouts_public_layout_footer_footer_component_footercomponent",
+        "src_app_app_component_routeroutletrouting"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/layouts/public-layout/public-layout.component.html"
+    },
+    {
+      "id": "request_estimate_cta_pattern",
+      "label": "Request Estimate CTA Pattern",
+      "nodes": [
+        "src_app_pages_about_about_component_aboutpage",
+        "src_app_pages_gallery_gallery_component_gallerypage",
+        "src_app_pages_home_home_component_homepage",
+        "src_app_pages_contact_contact_component_contactpage"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html"
+    },
+    {
+      "id": "services_presentation_pattern",
+      "label": "Services Presentation Pattern",
+      "nodes": [
+        "src_app_pages_contact_contact_component_serviceslist",
+        "src_app_pages_home_home_component_servicessection",
+        "src_app_shared_components_ui_card_ui_card_component_uicardcomponent"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/pages/home/home.component.html"
+    },
+    {
+      "id": "cta_button_pattern_family",
+      "label": "CTA Button Pattern Family (Button, UiButton, inline CTA links)",
+      "nodes": [
+        "src_app_shared_components_button_button_component_buttoncomponent",
+        "src_app_shared_components_ui_button_ui_button_component_uibuttoncomponent",
+        "src_app_pages_service_detail_service_detail_component_servicedetailpage"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/button/button.component.html"
+    },
+    {
+      "id": "section_heading_pattern_family",
+      "label": "Section Heading Pattern Family (SectionHeader, SectionTitle, page hero eyebrow/title/description)",
+      "nodes": [
+        "src_app_shared_components_section_header_section_header_component_sectionheadercomponent",
+        "src_app_shared_components_section_title_section_title_component_sectiontitlecomponent",
+        "src_app_pages_resources_resources_component_resourcespage"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/section-header/section-header.component.html"
+    },
+    {
+      "id": "card_ui_pattern_family",
+      "label": "Card UI Pattern Family (UiCard, ServiceCard, Resource cards)",
+      "nodes": [
+        "src_app_shared_components_ui_card_ui_card_component_uicardcomponent",
+        "src_app_shared_components_service_card_service_card_component_servicecardcomponent",
+        "src_app_pages_resources_resources_component_resourcecardsgrid"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/src/app/shared/components/ui-card/ui-card.component.html"
+    },
+    {
+      "id": "asp_logo_service_lines_taglines",
+      "label": "Brand-to-services grouping in logo tagline",
+      "nodes": [
+        "public_assets_images_austin_surface_pros_logo_austin_surface_pros",
+        "public_assets_images_austin_surface_pros_logo_concrete",
+        "public_assets_images_austin_surface_pros_logo_stone",
+        "public_assets_images_austin_surface_pros_logo_asphalt"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg"
+    },
+    {
+      "id": "asp_logo_visual_motif_group",
+      "label": "Paving-trade visual motif (badge, trowel icon, stripe imagery)",
+      "nodes": [
+        "public_assets_images_austin_surface_pros_logo_badge_emblem_design",
+        "public_assets_images_austin_surface_pros_logo_trowel_striping_tool_icon",
+        "public_assets_images_austin_surface_pros_logo_asphalt_stripe_imagery"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/zaq/Documents/GitHub/austinsurfacepros.com/public/assets/images/Austin_Surface_Pros_Logo.svg"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
