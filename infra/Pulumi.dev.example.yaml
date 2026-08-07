@@ -1,0 +1,10 @@
+config:
+  aws:region: us-east-1
+  austinsurfacepros-infra:environment: dev
+  austinsurfacepros-infra:expectedAccountId: "123456789012"
+  austinsurfacepros-infra:domainName: austinsurfacepros.com
+  austinsurfacepros-infra:hostedZoneId: Z0123456789EXAMPLE
+  austinsurfacepros-infra:certificateArn: arn:aws:acm:us-east-1:123456789012:certificate/replace-me
+  austinsurfacepros-infra:lambdaArchivePath: ../backend/dist/lambda.zip
+  austinsurfacepros-infra:databaseProvider: deferred
+  austinsurfacepros-infra:protectResources: false

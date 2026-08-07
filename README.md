@@ -1,59 +1,59 @@
-# Austinsurfacepros
+# Austin Surface Pros
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Austin Surface Pros is a serverless web application organized as a monorepo so
+the public site, API, data assets, and cloud infrastructure can evolve
+independently.
 
-## Development server
+## Repository layout
 
-To start a local development server, run:
+- `frontend/` — Angular public website
+- `backend/` — FastAPI application, Lambda adapter, and pytest suite
+- `data/` — provider-neutral PostgreSQL migrations and seed guidance
+- `infra/` — config-driven Pulumi AWS infrastructure and safety tests
+- `docs/` — browser-loadable architecture plans and decisions
+- `scripts/` — cross-project packaging automation
 
-```bash
-ng serve
-```
+Review the [architecture plan](docs/architecture/index.html) before changing
+service boundaries or selecting the hosted PostgreSQL provider.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Prerequisites
 
-## Code scaffolding
+- Node.js 24.18 LTS (`nvm use`)
+- Python 3.14 and [uv](https://docs.astral.sh/uv/)
+- Pulumi CLI for infrastructure work
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Setup
 
 ```bash
-ng build
+python3 scripts/project.py setup
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Local development
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Run the backend and frontend in separate terminals:
 
 ```bash
-ng test
+python3 scripts/project.py backend-dev
+python3 scripts/project.py frontend-dev
 ```
 
-## Running end-to-end tests
+The Angular site is available at <http://localhost:4200> and proxies `/api` to
+FastAPI at <http://localhost:8000>.
 
-For end-to-end (e2e) testing, run:
+## Verification
 
 ```bash
-ng e2e
+python3 scripts/project.py test
+python3 scripts/project.py build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The Makefile provides shorter aliases when Make is available. The Python task
+runner works without Xcode command-line tools. The build command produces the
+Angular distribution and an AWS Lambda arm64 zip; it does not deploy anything.
 
-## Additional Resources
+## Deployment safety
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Pulumi is operator-driven and is not part of application CI/CD. Before any
+preview or deployment, configure and verify the expected AWS account ID, Route
+53 hosted zone, domain, and us-east-1 ACM certificate. No database resource is
+provisioned until the provider decision is approved.
