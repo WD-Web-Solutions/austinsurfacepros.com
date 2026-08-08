@@ -43,6 +43,17 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+The AWS demo uses a separate configuration:
+
+```bash
+npm run build:demo
+```
+
+That build selects the browser-only contact submission gateway. It validates
+the form but does not send or persist contact data. Services, gallery entries,
+and resource/article content already come from the seeded files under
+`src/app/core/data`.
+
 ## Running unit tests
 
 To execute unit tests with Vitest, use the following command:

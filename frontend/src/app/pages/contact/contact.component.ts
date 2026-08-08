@@ -16,6 +16,7 @@ import {
   ContactService,
   ContactFormPayload
 } from './contact.service';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -38,6 +39,8 @@ import {
 
 })
 export class ContactComponent {
+
+  readonly isDemo = environment.demoMode;
 
 
   isSubmitting = false;

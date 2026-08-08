@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Austin Surface Pros — Demo Deployment Setup</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #101828;
+      --muted: #475467;
+      --line: #d0d5dd;
+      --brand: #f97316;
+      --brand-dark: #b54708;
+      --panel: #f8fafc;
+      --safe: #067647;
+      --safe-bg: #ecfdf3;
+      --warn: #b54708;
+      --warn-bg: #fff7ed;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.62 system-ui, sans-serif; color: var(--ink); background: white; }
+    main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 64px 0 96px; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 32px; }
+    h1 { margin: 0; font-size: clamp(2.25rem, 6vw, 4.6rem); line-height: 1; letter-spacing: -.05em; }
+    h2 { margin-top: 56px; font-size: 1.8rem; }
+    h3 { margin: 28px 0 8px; }
+    p, li { color: var(--muted); }
+    a { color: var(--brand-dark); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    code { background: #f2f4f7; border-radius: 5px; padding: .1em .35em; }
+    pre { overflow: auto; padding: 20px; border-radius: 12px; background: #101828; color: #f8fafc; }
+    pre code { padding: 0; background: transparent; color: inherit; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; }
+    .eyebrow { color: var(--brand); font-weight: 750; text-transform: uppercase; letter-spacing: .12em; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: 14px; padding: 20px; background: var(--panel); }
+    .card h3 { margin-top: 0; }
+    .callout { border-left: 4px solid var(--brand); padding: 10px 20px; background: var(--warn-bg); }
+    .safe { border-left-color: var(--safe); background: var(--safe-bg); }
+    .flow { display: grid; grid-template-columns: repeat(7, auto); gap: 10px; align-items: center; }
+    .node { min-height: 96px; display: grid; place-items: center; text-align: center; border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: white; box-shadow: 0 8px 20px rgb(16 24 40 / 7%); }
+    .arrow { color: var(--brand); font-size: 1.5rem; }
+    .phase { margin-top: 26px; padding: 22px; border: 1px solid var(--line); border-radius: 14px; }
+    .phase > h3 { margin-top: 0; }
+    .status { display: inline-block; border-radius: 999px; padding: 3px 10px; color: var(--safe); background: var(--safe-bg); font-size: .82rem; font-weight: 700; }
+    @media (max-width: 820px) {
+      .flow { grid-template-columns: 1fr; }
+      .arrow { text-align: center; transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Deployment guide · August 2026</div>
+    <h1>Disposable AWS demo with branch-driven delivery.</h1>
+    <p>This guide defines the one-time Pulumi bootstrap and ongoing GitHub Actions deployment for <code>austinsurfaceprosdemo.wdwebsolutions.com</code>.</p>
+    <p><a href="pipeline.d2">D2 pipeline source →</a> · <a href="../architecture/index.html">Architecture plan →</a></p>
+  </header>
+
+  <h2>Locked decisions</h2>
+  <div class="cards">
+    <section class="card"><h3>Target</h3><p>AWS account <code>767688909304</code>, region <code>us-east-1</code>, local profile <code>default</code>.</p></section>
+    <section class="card"><h3>Delivery branch</h3><p>PRs targeting and commits pushed to <code>demo</code>. <code>main</code> never deploys this stack.</p></section>
+    <section class="card"><h3>Demo mode</h3><p>Angular adapters read seeded content. Database and SES integrations remain disabled extension points.</p></section>
+    <section class="card"><h3>Cost target</h3><p>A tag-filtered monthly AWS Budget of <code>$5</code>, notifying <code>derekd@wdwebsolutions.com</code>.</p></section>
+  </div>
+
+  <h2>Delivery path</h2>
+  <div class="flow" aria-label="Deployment flow">
+    <div class="node"><strong>PR or push</strong><br><code>demo</code></div><div class="arrow">→</div>
+    <div class="node"><strong>GitHub Actions</strong><br>test + build</div><div class="arrow">→</div>
+    <div class="node"><strong>AWS OIDC role</strong><br>temporary credentials</div><div class="arrow">→</div>
+    <div class="node"><strong>S3 + Lambda + CloudFront</strong><br>deploy + invalidate</div>
+  </div>
+
+  <h2>Shared DNS safety boundary</h2>
+  <div class="callout safe">
+    <h3>The parent hosted zone is never a managed resource in this stack.</h3>
+    <p>Pulumi will call <code>aws.route53.get_zone</code> as a read-only data lookup. The stack will not declare, import, adopt, protect, update, or delete an <code>aws.route53.Zone</code> for <code>wdwebsolutions.com</code>.</p>
+  </div>
+  <p>The stack must read the parent zone ID to create the demo's A and AAAA alias records. Those two records are owned by this stack and are removed by <code>pulumi destroy</code>. The shared parent zone and unrelated records are untouched.</p>
+  <table>
+    <thead><tr><th>Object</th><th>Relationship to demo stack</th><th>Destroy behavior</th></tr></thead>
+    <tbody>
+      <tr><td><code>wdwebsolutions.com</code> hosted zone</td><td>Read-only lookup</td><td>Cannot be deleted by this stack</td></tr>
+      <tr><td>Existing wildcard ACM certificate</td><td>Read-only lookup</td><td>Cannot be deleted by this stack</td></tr>
+      <tr><td>Demo A/AAAA records</td><td>Managed by this stack</td><td>Deleted with the demo stack</td></tr>
+      <tr><td>Demo S3, CloudFront, Lambda, API resources</td><td>Managed by this stack</td><td>Deleted with the demo stack</td></tr>
+    </tbody>
+  </table>
+  <p>Automated infrastructure tests will reject any accidental <code>route53.Zone</code> declaration, and every preview must pass the expected-account and hosted-zone containment checks.</p>
+
+  <h2>One-time setup</h2>
+
+  <section class="phase">
+    <span class="status">Phase 1</span>
+    <h3>Implement and verify application artifacts</h3>
+    <ol>
+      <li>Keep services, gallery, and resources/articles on their existing seeded frontend data.</li>
+      <li>Add dependency-injected demo and HTTP adapters for contact submission.</li>
+      <li>Add disabled database and SES configuration paths and tests.</li>
+      <li>Build and test everything locally.</li>
+    </ol>
+    <pre><code>python3 scripts/project.py setup
+python3 scripts/project.py test
+python3 scripts/project.py build</code></pre>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 2</span>
+    <h3>Initialize the operator-run Pulumi stack</h3>
+    <p>Pulumi Cloud stores both stacks. The shared foundation stack owns only account-global GitHub OIDC configuration; the disposable demo stack owns the application. Pulumi remains outside application CI/CD.</p>
+    <pre><code>cd infra/foundation
+pulumi stack init shared
+pulumi preview --diff --stack shared
+pulumi up --stack shared
+
+cd ..
+pulumi stack init demo
+pulumi preview --diff --stack demo
+pulumi up --stack demo</code></pre>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 3</span>
+    <h3>Review the first preview</h3>
+    <pre><code>python3 ../scripts/package_lambda.py
+pulumi preview --diff --stack demo</code></pre>
+    <p>The preview must show no hosted-zone creation, import, replacement, or deletion. It should show only the demo DNS records in the shared zone.</p>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 4</span>
+    <h3>Create the AWS resources</h3>
+    <pre><code>pulumi up --stack demo</code></pre>
+    <p>The shared stack creates the account-global GitHub OIDC provider. The demo stack creates the application, least-privilege deploy role, tagged resources, and budget. Pulumi exports the deployment identifiers:</p>
+    <ul>
+      <li><code>githubDeployRoleArn</code></li>
+      <li><code>frontendBucketName</code></li>
+      <li><code>cloudFrontDistributionId</code></li>
+      <li><code>lambdaFunctionName</code></li>
+      <li><code>demoUrl</code></li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 5</span>
+    <h3>Enable cost allocation and create the client budget</h3>
+    <p>Every taggable resource receives <code>client_name=austinsurfacepros</code>, <code>env=demo</code>, <code>demo=true</code>, and a unique <code>billing_scope=austinsurfacepros-demo</code>.</p>
+    <p>The $5 budget already exists and filters on <code>user:billing_scope$austinsurfacepros-demo</code>. AWS can take up to 24 hours to expose a new user-defined tag for activation and another 24 hours to activate it. Cost matching is therefore staged:</p>
+    <ol>
+      <li>The first app <code>pulumi up</code> created and tagged the resources and budget.</li>
+      <li>After <code>billing_scope</code> becomes available, set the foundation config flag and let Pulumi activate it.</li>
+      <li>The existing budget begins matching tagged costs after AWS reports the tag as active.</li>
+    </ol>
+    <pre><code>cd infra/foundation
+pulumi config set activateCostAllocationTags true
+pulumi up --stack shared</code></pre>
+    <p>The budget filters on <code>user:billing_scope$austinsurfacepros-demo</code>, has a monthly limit of $5, and emails the configured address at forecasted 80%, actual 80%, and actual 100% thresholds.</p>
+    <div class="callout"><p>AWS Budgets sends subscriber emails directly. SES verification is not involved in budget notifications; the existing SES identity remains useful for the future contact notifier.</p></div>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 6</span>
+    <h3>Use the GitHub <code>demo</code> environment</h3>
+    <p>The workflow references <code>environment: demo</code>, so GitHub creates the environment automatically on its first run. The six deployment identifiers are non-secret and are versioned in the workflow; no GitHub secret or long-lived AWS key is required.</p>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 7</span>
+    <h3>Create the deployment workflow and branch</h3>
+    <p>The trusted workflow uses two jobs. The validation/build job runs proposed PR code with only <code>contents: read</code>. The deployment job receives the tested artifacts and alone requests <code>id-token: write</code>. The AWS role can only write to the demo bucket, update the demo Lambda, and invalidate the demo CloudFront distribution.</p>
+    <pre><code>on:
+  push:
+    branches: [demo]
+  pull_request_target:
+    branches: [demo]
+
+concurrency:
+  group: austinsurfacepros-demo-deployment
+  cancel-in-progress: true</code></pre>
+    <p>Internal PRs may deploy to the shared preview. Fork PRs are excluded from publishing. Closing a PR restores the current <code>demo</code> branch deployment.</p>
+  </section>
+
+  <section class="phase">
+    <span class="status">Phase 8</span>
+    <h3>Exercise the complete path</h3>
+    <ol>
+      <li>Create <code>demo</code> from the reviewed baseline.</li>
+      <li>Open an internal test PR targeting <code>demo</code>.</li>
+      <li>Confirm build, test, OIDC assumption, S3 sync, Lambda update, invalidation, and smoke test.</li>
+      <li>Close the PR without merging and confirm the workflow restores the branch version.</li>
+      <li>Merge a second PR and confirm the <code>push</code> deployment is authoritative.</li>
+    </ol>
+  </section>
+
+  <h2>Teardown</h2>
+  <pre><code>cd infra
+pulumi destroy --stack demo</code></pre>
+  <p>The demo records and application resources are removed. The shared <code>wdwebsolutions.com</code> hosted zone and wildcard certificate remain untouched.</p>
+</main>
+</body>
+</html>

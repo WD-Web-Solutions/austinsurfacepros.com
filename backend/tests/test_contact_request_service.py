@@ -11,6 +11,14 @@ from austin_surface_pros_api.services.contact_requests import (
 from tests.conftest import InMemoryContactRequestRepository
 
 
+class RecordingContactRequestNotifier:
+    def __init__(self) -> None:
+        self.contact_requests = []
+
+    async def notify(self, contact_request) -> None:
+        self.contact_requests.append(contact_request)
+
+
 @pytest.mark.asyncio
 async def test_submit_builds_and_persists_contact_request(
     repository: InMemoryContactRequestRepository,
@@ -38,3 +46,24 @@ async def test_submit_builds_and_persists_contact_request(
     assert result.created_at == expected_time
     assert result.status is ContactRequestStatus.RECEIVED
     assert repository.contact_requests == [result]
+
+
+@pytest.mark.asyncio
+async def test_submit_notifies_after_persisting(
+    repository: InMemoryContactRequestRepository,
+) -> None:
+    notifier = RecordingContactRequestNotifier()
+    service = ContactRequestService(repository, notifier=notifier)
+
+    result = await service.submit(
+        SubmitContactRequest(
+            name="Taylor Client",
+            email_address="taylor@example.com",
+            company=None,
+            phone=None,
+            service="Asphalt Repair",
+            message="Please call me.",
+        )
+    )
+
+    assert notifier.contact_requests == [result]

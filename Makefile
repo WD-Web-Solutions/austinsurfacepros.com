@@ -1,4 +1,4 @@
-.PHONY: setup frontend-install backend-install infra-install test test-frontend test-backend test-infra build build-frontend package-backend frontend-dev backend-dev
+.PHONY: setup frontend-install backend-install infra-install test test-frontend test-backend test-infra build build-frontend build-demo-frontend package-backend frontend-dev backend-dev
 
 setup: frontend-install backend-install infra-install
 
@@ -28,6 +28,9 @@ build:
 
 build-frontend:
 	python3 scripts/project.py build-frontend
+
+build-demo-frontend:
+	python3 scripts/project.py build-demo-frontend
 
 package-backend:
 	python3 scripts/package_lambda.py

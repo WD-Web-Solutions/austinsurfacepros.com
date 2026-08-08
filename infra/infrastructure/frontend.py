@@ -9,22 +9,31 @@ from infrastructure.api import ApiOutputs
 @dataclass(frozen=True)
 class FrontendOutputs:
     bucket_name: pulumi.Output[str]
+    bucket_arn: pulumi.Output[str]
     distribution_id: pulumi.Output[str]
+    distribution_arn: pulumi.Output[str]
     distribution_domain_name: pulumi.Output[str]
 
 
 def create_frontend(
     name_prefix: str,
+    bucket_name: str,
     api: ApiOutputs,
     domain_name: str | None,
     hosted_zone_id: str | None,
     certificate_arn: str | None,
     protect_resources: bool,
     tags: dict[str, str],
+    provider: aws.Provider,
 ) -> FrontendOutputs:
-    protected_options = pulumi.ResourceOptions(protect=protect_resources)
-    bucket = aws.s3.BucketV2(
+    protected_options = pulumi.ResourceOptions(
+        provider=provider,
+        protect=protect_resources,
+    )
+    bucket = aws.s3.Bucket(
         f"{name_prefix}-frontend",
+        bucket=bucket_name,
+        force_destroy=not protect_resources,
         tags=tags,
         opts=protected_options,
     )
@@ -35,17 +44,19 @@ def create_frontend(
         block_public_policy=True,
         ignore_public_acls=True,
         restrict_public_buckets=True,
+        opts=pulumi.ResourceOptions(provider=provider),
     )
-    aws.s3.BucketServerSideEncryptionConfigurationV2(
+    aws.s3.BucketServerSideEncryptionConfiguration(
         f"{name_prefix}-frontend-encryption",
         bucket=bucket.id,
         rules=[
-            aws.s3.BucketServerSideEncryptionConfigurationV2RuleArgs(
-                apply_server_side_encryption_by_default=aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
+            aws.s3.BucketServerSideEncryptionConfigurationRuleArgs(
+                apply_server_side_encryption_by_default=aws.s3.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs(
                     sse_algorithm="AES256"
                 )
             )
         ],
+        opts=pulumi.ResourceOptions(provider=provider),
     )
 
     origin_access_control = aws.cloudfront.OriginAccessControl(
@@ -55,12 +66,14 @@ def create_frontend(
         origin_access_control_origin_type="s3",
         signing_behavior="always",
         signing_protocol="sigv4",
+        opts=pulumi.ResourceOptions(provider=provider),
     )
     spa_rewrite = aws.cloudfront.Function(
         f"{name_prefix}-spa-rewrite",
         name=f"{name_prefix}-spa-rewrite",
         runtime="cloudfront-js-2.0",
         publish=True,
+        tags=tags,
         code="""function handler(event) {
   var request = event.request;
   var lastSegment = request.uri.split('/').pop();
@@ -70,12 +83,18 @@ def create_frontend(
   return request;
 }
 """,
+        opts=pulumi.ResourceOptions(provider=provider),
     )
 
-    caching_optimized = aws.cloudfront.get_cache_policy(name="Managed-CachingOptimized")
-    caching_disabled = aws.cloudfront.get_cache_policy(name="Managed-CachingDisabled")
+    invoke_options = pulumi.InvokeOptions(provider=provider)
+    caching_optimized = aws.cloudfront.get_cache_policy(
+        name="Managed-CachingOptimized", opts=invoke_options
+    )
+    caching_disabled = aws.cloudfront.get_cache_policy(
+        name="Managed-CachingDisabled", opts=invoke_options
+    )
     all_viewer_except_host = aws.cloudfront.get_origin_request_policy(
-        name="Managed-AllViewerExceptHostHeader"
+        name="Managed-AllViewerExceptHostHeader", opts=invoke_options
     )
 
     aliases = [domain_name] if domain_name is not None else []
@@ -98,21 +117,33 @@ def create_frontend(
         price_class="PriceClass_100",
         origins=[
             aws.cloudfront.DistributionOriginArgs(
-                domain_name=bucket.bucket_regional_domain_name,
-                origin_id="frontend-s3",
-                origin_access_control_id=origin_access_control.id,
-                s3_origin_config=aws.cloudfront.DistributionOriginS3OriginConfigArgs(
-                    origin_access_identity=""
-                ),
-            ),
-            aws.cloudfront.DistributionOriginArgs(
                 domain_name=api.origin_domain_name,
                 origin_id="backend-api",
+                connection_attempts=3,
+                connection_timeout=10,
+                custom_headers=[],
+                origin_path="",
+                response_completion_timeout=0,
                 custom_origin_config=aws.cloudfront.DistributionOriginCustomOriginConfigArgs(
                     http_port=80,
                     https_port=443,
+                    origin_keepalive_timeout=5,
                     origin_protocol_policy="https-only",
+                    origin_read_timeout=30,
                     origin_ssl_protocols=["TLSv1.2"],
+                ),
+            ),
+            aws.cloudfront.DistributionOriginArgs(
+                domain_name=bucket.bucket_regional_domain_name,
+                origin_id="frontend-s3",
+                connection_attempts=3,
+                connection_timeout=10,
+                custom_headers=[],
+                origin_access_control_id=origin_access_control.id,
+                origin_path="",
+                response_completion_timeout=0,
+                s3_origin_config=aws.cloudfront.DistributionOriginS3OriginConfigArgs(
+                    origin_access_identity=""
                 ),
             ),
         ],
@@ -172,12 +203,14 @@ def create_frontend(
                     )
                 ],
             )
-        ]
+        ],
+        opts=pulumi.InvokeOptions(provider=provider),
     )
     aws.s3.BucketPolicy(
         f"{name_prefix}-frontend-policy",
         bucket=bucket.id,
         policy=bucket_policy.json,
+        opts=pulumi.ResourceOptions(provider=provider),
     )
 
     if domain_name is not None and hosted_zone_id is not None:
@@ -192,6 +225,7 @@ def create_frontend(
             name=domain_name,
             type="A",
             aliases=[alias],
+            opts=pulumi.ResourceOptions(provider=provider),
         )
         aws.route53.Record(
             f"{name_prefix}-frontend-aaaa",
@@ -199,10 +233,13 @@ def create_frontend(
             name=domain_name,
             type="AAAA",
             aliases=[alias],
+            opts=pulumi.ResourceOptions(provider=provider),
         )
 
     return FrontendOutputs(
         bucket_name=bucket.bucket,
+        bucket_arn=bucket.arn,
         distribution_id=distribution.id,
+        distribution_arn=distribution.arn,
         distribution_domain_name=distribution.domain_name,
     )
