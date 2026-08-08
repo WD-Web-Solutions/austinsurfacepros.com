@@ -34,11 +34,12 @@
 
   <main class="dl-stack">
     <!-- 01 -->
-    <article id="concept-1" class="dl-concept dl-concept--01" [class.dl-is-hidden]="!isVisible('hero')">
+    @if (isRendered(1, 'hero')) {
+    <article id="concept-1" class="dl-concept dl-concept--01">
       <header class="dl-concept__label"><span>01 / Hero</span><h2>Split Reveal Hero</h2><p>A tactile before-and-after opener</p></header>
       <div class="dl-reveal" style="--reveal: {{ revealPosition }}%">
-        <img src="/assets/images/design-lab/parking-aerial.jpg" alt="Worn commercial parking area from above">
-        <div class="dl-reveal__after"><img src="/assets/images/design-lab/parking-lines.jpg" alt="Freshly striped parking lot from above"></div>
+        <img loading="lazy" decoding="async" src="/assets/images/design-lab/parking-aerial.jpg" alt="Worn commercial parking area from above">
+        <div class="dl-reveal__after"><img loading="lazy" decoding="async" src="/assets/images/design-lab/parking-lines.jpg" alt="Freshly striped parking lot from above"></div>
         <div class="dl-reveal__content">
           <span class="dl-chip">Austin’s commercial surface team</span>
           <h3>From tired<br>to <em>traffic-ready.</em></h3>
@@ -51,9 +52,11 @@
         <b class="dl-reveal__tag dl-reveal__tag--after">After</b>
       </div>
     </article>
+    }
 
     <!-- 02 -->
-    <article id="concept-2" class="dl-concept dl-concept--02" [class.dl-is-hidden]="!isVisible('hero')">
+    @if (isRendered(2, 'hero')) {
+    <article id="concept-2" class="dl-concept dl-concept--02">
       <header class="dl-concept__label dl-concept__label--light"><span>02 / Hero</span><h2>Service Orbit Hero</h2><p>A playful, animated service universe</p></header>
       <div class="dl-orbit">
         <div class="dl-orbit__copy">
@@ -69,9 +72,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 03 -->
-    <article id="concept-3" class="dl-concept dl-concept--03" [class.dl-is-hidden]="!isVisible('hero')">
+    @if (isRendered(3, 'hero')) {
+    <article id="concept-3" class="dl-concept dl-concept--03">
       <header class="dl-concept__label"><span>03 / Hero</span><h2>Blueprint Hero</h2><p>Technical confidence with a field-plan aesthetic</p></header>
       <div class="dl-blueprint">
         <div class="dl-blueprint__coords">30.2672° N<br>97.7431° W</div>
@@ -90,12 +95,14 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 04 -->
-    <article id="concept-4" class="dl-concept dl-concept--04" [class.dl-is-hidden]="!isVisible('hero')">
+    @if (isRendered(4, 'hero')) {
+    <article id="concept-4" class="dl-concept dl-concept--04">
       <header class="dl-concept__label dl-concept__label--light"><span>04 / Hero</span><h2>Austin Night Hero</h2><p>Cinematic, local, and premium</p></header>
       <div class="dl-night">
-        <img src="/assets/images/design-lab/austin-river.jpg" alt="Austin skyline and river at dusk">
+        <img loading="lazy" decoding="async" src="/assets/images/design-lab/austin-river.jpg" alt="Austin skyline and river at dusk">
         <div class="dl-night__scrim"></div>
         <div class="dl-night__top"><span>AUSTIN SURFACE PROS</span><span>COMMERCIAL · MULTI-SITE · LOCAL</span></div>
         <div class="dl-night__copy">
@@ -105,9 +112,11 @@
         <a href="/contact" class="dl-night__cta"><small>START HERE</small><span>Request a night-work plan</span><b>↗</b></a>
       </div>
     </article>
+    }
 
     <!-- 05 -->
-    <article id="concept-5" class="dl-concept dl-concept--05" [class.dl-is-hidden]="!isVisible('hero')">
+    @if (isRendered(5, 'hero')) {
+    <article id="concept-5" class="dl-concept dl-concept--05">
       <header class="dl-concept__label"><span>05 / Hero</span><h2>Editorial Statement Hero</h2><p>Minimal type with an architectural crop</p></header>
       <div class="dl-editorial">
         <div class="dl-editorial__index">ASP<br><span>05—26</span></div>
@@ -118,30 +127,34 @@
           <a href="/services">See what we notice →</a>
         </div>
         <figure>
-          <img src="/assets/images/design-lab/commercial-building.jpg" alt="Modern commercial building exterior">
+          <img loading="lazy" decoding="async" src="/assets/images/design-lab/commercial-building.jpg" alt="Modern commercial building exterior">
           <figcaption>01 / EXTERIOR SYSTEMS</figcaption>
         </figure>
       </div>
     </article>
+    }
 
     <!-- 06 -->
-    <article id="concept-6" class="dl-concept dl-concept--06" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(6, 'services')) {
+    <article id="concept-6" class="dl-concept dl-concept--06">
       <header class="dl-concept__label"><span>06 / Services</span><h2>Service Bento</h2><p>An asymmetric service overview</p></header>
       <div class="dl-bento">
         <a href="/services/asphalt" class="dl-bento__tile dl-bento__tile--asphalt">
           <span>01</span><h3>Asphalt</h3><p>Repair, seal, and protect high-use pavement.</p><b>↗</b>
         </a>
         <a href="/services" class="dl-bento__tile dl-bento__tile--image">
-          <img src="/assets/images/design-lab/paving-machine.jpg" alt="Road roller laying asphalt"><span>Built to take the heat</span>
+          <img loading="lazy" decoding="async" src="/assets/images/design-lab/paving-machine.jpg" alt="Road roller laying asphalt"><span>Built to take the heat</span>
         </a>
         <a href="/services" class="dl-bento__tile dl-bento__tile--stripe"><span>02</span><h3>Striping</h3><div class="dl-bento__parking" aria-hidden="true"><i></i><i></i><i></i><i></i></div></a>
         <a href="/services" class="dl-bento__tile dl-bento__tile--wash"><span>03</span><h3>Pressure washing</h3><p>Reset entrances, sidewalks, and façades.</p><b>↗</b></a>
         <a href="/services" class="dl-bento__tile dl-bento__tile--coat"><span>04</span><h3>Coatings</h3><div><i></i><i></i><i></i></div></a>
       </div>
     </article>
+    }
 
     <!-- 07 -->
-    <article id="concept-7" class="dl-concept dl-concept--07" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(7, 'services')) {
+    <article id="concept-7" class="dl-concept dl-concept--07">
       <header class="dl-concept__label"><span>07 / Services</span><h2>Surface Selector</h2><p>Interactive service education without a wall of text</p></header>
       <div class="dl-selector">
         <div class="dl-selector__nav">
@@ -153,24 +166,26 @@
         <div class="dl-selector__panel">
           @switch (selectedService) {
             @case ('asphalt') {
-              <img src="/assets/images/design-lab/fresh-asphalt.jpg" alt="Fresh asphalt being rolled">
+              <img loading="lazy" decoding="async" src="/assets/images/design-lab/fresh-asphalt.jpg" alt="Fresh asphalt being rolled">
               <div><span>ASPHALT CARE</span><h3>Protect the asset beneath every arrival.</h3><p>Crack sealing, patching, sealcoating, and restriping planned as one lifecycle.</p><ul><li>2–4 year protection cycle</li><li>Night work available</li></ul></div>
             }
             @case ('concrete') {
-              <img src="/assets/images/design-lab/construction-site.jpg" alt="Concrete construction site">
+              <img loading="lazy" decoding="async" src="/assets/images/design-lab/construction-site.jpg" alt="Concrete construction site">
               <div><span>CONCRETE CARE</span><h3>Clean paths, safer edges, stronger first impressions.</h3><p>Repair trip hazards, tired curbs, and high-visibility walks with a coordinated plan.</p><ul><li>ADA-aware planning</li><li>Phased access</li></ul></div>
             }
             @default {
-              <img src="/assets/images/design-lab/aerial-property.jpg" alt="Clean commercial parking garage">
+              <img loading="lazy" decoding="async" src="/assets/images/design-lab/aerial-property.jpg" alt="Clean commercial parking garage">
               <div><span>GARAGE CARE</span><h3>Bright, navigable, and built for daily traffic.</h3><p>Deck cleaning, markings, directional systems, and safety color zones.</p><ul><li>Low-disruption scheduling</li><li>Wayfinding audits</li></ul></div>
             }
           }
         </div>
       </div>
     </article>
+    }
 
     <!-- 08 -->
-    <article id="concept-8" class="dl-concept dl-concept--08" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(8, 'services')) {
+    <article id="concept-8" class="dl-concept dl-concept--08">
       <header class="dl-concept__label dl-concept__label--light"><span>08 / Services</span><h2>Asphalt Anatomy</h2><p>A layered, educational service explainer</p></header>
       <div class="dl-anatomy">
         <div class="dl-anatomy__copy"><span>KNOW YOUR SURFACE</span><h3>A lot is only as strong as its layers.</h3><p>Hover each layer in a production version to understand what fails, why it fails, and what the right repair protects.</p><a href="/resources">Open the field guide →</a></div>
@@ -182,9 +197,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 09 -->
-    <article id="concept-9" class="dl-concept dl-concept--09" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(9, 'services')) {
+    <article id="concept-9" class="dl-concept dl-concept--09">
       <header class="dl-concept__label"><span>09 / Services</span><h2>Maintenance Timeline</h2><p>Lifecycle planning on a clean horizontal track</p></header>
       <div class="dl-lifecycle">
         <div class="dl-lifecycle__heading"><span>THE 10-YEAR VIEW</span><h3>Spend less by doing the right work <em>earlier.</em></h3></div>
@@ -198,9 +215,11 @@
         <div class="dl-lifecycle__saving"><span>PLANNED CARE</span><strong>up to 40% lower</strong><small>lifecycle cost vs. reactive repair*</small></div>
       </div>
     </article>
+    }
 
     <!-- 10 -->
-    <article id="concept-10" class="dl-concept dl-concept--10" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(10, 'services')) {
+    <article id="concept-10" class="dl-concept dl-concept--10">
       <header class="dl-concept__label"><span>10 / Services</span><h2>Service Marquee</h2><p>High-energy kinetic type for a category break</p></header>
       <div class="dl-marquee">
         <div class="dl-marquee__line"><span>ASPHALT • STRIPING • CONCRETE • COATINGS • </span><span aria-hidden="true">ASPHALT • STRIPING • CONCRETE • COATINGS • </span></div>
@@ -208,9 +227,11 @@
         <div class="dl-marquee__center"><span>ONE PARTNER</span><strong>↘</strong><span>EVERY SURFACE</span></div>
       </div>
     </article>
+    }
 
     <!-- 11 -->
-    <article id="concept-11" class="dl-concept dl-concept--11" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(11, 'services')) {
+    <article id="concept-11" class="dl-concept dl-concept--11">
       <header class="dl-concept__label"><span>11 / Services</span><h2>Finish Swatches</h2><p>A tactile palette for coatings and markings</p></header>
       <div class="dl-swatches">
         <div class="dl-swatches__copy"><span>SPECIFY THE FINISH</span><h3>Color that works<br>as hard as the surface.</h3><p>Explore functional color systems for safety, traffic, branding, and high-use zones.</p></div>
@@ -223,13 +244,15 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 12 -->
-    <article id="concept-12" class="dl-concept dl-concept--12" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(12, 'services')) {
+    <article id="concept-12" class="dl-concept dl-concept--12">
       <header class="dl-concept__label dl-concept__label--light"><span>12 / Services</span><h2>Equipment Specification</h2><p>Industrial editorial product story</p></header>
       <div class="dl-spec">
         <div class="dl-spec__title"><span>FLEET / 07</span><h3>Pressure,<br>precisely applied.</h3></div>
-        <div class="dl-spec__image"><img src="/assets/images/design-lab/surface-cleaning.jpg" alt="Surface pressure washing in progress"><i></i><b>03</b></div>
+        <div class="dl-spec__image"><img loading="lazy" decoding="async" src="/assets/images/design-lab/surface-cleaning.jpg" alt="Surface pressure washing in progress"><i></i><b>03</b></div>
         <dl>
           <div><dt>Temperature</dt><dd>Up to 200°F</dd></div>
           <div><dt>Recovery</dt><dd>Wastewater ready</dd></div>
@@ -238,9 +261,11 @@
         </dl>
       </div>
     </article>
+    }
 
     <!-- 13 -->
-    <article id="concept-13" class="dl-concept dl-concept--13" [class.dl-is-hidden]="!isVisible('services')">
+    @if (isRendered(13, 'services')) {
+    <article id="concept-13" class="dl-concept dl-concept--13">
       <header class="dl-concept__label"><span>13 / Services</span><h2>Contract Plans</h2><p>A friendly service-plan comparison</p></header>
       <div class="dl-plans">
         <div class="dl-plans__intro"><span>CARE PLANS</span><h3>Choose the level of<br><em>hands-off.</em></h3><p>Every plan starts with a site assessment. The difference is how far ahead you want us to think.</p></div>
@@ -249,9 +274,11 @@
         <div class="dl-plan"><span>PORTFOLIO</span><h4>Standardize</h4><strong>Multi-site</strong><ul><li>One point of contact</li><li>Site-level reporting</li><li>Volume scheduling</li></ul><button type="button">Explore</button></div>
       </div>
     </article>
+    }
 
     <!-- 14 -->
-    <article id="concept-14" class="dl-concept dl-concept--14" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(14, 'proof')) {
+    <article id="concept-14" class="dl-concept dl-concept--14">
       <header class="dl-concept__label"><span>14 / Proof</span><h2>Metric Ribbon</h2><p>Trust signals without generic stat cards</p></header>
       <div class="dl-ribbon">
         <div><span>01</span><strong>500<sup>+</sup></strong><p>projects delivered<br>across Central Texas</p></div>
@@ -260,33 +287,39 @@
         <div><span>04</span><strong>1<sup>team</sup></strong><p>from first walk-through<br>to final inspection</p></div>
       </div>
     </article>
+    }
 
     <!-- 15 -->
-    <article id="concept-15" class="dl-concept dl-concept--15" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(15, 'proof')) {
+    <article id="concept-15" class="dl-concept dl-concept--15">
       <header class="dl-concept__label"><span>15 / Proof</span><h2>Case Study Spread</h2><p>A magazine-like project result</p></header>
       <div class="dl-case">
-        <figure><img src="/assets/images/design-lab/parking-structure.jpg" alt="Large organized commercial parking lot"><figcaption><span>ROUND ROCK / TX</span><span>SPRING 2026</span></figcaption></figure>
+        <figure><img loading="lazy" decoding="async" src="/assets/images/design-lab/parking-structure.jpg" alt="Large organized commercial parking lot"><figcaption><span>ROUND ROCK / TX</span><span>SPRING 2026</span></figcaption></figure>
         <div class="dl-case__copy"><span>CASE STUDY 08</span><h3>1,200 spaces.<br><em>Zero closure days.</em></h3><blockquote>“The phasing plan was as valuable as the finished lot.”</blockquote><p>A six-phase refresh kept entrances, loading, and tenant parking operational throughout the project.</p><a href="/gallery">Read the project <b>↗</b></a></div>
         <div class="dl-case__results"><div><b>06</b><span>work phases</span></div><div><b>09</b><span>night shifts</span></div><div><b>100%</b><span>access maintained</span></div></div>
       </div>
     </article>
+    }
 
     <!-- 16 -->
-    <article id="concept-16" class="dl-concept dl-concept--16" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(16, 'proof')) {
+    <article id="concept-16" class="dl-concept dl-concept--16">
       <header class="dl-concept__label dl-concept__label--light"><span>16 / Proof</span><h2>Testimonial Filmstrip</h2><p>Human proof with motion and texture</p></header>
       <div class="dl-film">
         <div class="dl-film__perfs" aria-hidden="true">@for (hole of [1,2,3,4,5,6,7,8,9,10]; track hole) { <i></i> }</div>
         <div class="dl-film__frames">
-          <figure><img src="/assets/images/design-lab/hardhat-detail.jpg" alt="Contractor wearing a safety helmet"><figcaption>FIELD NOTES / 01</figcaption></figure>
+          <figure><img loading="lazy" decoding="async" src="/assets/images/design-lab/hardhat-detail.jpg" alt="Contractor wearing a safety helmet"><figcaption>FIELD NOTES / 01</figcaption></figure>
           <blockquote><span>★★★★★</span>“They saw the traffic problem before we did—and solved it in the scope.”<cite>Monica R. · Regional facilities director</cite></blockquote>
-          <figure><img src="/assets/images/design-lab/worksite-team.jpg" alt="Commercial worksite team"><figcaption>FIELD NOTES / 02</figcaption></figure>
+          <figure><img loading="lazy" decoding="async" src="/assets/images/design-lab/worksite-team.jpg" alt="Commercial worksite team"><figcaption>FIELD NOTES / 02</figcaption></figure>
         </div>
         <div class="dl-film__perfs" aria-hidden="true">@for (hole of [1,2,3,4,5,6,7,8,9,10]; track hole) { <i></i> }</div>
       </div>
     </article>
+    }
 
     <!-- 17 -->
-    <article id="concept-17" class="dl-concept dl-concept--17" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(17, 'proof')) {
+    <article id="concept-17" class="dl-concept dl-concept--17">
       <header class="dl-concept__label"><span>17 / Proof</span><h2>Warranty Seal</h2><p>A focused reassurance moment</p></header>
       <div class="dl-guarantee">
         <div class="dl-guarantee__seal"><svg viewBox="0 0 180 180" aria-hidden="true"><defs><path id="sealpath" d="M90,90 m-63,0 a63,63 0 1,1 126,0 a63,63 0 1,1 -126,0"/></defs><text><textPath href="#sealpath">AUSTIN SURFACE PROS • DONE RIGHT PROMISE • </textPath></text><path d="M62 90l18 18 39-43"/></svg></div>
@@ -294,9 +327,11 @@
         <a href="/about">Read our standard →</a>
       </div>
     </article>
+    }
 
     <!-- 18 -->
-    <article id="concept-18" class="dl-concept dl-concept--18" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(18, 'proof')) {
+    <article id="concept-18" class="dl-concept dl-concept--18">
       <header class="dl-concept__label"><span>18 / Proof</span><h2>Safety Checklist</h2><p>Operational rigor in a field-document layout</p></header>
       <div class="dl-safety">
         <div class="dl-safety__head"><div><span>PRE-WORK / SITE SAFETY</span><h3>Clear site. Clear plan.</h3></div><b>FORM<br>ASP-06</b></div>
@@ -309,19 +344,23 @@
         <div class="dl-safety__footer"><span>PROJECT LEAD / M. TORRES</span><span>STATUS / 3 OF 4 CLEARED</span></div>
       </div>
     </article>
+    }
 
     <!-- 19 -->
-    <article id="concept-19" class="dl-concept dl-concept--19" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(19, 'proof')) {
+    <article id="concept-19" class="dl-concept dl-concept--19">
       <header class="dl-concept__label"><span>19 / Proof</span><h2>Crew Profile</h2><p>Make the field team feel expert and approachable</p></header>
       <div class="dl-crew">
-        <div class="dl-crew__portrait"><img src="/assets/images/design-lab/surface-worker.jpg" alt="Experienced commercial construction field worker"><span>FIELD LEAD / 08 YRS</span></div>
+        <div class="dl-crew__portrait"><img loading="lazy" decoding="async" src="/assets/images/design-lab/surface-worker.jpg" alt="Experienced commercial construction field worker"><span>FIELD LEAD / 08 YRS</span></div>
         <div class="dl-crew__bio"><span>MEET YOUR PROJECT LEAD</span><h3>Mateo knows<br>where projects get stuck.</h3><p>He has coordinated live-site surface work for retail, office, and multifamily properties throughout Central Texas.</p><blockquote>“The best jobsite is the one tenants barely notice.”</blockquote></div>
         <dl><div><dt>Specialty</dt><dd>Live-site phasing</dd></div><div><dt>Languages</dt><dd>English / Spanish</dd></div><div><dt>Perfect day</dt><dd>72° and overcast</dd></div></dl>
       </div>
     </article>
+    }
 
     <!-- 20 -->
-    <article id="concept-20" class="dl-concept dl-concept--20" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(20, 'proof')) {
+    <article id="concept-20" class="dl-concept dl-concept--20">
       <header class="dl-concept__label"><span>20 / Proof</span><h2>Partner Rail</h2><p>A restrained credibility marquee without fake logos</p></header>
       <div class="dl-partners">
         <p>Trusted across the properties Austin uses every day.</p>
@@ -331,9 +370,11 @@
         <small>PROPERTY TYPES SERVED / CENTRAL TEXAS</small>
       </div>
     </article>
+    }
 
     <!-- 21 -->
-    <article id="concept-21" class="dl-concept dl-concept--21" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(21, 'proof')) {
+    <article id="concept-21" class="dl-concept dl-concept--21">
       <header class="dl-concept__label"><span>21 / Proof</span><h2>Impact Report</h2><p>Sustainability framed as practical operations</p></header>
       <div class="dl-impact">
         <div class="dl-impact__headline"><span>2026 IMPACT SNAPSHOT</span><h3>Good maintenance<br><em>keeps material in service.</em></h3></div>
@@ -344,9 +385,11 @@
         <div class="dl-impact__foot"><div><b>12.4M</b><span>sq. ft. maintained</span></div><div><b>31%</b><span>average lifecycle extension*</span></div><small>*Illustrative concept data</small></div>
       </div>
     </article>
+    }
 
     <!-- 22 -->
-    <article id="concept-22" class="dl-concept dl-concept--22" [class.dl-is-hidden]="!isVisible('proof')">
+    @if (isRendered(22, 'proof')) {
+    <article id="concept-22" class="dl-concept dl-concept--22">
       <header class="dl-concept__label"><span>22 / Proof</span><h2>Neighborhood Proof</h2><p>Local credibility shown as dispatch cards</p></header>
       <div class="dl-local">
         <div class="dl-local__intro"><span>RECENTLY IN YOUR AREA</span><h3>Central Texas is<br>our home surface.</h3><p>Tap a market to see recent work, common property needs, and current crew coverage.</p></div>
@@ -358,9 +401,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 23 -->
-    <article id="concept-23" class="dl-concept dl-concept--23" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(23, 'tools')) {
+    <article id="concept-23" class="dl-concept dl-concept--23">
       <header class="dl-concept__label"><span>23 / Tool</span><h2>Instant Estimate</h2><p>A useful pricing-range interaction</p></header>
       <div class="dl-estimator">
         <div class="dl-estimator__controls">
@@ -376,9 +421,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 24 -->
-    <article id="concept-24" class="dl-concept dl-concept--24" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(24, 'tools')) {
+    <article id="concept-24" class="dl-concept dl-concept--24">
       <header class="dl-concept__label dl-concept__label--light"><span>24 / Tool</span><h2>Problem Diagnoser</h2><p>A visual choose-your-symptom utility</p></header>
       <div class="dl-diagnose">
         <div class="dl-diagnose__question"><span>SURFACE CHECK / 01</span><h3>What are you seeing?</h3><div>
@@ -394,9 +441,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 25 -->
-    <article id="concept-25" class="dl-concept dl-concept--25" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(25, 'tools')) {
+    <article id="concept-25" class="dl-concept dl-concept--25">
       <header class="dl-concept__label"><span>25 / Tool</span><h2>ROI Calculator</h2><p>Turn preventive maintenance into a business case</p></header>
       <div class="dl-roi">
         <div class="dl-roi__formula"><span>THE PREVENTION CASE</span><h3>Small work now.<br>Fewer capital surprises later.</h3><div><label>Property size<strong>{{ formatNumber(squareFeet) }} sq ft</strong></label><label>Planned care cycle<strong>Every 3 years</strong></label></div></div>
@@ -408,9 +457,11 @@
         <div class="dl-roi__save"><small>POTENTIAL ANNUALIZED SAVINGS</small><strong>${{ formatNumber(annualSavings) }}</strong><a href="/contact">Build my real plan →</a></div>
       </div>
     </article>
+    }
 
     <!-- 26 -->
-    <article id="concept-26" class="dl-concept dl-concept--26" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(26, 'tools')) {
+    <article id="concept-26" class="dl-concept dl-concept--26">
       <header class="dl-concept__label"><span>26 / Tool</span><h2>Maintenance Calendar</h2><p>A seasonal planning component</p></header>
       <div class="dl-calendar">
         <div class="dl-calendar__head"><span>BEST TIME TO BOOK</span><h3>Plan around heat,<br>rain, and traffic.</h3><p>Select a season to see the smartest work to schedule.</p></div>
@@ -422,9 +473,11 @@
         <div class="dl-calendar__note"><span>{{ selectedMonth >= 2 && selectedMonth <= 4 ? 'SPRING WINDOW' : selectedMonth >= 8 && selectedMonth <= 10 ? 'FALL WINDOW' : 'CONDITIONAL WINDOW' }}</span><strong>{{ selectedMonth >= 2 && selectedMonth <= 4 ? 'Ideal for assessment + striping' : selectedMonth >= 8 && selectedMonth <= 10 ? 'Prime sealcoating conditions' : 'Schedule with a weather hold' }}</strong><small>Current planning signal / Austin climate</small></div>
       </div>
     </article>
+    }
 
     <!-- 27 -->
-    <article id="concept-27" class="dl-concept dl-concept--27" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(27, 'tools')) {
+    <article id="concept-27" class="dl-concept dl-concept--27">
       <header class="dl-concept__label dl-concept__label--light"><span>27 / Tool</span><h2>Weather Window</h2><p>A compact operational forecast</p></header>
       <div class="dl-weather">
         <div class="dl-weather__today"><span>AUSTIN / WORKABILITY</span><strong>86°</strong><p>Clear · low wind</p><div><i></i><b>GOOD</b> for striping after 8 PM</div></div>
@@ -438,9 +491,11 @@
         <p class="dl-weather__disclaimer">Live production tool concept · actual scheduling requires field confirmation.</p>
       </div>
     </article>
+    }
 
     <!-- 28 -->
-    <article id="concept-28" class="dl-concept dl-concept--28" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(28, 'tools')) {
+    <article id="concept-28" class="dl-concept dl-concept--28">
       <header class="dl-concept__label"><span>28 / Tool</span><h2>Project Readiness</h2><p>A gamified pre-project checklist</p></header>
       <div class="dl-ready">
         <div class="dl-ready__score"><svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="58"/><circle class="meter" cx="70" cy="70" r="58" pathLength="100"/></svg><strong>75<small>%</small></strong><span>READY TO SCOPE</span></div>
@@ -448,9 +503,11 @@
         <button type="button">Finish my brief <span>→</span></button>
       </div>
     </article>
+    }
 
     <!-- 29 -->
-    <article id="concept-29" class="dl-concept dl-concept--29" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(29, 'tools')) {
+    <article id="concept-29" class="dl-concept dl-concept--29">
       <header class="dl-concept__label"><span>29 / Tool</span><h2>Quote Receipt</h2><p>Transparent scope shown like a refined receipt</p></header>
       <div class="dl-receipt">
         <div class="dl-receipt__paper">
@@ -463,9 +520,11 @@
         <div class="dl-receipt__aside"><span>CLARITY BUILDS CONFIDENCE</span><h3>No mystery line items.</h3><p>Each proposal connects cost to quantity, condition, and a clear outcome.</p><button type="button">What goes into a quote? <b>↗</b></button></div>
       </div>
     </article>
+    }
 
     <!-- 30 -->
-    <article id="concept-30" class="dl-concept dl-concept--30" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(30, 'tools')) {
+    <article id="concept-30" class="dl-concept dl-concept--30">
       <header class="dl-concept__label dl-concept__label--light"><span>30 / Tool</span><h2>Property Dashboard</h2><p>A client portal snapshot</p></header>
       <div class="dl-dashboard">
         <aside><strong>ASP<span>+</span></strong><nav><button type="button" class="is-active">Overview</button><button type="button">Properties</button><button type="button">Projects</button><button type="button">Documents</button></nav><small>HILL COUNTRY PM<br>8 PROPERTIES</small></aside>
@@ -476,9 +535,11 @@
         </section>
       </div>
     </article>
+    }
 
     <!-- 31 -->
-    <article id="concept-31" class="dl-concept dl-concept--31" [class.dl-is-hidden]="!isVisible('tools')">
+    @if (isRendered(31, 'tools')) {
+    <article id="concept-31" class="dl-concept dl-concept--31">
       <header class="dl-concept__label"><span>31 / Tool</span><h2>Parking Optimizer</h2><p>A visual layout and capacity concept</p></header>
       <div class="dl-optimizer">
         <div class="dl-optimizer__copy"><span>LAYOUT STUDY / CONCEPT</span><h3>Could your lot<br>work harder?</h3><p>A striping review can improve circulation, safety, and usable capacity before adding pavement.</p><div><strong>+8</strong><span>potential spaces</span></div><button type="button">Request a layout review →</button></div>
@@ -489,21 +550,25 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 32 -->
-    <article id="concept-32" class="dl-concept dl-concept--32" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(32, 'content')) {
+    <article id="concept-32" class="dl-concept dl-concept--32">
       <header class="dl-concept__label"><span>32 / Content</span><h2>Project Gallery</h2><p>An art-directed, varied image wall</p></header>
       <div class="dl-gallery">
         <div class="dl-gallery__intro"><span>SELECTED WORK / 2026</span><h3>Built around<br>the way people move.</h3><a href="/gallery">View every project ↗</a></div>
-        <figure class="dl-gallery__a"><img src="/assets/images/design-lab/parking-aerial.jpg" alt="Parking lot from above"><figcaption>DECK / DOWNTOWN</figcaption></figure>
-        <figure class="dl-gallery__b"><img src="/assets/images/design-lab/paving-machine.jpg" alt="Paving machine on fresh asphalt"><figcaption>PAVE / CEDAR PARK</figcaption></figure>
-        <figure class="dl-gallery__c"><img src="/assets/images/design-lab/aerial-property.jpg" alt="Commercial parking garage"><figcaption>WAYFINDING / NORTH AUSTIN</figcaption></figure>
-        <figure class="dl-gallery__d"><img src="/assets/images/design-lab/pressure-washing.jpg" alt="Commercial glass cleaning"><figcaption>CLEAN / CENTRAL</figcaption></figure>
+        <figure class="dl-gallery__a"><img loading="lazy" decoding="async" src="/assets/images/design-lab/parking-aerial.jpg" alt="Parking lot from above"><figcaption>DECK / DOWNTOWN</figcaption></figure>
+        <figure class="dl-gallery__b"><img loading="lazy" decoding="async" src="/assets/images/design-lab/paving-machine.jpg" alt="Paving machine on fresh asphalt"><figcaption>PAVE / CEDAR PARK</figcaption></figure>
+        <figure class="dl-gallery__c"><img loading="lazy" decoding="async" src="/assets/images/design-lab/aerial-property.jpg" alt="Commercial parking garage"><figcaption>WAYFINDING / NORTH AUSTIN</figcaption></figure>
+        <figure class="dl-gallery__d"><img loading="lazy" decoding="async" src="/assets/images/design-lab/pressure-washing.jpg" alt="Commercial glass cleaning"><figcaption>CLEAN / CENTRAL</figcaption></figure>
       </div>
     </article>
+    }
 
     <!-- 33 -->
-    <article id="concept-33" class="dl-concept dl-concept--33" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(33, 'content')) {
+    <article id="concept-33" class="dl-concept dl-concept--33">
       <header class="dl-concept__label"><span>33 / Content</span><h2>FAQ Ledger</h2><p>Dense information made calm and scannable</p></header>
       <div class="dl-faq">
         <div class="dl-faq__intro"><span>GOOD QUESTIONS</span><h3>Before the crew arrives.</h3><p>The practical answers property teams need to coordinate a smooth project.</p></div>
@@ -519,19 +584,23 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 34 -->
-    <article id="concept-34" class="dl-concept dl-concept--34" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(34, 'content')) {
+    <article id="concept-34" class="dl-concept dl-concept--34">
       <header class="dl-concept__label"><span>34 / Content</span><h2>Resource Magazine</h2><p>An editorial content hub, not a generic blog grid</p></header>
       <div class="dl-magazine">
         <div class="dl-magazine__mast"><span>THE FIELD NOTE</span><small>ISSUE 06 · SUMMER 2026</small></div>
-        <article class="dl-magazine__lead"><img src="/assets/images/design-lab/fresh-asphalt.jpg" alt="Asphalt roller at work"><div><span>THE COVER STORY</span><h3>The true cost of waiting one more summer.</h3><p>A practical guide to reading oxidation, cracking, and the point where preventive care stops being enough.</p><a href="/resources">Read 8 min →</a></div></article>
+        <article class="dl-magazine__lead"><img loading="lazy" decoding="async" src="/assets/images/design-lab/fresh-asphalt.jpg" alt="Asphalt roller at work"><div><span>THE COVER STORY</span><h3>The true cost of waiting one more summer.</h3><p>A practical guide to reading oxidation, cracking, and the point where preventive care stops being enough.</p><a href="/resources">Read 8 min →</a></div></article>
         <div class="dl-magazine__briefs"><article><span>03 MIN</span><h4>Five photos that make a remote quote better</h4><a href="/resources">↗</a></article><article><span>06 MIN</span><h4>How to notify tenants without creating confusion</h4><a href="/resources">↗</a></article><article><span>04 MIN</span><h4>Striping codes: what property teams should know</h4><a href="/resources">↗</a></article></div>
       </div>
     </article>
+    }
 
     <!-- 35 -->
-    <article id="concept-35" class="dl-concept dl-concept--35" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(35, 'content')) {
+    <article id="concept-35" class="dl-concept dl-concept--35">
       <header class="dl-concept__label"><span>35 / Content</span><h2>Material Comparison</h2><p>A side-by-side decision matrix</p></header>
       <div class="dl-compare">
         <div class="dl-compare__intro"><span>CHOOSE WITH CONTEXT</span><h3>Repair, seal,<br>or replace?</h3><p>The right answer depends on condition—not just age.</p></div>
@@ -544,9 +613,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 36 -->
-    <article id="concept-36" class="dl-concept dl-concept--36" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(36, 'content')) {
+    <article id="concept-36" class="dl-concept dl-concept--36">
       <header class="dl-concept__label dl-concept__label--light"><span>36 / Content</span><h2>Process Roadmap</h2><p>A route-map metaphor for project delivery</p></header>
       <div class="dl-roadmap">
         <div class="dl-roadmap__copy"><span>FROM WALK TO WARRANTY</span><h3>A clear route<br>through every project.</h3><p>You always know what is decided, what happens next, and who owns it.</p></div>
@@ -556,9 +627,11 @@
         </div>
       </div>
     </article>
+    }
 
     <!-- 37 -->
-    <article id="concept-37" class="dl-concept dl-concept--37" [class.dl-is-hidden]="!isVisible('content')">
+    @if (isRendered(37, 'content')) {
+    <article id="concept-37" class="dl-concept dl-concept--37">
       <header class="dl-concept__label"><span>37 / Content</span><h2>Service Area Map</h2><p>A custom local coverage visual</p></header>
       <div class="dl-map">
         <div class="dl-map__visual">
@@ -569,9 +642,11 @@
         <div class="dl-map__copy"><span>BASED IN AUSTIN / BUILT FOR CENTRAL TEXAS</span><h3>Local enough<br>to show up fast.</h3><p>Core coverage within 35 miles of Austin, with portfolio service available across the region.</p><label><span>Check your ZIP</span><input aria-label="ZIP code" inputmode="numeric" placeholder="787__"><button type="button">→</button></label><small>Typical site-visit response: 1–2 business days</small></div>
       </div>
     </article>
+    }
 
     <!-- 38 -->
-    <article id="concept-38" class="dl-concept dl-concept--38" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(38, 'cta')) {
+    <article id="concept-38" class="dl-concept dl-concept--38">
       <header class="dl-concept__label"><span>38 / CTA</span><h2>Emergency Alert</h2><p>A high-clarity urgent repair banner</p></header>
       <div class="dl-alert">
         <div class="dl-alert__signal"><i></i><span>URGENT SURFACE ISSUE?</span></div>
@@ -580,9 +655,11 @@
         <button type="button">Text a photo <span>→</span></button>
       </div>
     </article>
+    }
 
     <!-- 39 -->
-    <article id="concept-39" class="dl-concept dl-concept--39" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(39, 'cta')) {
+    <article id="concept-39" class="dl-concept dl-concept--39">
       <header class="dl-concept__label"><span>39 / CTA</span><h2>Schedule Strip</h2><p>A slim availability cue that creates momentum</p></header>
       <div class="dl-slots">
         <div class="dl-slots__copy"><span>NEXT SITE-WALK WINDOWS</span><h3>See it together.<br>Scope it right.</h3></div>
@@ -590,21 +667,25 @@
         <a href="/contact">Find a time <span>→</span></a>
       </div>
     </article>
+    }
 
     <!-- 40 -->
-    <article id="concept-40" class="dl-concept dl-concept--40" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(40, 'cta')) {
+    <article id="concept-40" class="dl-concept dl-concept--40">
       <header class="dl-concept__label"><span>40 / CTA</span><h2>Floating Action Dock</h2><p>A desktop contact utility with personality</p></header>
       <div class="dl-dock-stage">
-        <img src="/assets/images/design-lab/austin-city.jpg" alt="Austin skyline and river">
+        <img loading="lazy" decoding="async" src="/assets/images/design-lab/austin-city.jpg" alt="Austin skyline and river">
         <div class="dl-dock-stage__copy"><span>ALWAYS WITHIN REACH</span><h3>A contact dock that stays useful without shouting.</h3></div>
         <div class="dl-dock">
           <a href="tel:+15125550147"><i>☎</i><span>Call</span></a><a href="/contact"><i>✎</i><span>Quote</span></a><button type="button"><i>⌁</i><span>Chat</span></button><a href="/gallery"><i>▦</i><span>Work</span></a>
         </div>
       </div>
     </article>
+    }
 
     <!-- 41 -->
-    <article id="concept-41" class="dl-concept dl-concept--41" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(41, 'contact')) {
+    <article id="concept-41" class="dl-concept dl-concept--41">
       <header class="dl-concept__label"><span>41 / Contact form 01</span><h2>Guided Estimate Form</h2><p>One calm decision at a time</p></header>
       <form class="dl-stepform" (submit)="$event.preventDefault()" novalidate>
         <div class="dl-stepform__rail">
@@ -621,12 +702,14 @@
           @if (estimateStep === 3) { <h3>When would you like<br>work completed?</h3><div class="dl-stepform__choices dl-stepform__choices--timing"><button type="button" (click)="estimateStep = 4"><span>As soon as practical</span></button><button type="button" (click)="estimateStep = 4"><span>Within 1–3 months</span></button><button type="button" (click)="estimateStep = 4"><span>Planning ahead</span></button></div> }
           @if (estimateStep === 4) { <h3>Where should we send<br>your next steps?</h3><div class="dl-stepform__fields"><label>Name<input type="text" placeholder="Your name"></label><label>Work email<input type="email" placeholder="you@company.com"></label></div><button class="dl-stepform__next" type="submit">Send my project brief →</button> }
         </div>
-        <aside><img src="/assets/images/design-lab/parking-aerial.jpg" alt="Commercial parking surface"><div><span>WHAT HAPPENS NEXT</span><p>A local project lead reviews your details and reaches out within one business day.</p></div></aside>
+        <aside><img loading="lazy" decoding="async" src="/assets/images/design-lab/parking-aerial.jpg" alt="Commercial parking surface"><div><span>WHAT HAPPENS NEXT</span><p>A local project lead reviews your details and reaches out within one business day.</p></div></aside>
       </form>
     </article>
+    }
 
     <!-- 42 -->
-    <article id="concept-42" class="dl-concept dl-concept--42" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(42, 'contact')) {
+    <article id="concept-42" class="dl-concept dl-concept--42">
       <header class="dl-concept__label dl-concept__label--light"><span>42 / Contact form 02</span><h2>Concierge Contact Form</h2><p>Premium, human, and reassuring</p></header>
       <div class="dl-concierge">
         <div class="dl-concierge__copy">
@@ -642,9 +725,11 @@
         </form>
       </div>
     </article>
+    }
 
     <!-- 43 -->
-    <article id="concept-43" class="dl-concept dl-concept--43" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(43, 'contact')) {
+    <article id="concept-43" class="dl-concept dl-concept--43">
       <header class="dl-concept__label"><span>43 / Contact form 03</span><h2>Conversational Form</h2><p>A friendly fill-in-the-sentence approach</p></header>
       <form class="dl-conversation" (submit)="$event.preventDefault()" novalidate>
         <span>QUICK HELLO / NO PERFECT DETAILS REQUIRED</span>
@@ -658,9 +743,11 @@
         <div class="dl-conversation__end"><label>Reach me at <input aria-label="Email" type="email" placeholder="name@company.com"></label><button type="submit">That’s it—send <span>→</span></button></div>
       </form>
     </article>
+    }
 
     <!-- 44 -->
-    <article id="concept-44" class="dl-concept dl-concept--44" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(44, 'contact')) {
+    <article id="concept-44" class="dl-concept dl-concept--44">
       <header class="dl-concept__label"><span>44 / Contact form 04</span><h2>Local Map Form</h2><p>Lead with place and service-area confidence</p></header>
       <div class="dl-mapform">
         <div class="dl-mapform__map">
@@ -673,9 +760,11 @@
         </form>
       </div>
     </article>
+    }
 
     <!-- 45 -->
-    <article id="concept-45" class="dl-concept dl-concept--45" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(45, 'contact')) {
+    <article id="concept-45" class="dl-concept dl-concept--45">
       <header class="dl-concept__label"><span>45 / Contact form 05</span><h2>Callback Card</h2><p>A tiny, low-friction conversion point</p></header>
       <div class="dl-callback">
         <div class="dl-callback__signal"><span></span><b>LOCAL TEAM ONLINE</b></div>
@@ -688,12 +777,14 @@
         <small>MON–FRI · 7:30 AM–5:30 PM CT</small>
       </div>
     </article>
+    }
 
     <!-- 46 -->
-    <article id="concept-46" class="dl-concept dl-concept--46" [class.dl-is-hidden]="!isVisible('contact')">
+    @if (isRendered(46, 'contact')) {
+    <article id="concept-46" class="dl-concept dl-concept--46">
       <header class="dl-concept__label dl-concept__label--light"><span>46 / Contact form 06</span><h2>Photo Quote Form</h2><p>An image-forward form designed for field reality</p></header>
       <div class="dl-photoform">
-        <div class="dl-photoform__visual"><img src="/assets/images/design-lab/construction-crew.jpg" alt="Field crew planning a project"><div><span>THE FASTEST WAY TO START</span><h3>Show us the surface.</h3><p>Wide shots, close-ups, and one photo showing access are usually enough for a useful first conversation.</p></div></div>
+        <div class="dl-photoform__visual"><img loading="lazy" decoding="async" src="/assets/images/design-lab/construction-crew.jpg" alt="Field crew planning a project"><div><span>THE FASTEST WAY TO START</span><h3>Show us the surface.</h3><p>Wide shots, close-ups, and one photo showing access are usually enough for a useful first conversation.</p></div></div>
         <form (submit)="$event.preventDefault()" novalidate>
           <div class="dl-photoform__drop"><input aria-label="Upload surface photos" type="file" multiple accept="image/*"><i>＋</i><strong>Drop surface photos here</strong><span>or tap to choose · JPG, PNG, HEIC</span></div>
           <div><label>Property address<input type="text" placeholder="Where is the project?"></label><label>Email<input type="email" placeholder="Where should we reply?"></label></div>
@@ -703,9 +794,11 @@
         </form>
       </div>
     </article>
+    }
 
     <!-- 47 -->
-    <article id="concept-47" class="dl-concept dl-concept--47" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(47, 'cta')) {
+    <article id="concept-47" class="dl-concept dl-concept--47">
       <header class="dl-concept__label"><span>47 / CTA</span><h2>Jumbo Quote Footer</h2><p>A confident, unmistakable closing ask</p></header>
       <div class="dl-jumbo">
         <div class="dl-jumbo__top"><span>READY WHEN YOU ARE</span><span>AUSTIN, TEXAS / 30.2672° N</span></div>
@@ -714,46 +807,74 @@
         <div class="dl-jumbo__bottom"><span>ASPHALT · STRIPING · CONCRETE · COATINGS · CLEANING</span><small>© AUSTIN SURFACE PROS</small></div>
       </div>
     </article>
+    }
 
     <!-- 48 -->
-    <article id="concept-48" class="dl-concept dl-concept--48" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(48, 'cta')) {
+    <article id="concept-48" class="dl-concept dl-concept--48">
       <header class="dl-concept__label"><span>48 / CTA</span><h2>Availability Card</h2><p>A conversion card that feels operational, not promotional</p></header>
       <div class="dl-availability">
-        <div class="dl-availability__image"><img src="/assets/images/design-lab/worksite-team.jpg" alt="Commercial surface project team"><span>LIVE SCHEDULING SIGNAL</span></div>
+        <div class="dl-availability__image"><img loading="lazy" decoding="async" src="/assets/images/design-lab/worksite-team.jpg" alt="Commercial surface project team"><span>LIVE SCHEDULING SIGNAL</span></div>
         <div class="dl-availability__copy"><div class="dl-availability__status"><i></i><span>AUGUST CREW CAPACITY</span><b>LIMITED</b></div><h3>Two night-work windows<br>are still open.</h3><p>Best fit: striping, small asphalt repairs, and surface cleaning under 40,000 sq. ft.</p><div><a href="/contact">Check project fit →</a><small>Updated weekly<br>Not a guarantee of availability</small></div></div>
       </div>
     </article>
+    }
 
     <!-- 49 -->
-    <article id="concept-49" class="dl-concept dl-concept--49" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(49, 'cta')) {
+    <article id="concept-49" class="dl-concept dl-concept--49">
       <header class="dl-concept__label"><span>49 / CTA</span><h2>Mobile Sticky CTA</h2><p>A responsive action bar shown in context</p></header>
       <div class="dl-mobile">
         <div class="dl-mobile__phone">
           <div class="dl-mobile__browser"><i></i><span>austinsurfacepros.com</span></div>
-          <img src="/assets/images/design-lab/paving-machine.jpg" alt="Paving roller">
+          <img loading="lazy" decoding="async" src="/assets/images/design-lab/paving-machine.jpg" alt="Paving roller">
           <div class="dl-mobile__body"><span>ASPHALT SERVICES</span><h3>Repair today.<br>Protect tomorrow.</h3><p>Strategic repairs and maintenance for active commercial properties.</p><div><b>Crack seal</b><b>Patching</b><b>Sealcoat</b></div></div>
           <div class="dl-mobile__bar"><a href="tel:+15125550147"><i>☎</i><span>Call</span></a><a href="/contact"><span>Request estimate</span><b>→</b></a></div>
         </div>
         <div class="dl-mobile__notes"><span>MOBILE CONVERSION PATTERN</span><h3>The next step stays<br>within thumb’s reach.</h3><ul><li>Appears after meaningful scroll</li><li>Preserves direct-call option</li><li>Respects device safe areas</li></ul></div>
       </div>
     </article>
+    }
 
     <!-- 50 -->
-    <article id="concept-50" class="dl-concept dl-concept--50" [class.dl-is-hidden]="!isVisible('cta')">
+    @if (isRendered(50, 'cta')) {
+    <article id="concept-50" class="dl-concept dl-concept--50">
       <header class="dl-concept__label"><span>50 / CTA</span><h2>Mood Switcher</h2><p>One message, three possible visual directions</p></header>
       <div class="dl-moods" [attr.data-mood]="mood">
         <nav aria-label="Choose visual mood"><span>TRY A DIRECTION</span><button type="button" [class.is-active]="mood === 'precision'" (click)="mood = 'precision'">01 Precision</button><button type="button" [class.is-active]="mood === 'warm'" (click)="mood = 'warm'">02 Warm local</button><button type="button" [class.is-active]="mood === 'bold'" (click)="mood = 'bold'">03 High impact</button></nav>
         <div class="dl-moods__stage">
-          <div class="dl-moods__art"><img src="/assets/images/design-lab/austin-skyline.jpg" alt="Austin skyline in daylight"><i></i></div>
+          <div class="dl-moods__art"><img loading="lazy" decoding="async" src="/assets/images/design-lab/austin-skyline.jpg" alt="Austin skyline in daylight"><i></i></div>
           <div class="dl-moods__copy"><span>AUSTIN SURFACE PROS</span><h3>Take care of<br>the ground<br><em>you’ve gained.</em></h3><p>Commercial surface care planned around your property, people, and priorities.</p><a href="/contact">Start a conversation <b>↗</b></a></div>
         </div>
       </div>
     </article>
+    }
   </main>
 
+  <nav class="dl-pagination" aria-label="Design lab pages">
+    <p>
+      <span>Showing</span>
+      <strong>{{ visibleRangeStart }}–{{ visibleRangeEnd }}</strong>
+      <span>of {{ filteredConcepts.length }} concepts</span>
+    </p>
+    <div>
+      <button type="button" (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" aria-label="Previous page">←</button>
+      @for (page of pageNumbers; track page) {
+        <button
+          type="button"
+          (click)="setPage(page)"
+          [class.is-active]="page === currentPage"
+          [attr.aria-current]="page === currentPage ? 'page' : null"
+          [attr.aria-label]="'Page ' + page"
+        >{{ page.toString().padStart(2, '0') }}</button>
+      }
+      <button type="button" (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" aria-label="Next page">→</button>
+    </div>
+  </nav>
+
   <footer class="dl-pagefoot">
-    <span>END OF STUDIES</span>
-    <strong>50 / 50</strong>
+    <span>PAGE {{ currentPage }} OF {{ totalPages }}</span>
+    <strong>{{ visibleRangeEnd }} / {{ filteredConcepts.length }}</strong>
     <button type="button" (click)="jumpTo(1)">Back to the top ↑</button>
   </footer>
 </div>

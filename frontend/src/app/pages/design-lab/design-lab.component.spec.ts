@@ -9,14 +9,16 @@ describe('DesignLabComponent', () => {
     }).compileComponents();
   });
 
-  it('renders all 50 numbered concepts, including six contact-form studies', () => {
+  it('renders only the first ten concepts on the initial page', () => {
     const fixture = TestBed.createComponent(DesignLabComponent);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelectorAll('.dl-concept')).toHaveLength(50);
-    expect(element.querySelectorAll('form')).toHaveLength(6);
+    expect(element.querySelectorAll('.dl-concept')).toHaveLength(10);
+    expect(element.querySelector('#concept-1')).not.toBeNull();
+    expect(element.querySelector('#concept-10')).not.toBeNull();
+    expect(element.querySelector('#concept-11')).toBeNull();
   });
 
   it('filters the gallery by concept family', () => {
@@ -27,7 +29,7 @@ describe('DesignLabComponent', () => {
     fixture.detectChanges();
 
     const visibleConcepts = [
-      ...fixture.nativeElement.querySelectorAll('.dl-concept:not(.dl-is-hidden)')
+      ...fixture.nativeElement.querySelectorAll('.dl-concept')
     ] as HTMLElement[];
 
     expect(visibleConcepts).toHaveLength(6);
@@ -39,6 +41,22 @@ describe('DesignLabComponent', () => {
       'concept-45',
       'concept-46'
     ]);
+    expect(fixture.nativeElement.querySelectorAll('form')).toHaveLength(6);
+  });
+
+  it('paginates all concepts ten at a time', () => {
+    const fixture = TestBed.createComponent(DesignLabComponent);
+    const component = fixture.componentInstance;
+
+    component.setPage(3);
+    fixture.detectChanges();
+
+    const concepts = [...fixture.nativeElement.querySelectorAll('.dl-concept')] as HTMLElement[];
+
+    expect(component.totalPages).toBe(5);
+    expect(concepts).toHaveLength(10);
+    expect(concepts[0]?.id).toBe('concept-21');
+    expect(concepts[9]?.id).toBe('concept-30');
   });
 
   it('marks the private page as noindex and nofollow', () => {
