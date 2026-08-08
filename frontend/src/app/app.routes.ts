@@ -99,6 +99,14 @@ export const routes: Routes = [
 
       },
       {
+        path: 'design-lab',
+
+        loadComponent: () =>
+          import('./pages/design-lab/design-lab.component')
+            .then(m => m.DesignLabComponent)
+
+      },
+      {
         path: '**',
         loadComponent: () =>
         import('./pages/not-found/not-found.component')

@@ -29,7 +29,9 @@ export class SeoService {
 
     title: string,
 
-    description: string
+    description: string,
+
+    robots: string = 'index, follow'
 
   ): void {
 
@@ -63,6 +65,16 @@ export class SeoService {
       property: 'og:description',
 
       content: description
+
+    });
+
+
+
+    this.meta.updateTag({
+
+      name: 'robots',
+
+      content: robots
 
     });
 
