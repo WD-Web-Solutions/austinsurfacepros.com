@@ -89,6 +89,8 @@ export class DesignLabComponent {
     { id: 50, title: 'Mood Switcher', category: 'cta' }
   ];
 
+  readonly pageSize = 10;
+
   activeCategory: LabCategory = 'all';
   revealPosition = 58;
   selectedService = 'asphalt';
@@ -99,6 +101,7 @@ export class DesignLabComponent {
   callbackTime = 'Morning';
   mood: 'precision' | 'warm' | 'bold' = 'precision';
   estimateStep = 1;
+  currentPage = 1;
 
   constructor() {
     this.seoService.updatePage(
@@ -108,16 +111,76 @@ export class DesignLabComponent {
     );
   }
 
-  isVisible(category: Exclude<LabCategory, 'all'>): boolean {
-    return this.activeCategory === 'all' || this.activeCategory === category;
+  get filteredConcepts(): readonly LabJumpLink[] {
+    if (this.activeCategory === 'all') {
+      return this.concepts;
+    }
+
+    return this.concepts.filter(concept => concept.category === this.activeCategory);
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredConcepts.length / this.pageSize));
+  }
+
+  get pageNumbers(): readonly number[] {
+    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+  }
+
+  get visibleRangeStart(): number {
+    return this.filteredConcepts.length === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get visibleRangeEnd(): number {
+    return Math.min(this.currentPage * this.pageSize, this.filteredConcepts.length);
+  }
+
+  isRendered(id: number, category: Exclude<LabCategory, 'all'>): boolean {
+    if (this.activeCategory !== 'all' && this.activeCategory !== category) {
+      return false;
+    }
+
+    const index = this.filteredConcepts.findIndex(concept => concept.id === id);
+    return index >= (this.currentPage - 1) * this.pageSize && index < this.currentPage * this.pageSize;
   }
 
   setCategory(category: LabCategory): void {
     this.activeCategory = category;
+    this.currentPage = 1;
+  }
+
+  setPage(page: number): void {
+    const nextPage = Math.min(Math.max(page, 1), this.totalPages);
+    if (nextPage === this.currentPage) {
+      return;
+    }
+
+    this.currentPage = nextPage;
+    const gallery = document.querySelector<HTMLElement>('.dl-stack');
+    if (typeof gallery?.scrollIntoView === 'function') {
+      gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   jumpTo(id: number): void {
-    document.getElementById(`concept-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = this.concepts.find(concept => concept.id === id);
+    if (!target) {
+      return;
+    }
+
+    if (this.activeCategory !== 'all' && this.activeCategory !== target.category) {
+      this.activeCategory = 'all';
+    }
+
+    const index = this.filteredConcepts.findIndex(concept => concept.id === id);
+    this.currentPage = Math.floor(index / this.pageSize) + 1;
+
+    setTimeout(() => {
+      const concept = document.getElementById(`concept-${id}`);
+      if (typeof concept?.scrollIntoView === 'function') {
+        concept.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
   setReveal(event: Event): void {
