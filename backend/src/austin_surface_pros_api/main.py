@@ -1,6 +1,7 @@
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,6 +26,11 @@ from austin_surface_pros_api.core.config import Settings
 from austin_surface_pros_api.core.logging import configure_logging
 from austin_surface_pros_api.db.database import Database
 from austin_surface_pros_api.domain.storage import FileStorage
+from austin_surface_pros_api.notifications.contact_requests import (
+    ContactRequestNotifier,
+    NoOpContactRequestNotifier,
+    SesContactRequestNotifier,
+)
 from austin_surface_pros_api.services.admin import AdminService
 from austin_surface_pros_api.services.auth import AuthService
 from austin_surface_pros_api.services.blog import BlogService
@@ -37,6 +43,20 @@ BlogServiceProvider = Callable[[], BlogService]
 FileStorageProvider = Callable[[], FileStorage]
 
 
+def create_contact_request_notifier(settings: Settings) -> ContactRequestNotifier:
+    if not settings.enable_ses:
+        return NoOpContactRequestNotifier()
+
+    import boto3
+
+    client: Any = boto3.client("sesv2", region_name=settings.ses_region)
+    return SesContactRequestNotifier(
+        client=client,
+        source_email=settings.ses_source_email or "",
+        recipient_emails=tuple(settings.ses_recipient_emails),
+    )
+
+
 def create_app(
     settings: Settings | None = None,
     contact_service_provider: ContactServiceProvider | None = None,
@@ -47,7 +67,10 @@ def create_app(
 ) -> FastAPI:
     resolved_settings = settings or Settings()
     configure_logging(resolved_settings.log_level)
-    database = Database(resolved_settings.database_url)
+    database = Database(
+        resolved_settings.database_url if resolved_settings.enable_database else None
+    )
+    contact_request_notifier = create_contact_request_notifier(resolved_settings)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -61,6 +84,7 @@ def create_app(
     )
     application.state.database = database
     application.state.settings = resolved_settings
+    application.state.contact_request_notifier = contact_request_notifier
 
     if resolved_settings.cors_origins:
         application.add_middleware(

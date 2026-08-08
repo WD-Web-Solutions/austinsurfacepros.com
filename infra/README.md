@@ -1,44 +1,66 @@
 # Infrastructure
 
-Config-driven Pulumi for the AWS serverless platform. Pulumi is intentionally
-used for initial infrastructure setup and operator-driven changes, not as an
-application deployment step inside CI/CD.
+Config-driven Pulumi for the Austin Surface Pros AWS demo. Pulumi is used for
+operator-run infrastructure setup and changes; GitHub Actions deploys only
+application artifacts.
 
-## Resources
+## Stacks
 
-- private S3 bucket for the Angular build
-- CloudFront distribution with Origin Access Control and SPA routing
-- API Gateway HTTP API
-- Python 3.14 Lambda running FastAPI through Mangum
-- CloudWatch logs with retention
-- optional Route 53 aliases and ACM certificate
+`foundation/shared` owns account-global resources:
 
-The database provider is deliberately deferred. A secret `databaseUrl` setting
-can connect the Lambda to any PostgreSQL-compatible provider after that decision
-is made. Aurora or private-network PostgreSQL will also require a VPC component.
+- GitHub Actions OIDC provider
+- optional activation of the `billing_scope` cost-allocation tag
 
-## Safety guard
+`austinsurfacepros-infra/demo` owns disposable demo resources:
 
-Every stack requires `expectedAccountId`. Evaluation stops if AWS STS reports a
-different account. When a custom domain is configured, the Route 53 hosted zone
-is also checked against the requested domain. Never remove these checks to make
-a preview pass.
+- private S3 frontend bucket and CloudFront distribution
+- API Gateway HTTP API and Python Lambda
+- Route 53 `A` and `AAAA` records for the demo host
+- repository-scoped, least-privilege GitHub deployment role
+- tag-filtered USD 5 monthly AWS Budget and email notifications
 
-## Configure a stack
+The app stack reads the existing `wdwebsolutions.com` hosted zone and wildcard
+ACM certificate. It never manages the hosted zone. A stack transformation
+rejects any attempt to add an `aws.route53.Zone` resource.
+
+Database persistence and SES notifications are implemented but disabled in the
+demo stack. The Angular demo adapter keeps contact submissions in the browser
+only. Enabling either backend integration requires an explicit Pulumi config
+change and the corresponding provider configuration.
+
+## Safety controls
+
+- `expectedAccountId` must match STS.
+- The configured `verificationDomain` must exist in the foundation account.
+- The demo hostname must be inside the read-only hosted zone.
+- The ACM certificate is looked up in `us-east-1` and must cover the hostname.
+- Every supported resource is tagged with `client_name`, `env`, and `demo`.
+- The GitHub role can update only this stack's S3 objects, Lambda code, and
+  CloudFront invalidations. It cannot change Pulumi, IAM, Route 53, ACM, or API
+  Gateway resources.
+
+## Operator workflow
+
+Use the values in `foundation/Pulumi.shared.example.yaml` and
+`Pulumi.demo.example.yaml`. Build `../backend/dist/lambda.zip` before previewing
+the app stack.
 
 ```bash
-uv sync
-pulumi stack init dev
-pulumi config set aws:region us-east-1
-pulumi config set expectedAccountId 123456789012
-pulumi config set domainName austinsurfacepros.com
-pulumi config set hostedZoneId Z0123456789EXAMPLE
-pulumi config set certificateArn <us-east-1-certificate-arn>
-pulumi config set --secret databaseUrl <postgresql-sqlalchemy-url>
+cd infra/foundation
+pulumi stack init shared
+pulumi preview --diff
+pulumi up
+
+cd ..
+pulumi stack init demo
+pulumi preview --diff
+pulumi up
 ```
 
-Build `../backend/dist/lambda.zip` before previewing. Do not preview or deploy
-until the account ID, hosted zone, and domain are confirmed to belong together.
+After AWS exposes the `billing_scope` tag to Cost Explorer (which may take up to
+24 hours), set `wdwebsolutions-aws-foundation:activateCostAllocationTags` to
+`true` and update the foundation stack. The demo budget is created immediately;
+its tag filter begins matching costs after tag activation propagates.
 
 ## Validate locally
 

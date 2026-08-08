@@ -15,6 +15,11 @@ uv run uvicorn austin_surface_pros_api.main:app --reload
 The API is available at <http://localhost:8000/api>. The health endpoint does
 not connect to PostgreSQL, so health checks do not wake a paused database.
 
+Database persistence and SES contact notifications are independently gated by
+`ASP_ENABLE_DATABASE` and `ASP_ENABLE_SES`. Both are `false` in the demo stack.
+Their dependent settings are validated only when the corresponding integration
+is enabled.
+
 ## Tests and quality checks
 
 ```bash

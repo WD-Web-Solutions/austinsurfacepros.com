@@ -1,0 +1,175 @@
+name: Deploy demo
+
+on:
+  push:
+    branches:
+      - demo
+  # pull_request_target keeps the workflow definition anchored to the trusted
+  # demo branch. Proposed code is built without any OIDC permission below.
+  pull_request_target:
+    branches:
+      - demo
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+
+concurrency:
+  group: austinsurfacepros-demo-deployment
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ROLE_ARN: arn:aws:iam::767688909304:role/asp-demo-github-deploy
+  FRONTEND_BUCKET: asp-demo-frontend-767688909304
+  CLOUDFRONT_DISTRIBUTION_ID: E2SWL02VV5EUW1
+  LAMBDA_FUNCTION_NAME: asp-demo-api
+  DEMO_URL: https://austinsurfaceprosdemo.wdwebsolutions.com
+
+jobs:
+  validate-build:
+    name: Validate and build
+    # Fork pull requests never publish to the shared client demo.
+    if: >-
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out the demo branch
+        if: github.event_name == 'push' || github.event.action == 'closed'
+        uses: actions/checkout@v6
+        with:
+          ref: demo
+          persist-credentials: false
+
+      - name: Check out the proposed change
+        if: github.event_name == 'pull_request_target' && github.event.action != 'closed'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Python and uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          python-version: "3.14"
+          enable-cache: true
+          cache-dependency-glob: |
+            backend/uv.lock
+            infra/uv.lock
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Test frontend
+        working-directory: frontend
+        run: npm test -- --watch=false
+
+      - name: Build demo frontend
+        working-directory: frontend
+        run: npm run build:demo
+
+      - name: Validate backend
+        working-directory: backend
+        run: |
+          uv sync --frozen
+          uv run pytest
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Validate infrastructure code
+        working-directory: infra
+        run: |
+          uv sync --frozen
+          uv run pytest
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Package Lambda
+        run: python scripts/package_lambda.py
+
+      - name: Upload tested deployment artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: demo-deployment
+          path: |
+            frontend/dist/austinsurfacepros/browser
+            backend/dist/lambda.zip
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    name: Deploy tested artifacts
+    needs: validate-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: demo
+      url: https://austinsurfaceprosdemo.wdwebsolutions.com
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Download tested deployment artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: demo-deployment
+          path: deployment
+
+      - name: Assume the demo deployment role
+        uses: aws-actions/configure-aws-credentials@v6.2.3
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: asp-demo-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name "${LAMBDA_FUNCTION_NAME}" \
+            --zip-file fileb://deployment/backend/dist/lambda.zip \
+            --no-cli-pager
+          aws lambda wait function-updated \
+            --function-name "${LAMBDA_FUNCTION_NAME}"
+
+      - name: Deploy frontend to S3
+        run: >-
+          aws s3 sync deployment/frontend/dist/austinsurfacepros/browser
+          "s3://${FRONTEND_BUCKET}"
+          --delete
+
+      - name: Invalidate CloudFront
+        shell: bash
+        run: |
+          invalidation_id="$(aws cloudfront create-invalidation \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --paths '/*' \
+            --query 'Invalidation.Id' \
+            --output text)"
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --id "${invalidation_id}"
+
+      - name: Smoke-test demo
+        run: |
+          curl --fail --silent --show-error \
+            --retry 30 --retry-delay 10 --retry-all-errors \
+            "${DEMO_URL}/"
+          curl --fail --silent --show-error \
+            --retry 30 --retry-delay 10 --retry-all-errors \
+            "${DEMO_URL}/api/health"

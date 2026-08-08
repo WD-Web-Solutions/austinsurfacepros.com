@@ -1,0 +1,6 @@
+name: wdwebsolutions-aws-foundation
+description: Shared AWS foundations used by WD Web Solutions GitHub deployments
+runtime:
+  name: python
+  options:
+    virtualenv: ../.venv

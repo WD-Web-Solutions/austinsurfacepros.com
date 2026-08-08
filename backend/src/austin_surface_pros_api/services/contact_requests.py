@@ -10,6 +10,10 @@ from austin_surface_pros_api.domain.contacts import (
     ContactRequestRepository,
     ContactRequestStatus,
 )
+from austin_surface_pros_api.notifications.contact_requests import (
+    ContactRequestNotifier,
+    NoOpContactRequestNotifier,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,10 +30,12 @@ class ContactRequestService:
     def __init__(
         self,
         repository: ContactRequestRepository,
+        notifier: ContactRequestNotifier | None = None,
         id_factory: Callable[[], UUID] = uuid4,
         clock: Callable[[], datetime] = lambda: datetime.now(UTC),
     ) -> None:
         self._repository = repository
+        self._notifier = notifier or NoOpContactRequestNotifier()
         self._id_factory = id_factory
         self._clock = clock
 
@@ -47,4 +53,10 @@ class ContactRequestService:
         )
         saved_request = await self._repository.add(contact_request)
         logger.bind(contact_request_id=str(saved_request.id)).info("Contact request received")
+        try:
+            await self._notifier.notify(saved_request)
+        except Exception:
+            logger.bind(contact_request_id=str(saved_request.id)).exception(
+                "Contact request notification failed"
+            )
         return saved_request

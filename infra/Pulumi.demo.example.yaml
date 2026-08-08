@@ -1,0 +1,23 @@
+config:
+  aws:region: us-east-1
+  aws:profile: default
+  austinsurfacepros-infra:environment: demo
+  austinsurfacepros-infra:clientName: austinsurfacepros
+  austinsurfacepros-infra:expectedAccountId: "767688909304"
+  austinsurfacepros-infra:rootDomain: wdwebsolutions.com
+  austinsurfacepros-infra:domainName: austinsurfaceprosdemo.wdwebsolutions.com
+  austinsurfacepros-infra:certificateDomain: wdwebsolutions.com
+  austinsurfacepros-infra:lambdaArchivePath: ../backend/dist/lambda.zip
+  austinsurfacepros-infra:databaseProvider: deferred
+  austinsurfacepros-infra:enableDatabase: false
+  austinsurfacepros-infra:enableSes: false
+  austinsurfacepros-infra:protectResources: false
+  austinsurfacepros-infra:logRetentionDays: 7
+  austinsurfacepros-infra:githubRepository: WD-Web-Solutions/austinsurfacepros.com
+  austinsurfacepros-infra:githubOwnerId: "78939019"
+  austinsurfacepros-infra:githubRepositoryId: "1322502457"
+  austinsurfacepros-infra:githubEnvironment: demo
+  austinsurfacepros-infra:githubOidcStackReference: derek-dreibrodt/wdwebsolutions-aws-foundation/shared
+  austinsurfacepros-infra:budgetAmount: "5"
+  austinsurfacepros-infra:budgetEmail: derekd@wdwebsolutions.com
+  austinsurfacepros-infra:createBudget: true

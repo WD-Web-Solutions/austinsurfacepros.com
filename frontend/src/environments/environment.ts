@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   demo: true,
+  demoMode: false,
   blog: {
     useLocalRepository: true,
     seedOnFirstRun: true,
@@ -10,4 +11,4 @@ export const environment = {
     localModelPath: '/assets/models/',
     embeddingDtype: 'q8' as const
   }
-};
+} as const;

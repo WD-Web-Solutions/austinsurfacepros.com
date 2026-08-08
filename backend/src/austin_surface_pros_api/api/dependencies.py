@@ -20,6 +20,7 @@ from austin_surface_pros_api.db.repositories import (
     SqlAlchemyUserRepository,
 )
 from austin_surface_pros_api.domain.users import AuthenticatedUser, UserRole
+from austin_surface_pros_api.notifications.contact_requests import ContactRequestNotifier
 from austin_surface_pros_api.services.admin import AdminService
 from austin_surface_pros_api.services.auth import AuthService
 from austin_surface_pros_api.services.blog import BlogService
@@ -59,6 +60,10 @@ def get_settings(request: Request) -> Settings:
     return request.app.state.settings
 
 
+def get_contact_request_notifier(request: Request) -> ContactRequestNotifier:
+    return request.app.state.contact_request_notifier
+
+
 async def get_session(
     database: Annotated[Database, Depends(get_database)],
 ) -> AsyncIterator[AsyncSession]:
@@ -74,9 +79,10 @@ async def get_session(
 
 def get_contact_request_service(
     session: Annotated[AsyncSession, Depends(get_session)],
+    notifier: Annotated[ContactRequestNotifier, Depends(get_contact_request_notifier)],
 ) -> ContactRequestService:
     repository = SqlAlchemyContactRequestRepository(session)
-    return ContactRequestService(repository)
+    return ContactRequestService(repository, notifier=notifier)
 
 
 def get_user_repository(

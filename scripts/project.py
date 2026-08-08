@@ -51,6 +51,9 @@ class ProjectTasks:
                 Command(("uv", "run", "ruff", "format", "--check", "."), infra),
             ),
             "build-frontend": (Command(("npm", "run", "build"), frontend),),
+            "build-demo-frontend": (
+                Command(("npm", "run", "build:demo"), frontend),
+            ),
             "package-backend": (
                 Command((python, "scripts/package_lambda.py"), self.repository_root),
             ),
@@ -98,6 +101,7 @@ def main() -> None:
             "test-infra",
             "build",
             "build-frontend",
+            "build-demo-frontend",
             "package-backend",
             "frontend-dev",
             "backend-dev",
