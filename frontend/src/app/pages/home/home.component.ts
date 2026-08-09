@@ -8,6 +8,8 @@ import { SERVICES } from '../../core/data/services.data';
 
 import { SeoService } from '../../core/services/seo.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -20,7 +22,9 @@ import { SeoService } from '../../core/services/seo.service';
 
     RouterLink,
 
-    UiCardComponent
+    UiCardComponent,
+
+    HeroVideoComponent
 
   ],
 

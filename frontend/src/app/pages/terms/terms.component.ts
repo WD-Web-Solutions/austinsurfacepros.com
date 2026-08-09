@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
 
 @Component({
   selector: 'app-terms',
-  imports: [],
+  imports: [HeroVideoComponent],
   templateUrl: './terms.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './terms.component.css'

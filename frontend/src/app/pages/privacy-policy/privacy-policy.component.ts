@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
 
 @Component({
   selector: 'app-privacy-policy',
-  imports: [],
+  imports: [HeroVideoComponent],
   templateUrl: './privacy-policy.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './privacy-policy.component.css'

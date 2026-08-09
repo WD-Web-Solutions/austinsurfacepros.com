@@ -17,6 +17,8 @@ import {
   ContactFormPayload
 } from './contact.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -26,7 +28,8 @@ import {
   standalone: true,
 
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeroVideoComponent
 ],
 
   templateUrl:

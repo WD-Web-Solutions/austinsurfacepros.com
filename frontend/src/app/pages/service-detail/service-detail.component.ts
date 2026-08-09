@@ -10,6 +10,8 @@ import { Service } from '../../core/models/service.model';
 
 import { SeoService } from '../../core/services/seo.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -20,7 +22,9 @@ import { SeoService } from '../../core/services/seo.service';
 
   imports: [
 
-    RouterLink
+    RouterLink,
+
+    HeroVideoComponent
 
   ],
 
