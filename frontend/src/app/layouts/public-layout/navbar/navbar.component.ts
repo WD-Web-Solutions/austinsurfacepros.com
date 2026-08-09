@@ -25,7 +25,7 @@ import {
 
     './navbar.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './navbar.component.css'

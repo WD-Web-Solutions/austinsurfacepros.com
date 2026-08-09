@@ -5,7 +5,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
   selector: 'app-privacy-policy',
   imports: [HeroVideoComponent],
   templateUrl: './privacy-policy.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './privacy-policy.component.css'
 })
 export class PrivacyPolicyComponent {

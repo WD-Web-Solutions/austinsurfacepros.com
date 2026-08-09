@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
   templateUrl:
     './footer.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './footer.component.css'
 

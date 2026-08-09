@@ -32,7 +32,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
 
     './home.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './home.component.css'

@@ -5,7 +5,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
   selector: 'app-terms',
   imports: [HeroVideoComponent],
   templateUrl: './terms.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './terms.component.css'
 })
 export class TermsComponent {

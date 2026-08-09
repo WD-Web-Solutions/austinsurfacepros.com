@@ -26,7 +26,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
 
     './about.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './about.component.css'
