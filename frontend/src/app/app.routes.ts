@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 
 export const routes: Routes = [
@@ -71,11 +72,99 @@ export const routes: Routes = [
 
 
       {
+        path: 'blog',
+
+        loadComponent: () =>
+          import('./pages/blog/blog.component')
+            .then(m => m.BlogComponent)
+
+      },
+
+
+      {
+        path: 'blog/:slug',
+
+        loadComponent: () =>
+          import('./pages/blog/blog-post-detail/blog-post-detail.component')
+            .then(m => m.BlogPostDetailComponent)
+
+      },
+
+
+      {
         path: 'contact',
 
         loadComponent: () =>
           import('./pages/contact/contact.component')
             .then(m => m.ContactComponent)
+
+      },
+
+
+      {
+        path: 'login',
+
+        loadComponent: () =>
+          import('./pages/login/login.component')
+            .then(m => m.LoginComponent)
+
+      },
+
+
+      {
+        path: 'register',
+
+        loadComponent: () =>
+          import('./pages/register/register.component')
+            .then(m => m.RegisterComponent)
+
+      },
+
+
+      {
+        path: 'admin',
+
+        canActivate: [adminGuard],
+
+        loadComponent: () =>
+          import('./pages/admin/admin.component')
+            .then(m => m.AdminComponent)
+
+      },
+
+
+      {
+        path: 'admin/blog',
+
+        canActivate: [adminGuard],
+
+        loadComponent: () =>
+          import('./pages/admin-blog/admin-blog.component')
+            .then(m => m.AdminBlogComponent)
+
+      },
+
+
+      {
+        path: 'admin/blog/new',
+
+        canActivate: [adminGuard],
+
+        loadComponent: () =>
+          import('./pages/admin-blog/post-editor/post-editor.component')
+            .then(m => m.PostEditorComponent)
+
+      },
+
+
+      {
+        path: 'admin/blog/:slug/edit',
+
+        canActivate: [adminGuard],
+
+        loadComponent: () =>
+          import('./pages/admin-blog/post-editor/post-editor.component')
+            .then(m => m.PostEditorComponent)
 
       },
 

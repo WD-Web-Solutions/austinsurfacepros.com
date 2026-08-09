@@ -18,6 +18,8 @@ import {
 } from './contact.service';
 import { environment } from '../../../environments/environment';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -27,13 +29,14 @@ import { environment } from '../../../environments/environment';
   standalone: true,
 
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeroVideoComponent
 ],
 
   templateUrl:
     './contact.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './contact.component.css'
 

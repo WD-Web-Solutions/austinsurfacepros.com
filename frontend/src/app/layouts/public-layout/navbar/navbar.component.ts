@@ -1,9 +1,12 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import {
+  Router,
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
+
+import { AuthService } from '../../../core/services/auth.service';
 
 
 
@@ -25,13 +28,18 @@ import {
 
     './navbar.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './navbar.component.css'
 
 })
 export class NavbarComponent {
+
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  readonly currentUser = this.authService.currentUser;
 
 
   mobileMenuOpen = false;
@@ -51,6 +59,18 @@ export class NavbarComponent {
 
     this.mobileMenuOpen =
       false;
+
+  }
+
+
+
+  logout(): void {
+
+    this.authService.logout();
+
+    this.closeMenu();
+
+    this.router.navigateByUrl('/');
 
   }
 

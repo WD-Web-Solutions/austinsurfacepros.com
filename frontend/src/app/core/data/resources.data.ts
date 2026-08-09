@@ -19,7 +19,7 @@ export const RESOURCES: Resource[] = [
     'commercial-property-manager-guide',
 
   icon:
-    '🏢'
+    'building'
 
 },
 
@@ -39,7 +39,7 @@ export const RESOURCES: Resource[] = [
     'parking-lot-maintenance-guide',
 
   icon:
-    '🛣️'
+    'wrench'
 
 },
 
@@ -59,7 +59,7 @@ export const RESOURCES: Resource[] = [
     'commercial-project-planning',
 
   icon:
-    '📋'
+    'clipboard-list'
 
 },
 
@@ -79,7 +79,7 @@ export const RESOURCES: Resource[] = [
     'working-with-contractors',
 
   icon:
-    '🤝'
+    'handshake'
 
 }
 

@@ -26,7 +26,7 @@ import { FooterComponent } from './footer/footer.component';
   templateUrl:
     './public-layout.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './public-layout.component.css'
 

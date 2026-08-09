@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 
 import { SeoService } from '../../core/services/seo.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -14,7 +16,9 @@ import { SeoService } from '../../core/services/seo.service';
 
   imports: [
 
-    RouterLink
+    RouterLink,
+
+    HeroVideoComponent
 
   ],
 
@@ -22,7 +26,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './about.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './about.component.css'
