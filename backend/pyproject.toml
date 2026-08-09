@@ -5,12 +5,15 @@ description = "Serverless API for Austin Surface Pros"
 readme = "README.md"
 requires-python = ">=3.14,<3.15"
 dependencies = [
+  "bcrypt>=4.2,<5",
   "email-validator>=2.2,<3",
   "fastapi>=0.116,<1",
   "loguru>=0.7,<1",
   "mangum>=0.19,<1",
   "psycopg[binary]>=3.2,<4",
   "pydantic-settings>=2.10,<3",
+  "pyjwt>=2.10,<3",
+  "python-multipart>=0.0.20,<1",
   "sqlalchemy[asyncio]>=2.0,<3",
 ]
 

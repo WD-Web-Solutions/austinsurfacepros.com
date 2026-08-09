@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { RESOURCES } from '../../core/data/resources.data';
 import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
@@ -11,7 +12,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
 
   standalone: true,
 
-  imports: [HeroVideoComponent],
+  imports: [HeroVideoComponent, RouterLink],
 
   templateUrl:
 
