@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     blog_uploads_dir: str = "uploads/blog"
 
     @model_validator(mode="after")
-    def validate_integrations(self) -> "Settings":
+    def validate_integrations(self) -> Settings:
         if self.enable_database and self.database_url is None:
             raise ValueError("database_url is required when enable_database is true")
         if self.enable_ses and (self.ses_source_email is None or not self.ses_recipient_emails):
