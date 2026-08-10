@@ -16,15 +16,18 @@ from austin_surface_pros_api.db.repositories import (
     SqlAlchemyBlogPostRepository,
     SqlAlchemyCommentRepository,
     SqlAlchemyContactRequestRepository,
+    SqlAlchemyGalleryPhotoRepository,
     SqlAlchemyTagSubscriptionRepository,
     SqlAlchemyUserRepository,
 )
+from austin_surface_pros_api.domain.gallery_storage import GalleryObjectStorage
 from austin_surface_pros_api.domain.users import AuthenticatedUser, UserRole
 from austin_surface_pros_api.notifications.contact_requests import ContactRequestNotifier
 from austin_surface_pros_api.services.admin import AdminService
 from austin_surface_pros_api.services.auth import AuthService
 from austin_surface_pros_api.services.blog import BlogService
 from austin_surface_pros_api.services.contact_requests import ContactRequestService
+from austin_surface_pros_api.services.gallery import GalleryService
 
 _bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -175,6 +178,23 @@ def get_blog_service(
     ],
 ) -> BlogService:
     return BlogService(post_repository, comment_repository, subscription_repository)
+
+
+def get_gallery_object_storage(request: Request) -> GalleryObjectStorage:
+    return request.app.state.gallery_object_storage
+
+
+def get_gallery_photo_repository(
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> SqlAlchemyGalleryPhotoRepository:
+    return SqlAlchemyGalleryPhotoRepository(session)
+
+
+def get_gallery_service(
+    repository: Annotated[SqlAlchemyGalleryPhotoRepository, Depends(get_gallery_photo_repository)],
+    storage: Annotated[GalleryObjectStorage, Depends(get_gallery_object_storage)],
+) -> GalleryService:
+    return GalleryService(repository, storage)
 
 
 def get_file_storage(settings: Annotated[Settings, Depends(get_settings)]) -> LocalFileStorage:

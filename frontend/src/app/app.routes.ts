@@ -37,9 +37,8 @@ const localStudioRoutes: Routes = environment.blog.useLocalRepository
   ? [
       {
         path: 'admin/blogs',
-        canActivate: [demoAdminGuard],
-        loadComponent: () =>
-          import('./pages/admin/blog-admin-list.component').then(m => m.BlogAdminListComponent)
+        pathMatch: 'full',
+        redirectTo: 'blog'
       },
       {
         path: 'admin/blogs/new',
@@ -90,11 +89,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/gallery/gallery.component').then(m => m.GalleryComponent)
       },
-      {
-        path: 'resources',
-        loadComponent: () =>
-          import('./pages/resources/resources.component').then(m => m.ResourcesComponent)
-      },
       ...publicBlogRoutes,
       {
         path: 'contact',
@@ -112,15 +106,20 @@ export const routes: Routes = [
       },
       ...localStudioRoutes,
       {
+        path: 'admin/gallery',
+        canActivate: [environment.gallery.useLocalRepository ? demoAdminGuard : adminGuard],
+        loadComponent: () =>
+          import('./pages/admin-gallery/gallery-admin.component').then(m => m.GalleryAdminComponent)
+      },
+      {
         path: 'admin',
         canActivate: [adminGuard],
         loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
       },
       {
         path: 'admin/blog',
-        canActivate: [adminGuard],
-        loadComponent: () =>
-          import('./pages/admin-blog/admin-blog.component').then(m => m.AdminBlogComponent)
+        pathMatch: 'full',
+        redirectTo: 'blog'
       },
       {
         path: 'admin/blog/new',

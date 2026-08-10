@@ -1,7 +1,7 @@
 /* Austin Surface Pros — private component exploration page */
 .dl-page,
 .dl-page * { box-sizing: border-box; }
-.dl-page { --ink:#17221d; --cream:#f4f1e9; --paper:#fffdf8; --orange:#f0602c; --lime:#d8f05e; --blue:#143f68; color:var(--ink); background:#e9e8e2; font-family:Inter,ui-sans-serif,system-ui,sans-serif; overflow:hidden; }
+.dl-page { --ink:#111827; --cream:#f8fafc; --paper:#fff; --orange:#f97316; --lime:#bfdbfe; --blue:#2563eb; color:var(--ink); background:#e5e7eb; font-family:Inter,ui-sans-serif,system-ui,sans-serif; overflow:hidden; }
 .dl-page button,.dl-page input,.dl-page textarea,.dl-page select { font:inherit; }
 .dl-page button,.dl-page a { -webkit-tap-highlight-color:transparent; }
 .dl-page button { cursor:pointer; }

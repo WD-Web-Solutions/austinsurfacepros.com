@@ -23,18 +23,20 @@ describe('LocalBlogService', () => {
   });
 
   it('creates, updates, and deletes a local post while deriving hashtag categories', async () => {
+    const beforeCreate = Date.now();
     const created = await service.create({
       title: 'Drainage Planning for Parking Lots',
       summary: 'A local service test post about drainage planning.',
       contentHtml: '<h2>Start with water</h2><p>Map the route before planning a repair.</p>',
       thumbnailUrl: '/assets/images/design-lab/parking-aerial.jpg',
       thumbnailAlt: 'Parking lot viewed from above',
-      author: 'Test Author',
-      publishedAt: '2026-08-09T12:00:00.000Z',
-      status: 'published',
       tags: ['#Drainage', 'Parking Lots', '#drainage']
     });
     expect(created.tags).toEqual(['drainage', 'parking-lots']);
+    expect(created.author).toBe('Austin Surface Pros');
+    expect(created.status).toBe('published');
+    expect(new Date(created.publishedAt).getTime()).toBeGreaterThanOrEqual(beforeCreate);
+    expect(new Date(created.publishedAt).getTime()).toBeLessThanOrEqual(Date.now());
 
     const updated = await service.update(created.id, {
       ...created,
@@ -42,6 +44,9 @@ describe('LocalBlogService', () => {
       tags: ['drainage', 'property-management']
     });
     expect(updated.slug).toBe('drainage-planning-for-parking-lots');
+    expect(updated.author).toBe(created.author);
+    expect(updated.publishedAt).toBe(created.publishedAt);
+    expect(updated.status).toBe('published');
     expect((await service.getAllTags()).some(tag => tag.name === 'property-management')).toBe(true);
 
     await service.delete(created.id);
@@ -53,7 +58,7 @@ describe('LocalBlogService', () => {
       title: 'Safe content', summary: 'Sanitizer coverage',
       contentHtml: '<p onclick="alert(1)">Useful</p><script>alert(2)</script><a href="javascript:alert(3)">bad</a>',
       thumbnailUrl: '/assets/images/design-lab/asphalt-road.jpg', thumbnailAlt: 'Road',
-      author: 'Test', publishedAt: '2026-08-09T12:00:00.000Z', status: 'draft', tags: ['safety']
+      tags: ['safety']
     });
     expect(created.contentHtml).not.toContain('script');
     expect(created.contentHtml).not.toContain('onclick');
@@ -69,7 +74,7 @@ describe('LocalBlogService', () => {
       title: 'Cache invalidation', summary: 'Changes require fresh search vectors.',
       contentHtml: '<p>Fresh content needs a fresh vector.</p>',
       thumbnailUrl: '/assets/images/design-lab/asphalt-road.jpg', thumbnailAlt: 'Road',
-      author: 'Test', publishedAt: '2026-08-09T12:00:00.000Z', status: 'draft', tags: ['search']
+      tags: ['search']
     });
 
     expect(await service.getCachedEmbedding(seed)).toBeNull();

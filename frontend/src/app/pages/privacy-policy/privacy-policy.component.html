@@ -30,6 +30,12 @@
           or otherwise communicate with us.
         </li>
         <li>
+          If you use the service-area checker or enter a project address in the
+          estimate form, the address text you type is sent to Komoot's Photon
+          service for suggestions. We use the selected location to estimate
+          coverage. The project address is saved only if you submit the estimate form.
+        </li>
+        <li>
           We use that information to respond to you, provide services, operate
           our business, and meet legal obligations.
         </li>
@@ -41,8 +47,9 @@
           use browser storage that is necessary to keep you authenticated.
         </li>
         <li>
-          In the demo environment, blog posts, uploaded images, administrator
-          session state, and search embeddings remain in your browser.
+          In the demo environment, blog posts, project-gallery photos and
+          metadata, uploaded images, administrator session state, and search
+          embeddings remain in your browser.
         </li>
       </ul>
     </div>
@@ -79,13 +86,21 @@
       </h3>
 
       <p class="mt-3 leading-7">
-        When you submit an estimate request, we collect your name, email
-        address, the service you are interested in, and the project details you
-        include. You may also choose to provide a company name and phone number.
-        If you continue communicating with us, we collect the contents of those
-        communications and information reasonably needed to prepare an estimate,
-        perform requested services, maintain business records, or support the
-        resulting customer relationship.
+        When you submit an estimate request, we collect your name, property type,
+        project address, requested service, desired timeline, and the project
+        details you include. You must provide at least one contact method—an
+        email address or phone number—and may provide both. You may also choose
+        to provide a company name. If you continue communicating with us, we
+        collect the contents of those communications and information reasonably
+        needed to prepare an estimate, perform requested services, maintain
+        business records, or support the resulting customer relationship.
+      </p>
+
+      <p class="mt-4 leading-7">
+        The optional photo step lets you select up to three project photos to
+        organize before follow-up. Those selected photos remain on your device
+        and are not uploaded or submitted with the estimate request. We may ask
+        you to share photos later through an agreed contact method.
       </p>
 
       <p class="mt-4 leading-7">
@@ -101,9 +116,52 @@
         comment text or selected topic together with your account identifier.
         Your full name and the date of a comment are displayed publicly with
         the comment. Blog authors' names are also displayed with their posts.
+        Production posts use the signed-in administrator's account name for
+        that attribution. The browser-local demo uses the fixed name "Austin
+        Surface Pros" instead of collecting a separate author name.
         Administrators may upload blog images and create, edit, publish, or
         remove blog content; uploaded images and associated content are stored
         for those purposes.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Authorized administrators may upload project-gallery photos and provide
+        titles, alternative text, descriptions, hashtags, city and state, crop
+        settings, and an optional capture date. A photo may depict identifiable
+        people, vehicles, or property and may therefore contain personal
+        information. The gallery studio reads IPTC or XMP city, state, and
+        capture-date metadata on the administrator's device to prefill editable
+        fields. Production uploads are sent directly to private Amazon S3
+        staging storage through a short-lived upload link. Our backend validates
+        the image, removes embedded metadata, creates compressed display and
+        thumbnail copies, and publishes the approved photo together with the
+        title, description, hashtags, city, and state.
+      </p>
+
+      <h3 class="mt-6 text-xl font-bold text-gray-950">
+        Service-area map and estimate address checker
+      </h3>
+
+      <p class="mt-3 leading-7">
+        The services page displays an interactive map using OpenStreetMap data.
+        Loading and using the map causes your browser to request map tiles from
+        the OpenStreetMap Foundation, which receives technical information such
+        as your IP address, browser information, referring page, requested map
+        tiles, and request date and time.
+      </p>
+
+      <p class="mt-4 leading-7">
+        After you enter four characters in either address checker, the address
+        text you type is sent to Komoot's Photon geocoding service to return
+        suggested locations. When you select a suggestion, the website uses the
+        returned coordinates in browser memory to estimate distance from central
+        Austin. The services page also displays the location on the map. Austin
+        Surface Pros does not save the search text, coordinates, or coverage
+        result in browser storage or send them to its application server. On the
+        estimate page, the selected street address, city, state, and ZIP code are
+        added to the form and sent to Austin Surface Pros only if you submit the
+        estimate request. Do not enter confidential or sensitive information in
+        either address field.
       </p>
 
       <p class="mt-4 leading-7">
@@ -148,7 +206,7 @@
       </p>
 
       <h3 class="mt-6 text-xl font-bold text-gray-950">
-        Local demo blog studio and browser search
+        Local demo content studios and browser search
       </h3>
 
       <p class="mt-3 leading-7">
@@ -177,6 +235,16 @@
         profile may be able to view local demo content, so do not place
         confidential or personal information in demo posts.
       </p>
+
+      <p class="mt-4 leading-7">
+        The demo project-gallery studio similarly stores uploaded photo files,
+        crops, titles, alternative text, descriptions, hashtags, and locations
+        in IndexedDB on that device. Demo gallery content is not sent to Austin
+        Surface Pros, Amazon S3, or another image-processing service. It remains
+        until removed in the studio, replaced with the demo seeds, or cleared
+        through browser settings. Other people using the same browser profile
+        may be able to view it.
+      </p>
     </section>
 
     <section aria-labelledby="policy-use" class="mt-12">
@@ -191,11 +259,16 @@
       <ul class="mt-4 space-y-3 pl-6">
         <li>Responding to questions and estimate requests;</li>
         <li>Evaluating, scheduling, and performing requested services;</li>
+        <li>Suggesting addresses and providing a preliminary service-area result;</li>
         <li>Communicating about an inquiry, estimate, project, or service;</li>
         <li>Creating, authenticating, securing, and administering accounts;</li>
         <li>
           Publishing and moderating blog posts and comments, displaying author
           attribution, and maintaining topic subscriptions;
+        </li>
+        <li>
+          Validating, processing, publishing, organizing, and delivering project
+          gallery photos and their descriptive and location metadata;
         </li>
         <li>Operating, maintaining, troubleshooting, and securing the website;</li>
         <li>Preventing fraud, misuse, and other harmful activity;</li>
@@ -220,7 +293,7 @@
         technologies. As described above, signed-in users' access tokens and
         basic account details are stored in local storage for authentication and
         account operation. Demo-only IndexedDB, sessionStorage, and same-origin
-        model caching provide local blog editing and search. We do not use that
+        model caching provide local blog and gallery editing and search. We do not use that
         storage for advertising or cross-site tracking, and we do not use
         website activity for cross-context behavioral or targeted advertising.
       </p>
@@ -260,6 +333,11 @@
           that process information on our behalf;
         </li>
         <li>
+          The OpenStreetMap Foundation, which provides map tiles, and Komoot,
+          which operates the Photon address-suggestion service, when you use
+          those features;
+        </li>
+        <li>
           Employees, contractors, and subcontractors who need information to
           evaluate or perform a requested project;
         </li>
@@ -290,6 +368,14 @@
         other site visitors. In particular, comments display the comment text,
         your full name, and the comment date. Published posts display the
         author's name and any included images or content.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Published project-gallery photos are intentionally disclosed to site
+        visitors through Amazon CloudFront together with their titles,
+        descriptions, hashtags, city, and state. Amazon Web Services provides
+        private object storage, backend processing infrastructure, and content
+        delivery on our behalf. Original staging uploads are not made public.
       </p>
     </section>
 
@@ -327,6 +413,33 @@
         post, and changing local content clears its saved search embeddings so
         stale vectors are not retained.
       </p>
+
+      <p class="mt-4 leading-7">
+        Production gallery photos and their metadata remain while they are
+        published or otherwise reasonably needed as content and business
+        records. Removing a gallery photo through the studio removes its
+        database record and staged and processed objects. Abandoned production
+        staging objects are scheduled to expire after one day. Cached copies may
+        persist temporarily in content-delivery or browser caches. Browser-local
+        demo gallery data follows the deletion behavior described in Section 3.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Photos selected in the estimate form remain in the current browser page
+        only and are discarded when you remove them, refresh or close the page,
+        or submit the form. They are not transferred to Austin Surface Pros by
+        the photo-selection control.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Address-checker search text, suggested locations, coordinates, and
+        coverage results are held only in the current page's browser memory by
+        Austin Surface Pros and are discarded when the page is refreshed or
+        closed. If you submit an estimate request, its selected project address
+        is retained with the request as described above. OpenStreetMap Foundation
+        and Komoot may process or retain request and technical data under their
+        own privacy notices and operational requirements.
+      </p>
     </section>
 
     <section aria-labelledby="policy-security" class="mt-12">
@@ -346,6 +459,15 @@
         Passwords are stored as cryptographic hashes. Authentication tokens are
         stored in the signed-in user's browser, so users should log out on
         shared devices and protect access to their browsers and devices.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Gallery upload links expire after a short period and are limited to a
+        private staging object. Only administrators can create, complete, edit,
+        reorder, or delete production gallery entries. Uploaded bytes are
+        checked for supported format, file size, pixel dimensions, and successful
+        image decoding before publication; processed copies omit embedded photo
+        metadata.
       </p>
     </section>
 
@@ -375,8 +497,8 @@
         We do not currently sell personal information, process it for targeted
         advertising, or conduct the profiling described above. To make another
         privacy request, email
-        <a href="mailto:matt@austinsurfacepros.com?subject=Privacy%20Request">
-          matt@austinsurfacepros.com
+        <a href="mailto:austinsurfacepros@gmail.com?subject=Privacy%20Request">
+          austinsurfacepros@gmail.com
         </a>
         with the subject "Privacy Request," or mail the request to the address
         in the Contact Us section. Please describe your request and your
@@ -424,6 +546,20 @@
         practices are governed by their own notices, and we are not responsible
         for websites or services we do not control.
       </p>
+
+      <p class="mt-4 leading-7">
+        The interactive map and address suggestions are third-party services.
+        You can review the
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">
+          OpenStreetMap Foundation privacy policy<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        and
+        <a href="https://www.komoot.com/privacy" target="_blank" rel="noopener noreferrer">
+          Komoot privacy policy<span class="sr-only"> (opens in a new tab)</span>
+        </a>.
+        If you prefer not to send address text to Photon, do not use the checker;
+        contact us directly and ask whether we serve your area.
+      </p>
     </section>
 
     <section aria-labelledby="policy-changes" class="mt-12">
@@ -454,7 +590,7 @@
         Attn: Privacy<br>
         1239 County Road 250<br>
         Georgetown, TX 78633<br>
-        <a href="mailto:matt@austinsurfacepros.com">matt@austinsurfacepros.com</a>
+        <a href="mailto:austinsurfacepros@gmail.com">austinsurfacepros@gmail.com</a>
       </address>
     </section>
   </article>

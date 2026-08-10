@@ -1,0 +1,33 @@
+.property-address { margin-top:1.5rem; padding-top:.5rem; border-top:1px solid #d8ddd9; }
+.address-combobox { position:relative; }
+.address-search-row { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; min-height:3.4rem; border:1px solid #9ea8a2; border-radius:.45rem; background:#fff; }
+.address-search-row>i { padding-left:.9rem; color:#c2410c; }
+.address-search-row input { min-width:0; border:0; box-shadow:none; outline:0; background:transparent; }
+.address-search-row button { align-self:stretch; min-width:5.5rem; padding:0 .9rem; border:0; border-radius:0 .4rem .4rem 0; color:#fff; background:var(--blue); font-size:.7rem; font-weight:850; letter-spacing:.05em; text-transform:uppercase; cursor:pointer; }
+.address-search-row button:disabled { color:#e2e8f0; background:#64748b; cursor:not-allowed; }
+.address-spinner { display:inline-block; width:1rem; height:1rem; border:.14rem solid #ffffff59; border-top-color:#fff; border-radius:50%; animation:address-spin .8s linear infinite; }
+@keyframes address-spin { to { transform:rotate(360deg); } }
+.address-suggestions { position:absolute; z-index:20; top:calc(100% + .3rem); right:0; left:0; overflow:hidden; border:1px solid #bfdbfe; border-radius:.45rem; background:#fff; box-shadow:0 1rem 2rem #102a4329; }
+.address-suggestions button { display:grid; grid-template-columns:1rem 1fr; gap:.7rem; width:100%; min-height:3rem; padding:.75rem .9rem; border:0; border-bottom:1px solid #dbeafe; color:#1e293b; background:transparent; font:inherit; font-size:.78rem; line-height:1.35; text-align:left; cursor:pointer; }
+.address-suggestions button:last-child { border-bottom:0; }.address-suggestions button:hover,.address-suggestions button.is-active { color:#fff; background:var(--blue); }.address-suggestions i { margin-top:.15rem; color:#c2410c; }
+.address-privacy { margin:.65rem 0 0; color:#65716b; font-size:.68rem; line-height:1.5; }.address-privacy a { color:#1d4ed8; font-weight:750; }
+.address-coverage { display:grid; grid-template-columns:auto 1fr; gap:.75rem; margin-top:.8rem; padding:.8rem; border-left:3px solid #2563eb; color:#1d4ed8; background:#eff6ff; }
+.address-coverage--outside { border-color:#f97316; color:#9a3412; background:#fff7ed; }.address-coverage>i { margin-top:.15rem; }.address-coverage p { display:grid; gap:.15rem; margin:0; }.address-coverage strong { color:#26342e; font-size:.75rem; }.address-coverage span { color:#59665f; font-size:.7rem; line-height:1.45; }
+
+.serviceability-dialog { position:fixed; inset:0; width:min(34rem,calc(100% - 2rem)); margin:auto; padding:2.3rem; border:0; border-radius:.9rem; color:#26342e; background:#fffdf8; box-shadow:0 1.5rem 5rem #08192366; }
+.serviceability-dialog::backdrop { background:#081923b8; backdrop-filter:blur(3px); }
+.serviceability-dialog>i { color:#c2410c; font-size:1.5rem; }.serviceability-dialog h2 { margin:.9rem 2rem .75rem 0; font-size:clamp(1.7rem,5vw,2.5rem); line-height:1; letter-spacing:-.04em; }.serviceability-dialog>p { margin:0; color:#59665f; line-height:1.6; }
+.dialog-close { position:absolute; top:.8rem; right:.8rem; width:2.5rem; height:2.5rem; border:0; border-radius:50%; color:#26342e; background:#e8e9e5; font-size:1.4rem; cursor:pointer; }.dialog-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.8rem 1rem; margin-top:1.5rem; }.dialog-actions button,.dialog-actions a { min-height:2.8rem; border-radius:.35rem; font-size:.72rem; font-weight:850; letter-spacing:.04em; }.dialog-primary { padding:.75rem 1rem; border:0; color:#fff; background:var(--blue); cursor:pointer; }.dialog-secondary { padding:.75rem 0; border:0; color:#59665f; background:transparent; cursor:pointer; }.dialog-actions a { display:inline-flex; align-items:center; color:#1d4ed8; text-underline-offset:.2rem; }
+
+@media (max-width:760px) {
+  .serviceability-dialog { padding:1.6rem; }
+  .dialog-actions { align-items:stretch; flex-direction:column; }
+  .dialog-actions a,.dialog-actions button { justify-content:center; text-align:center; }
+}
+@media (max-width:480px) {
+  .address-search-row { grid-template-columns:auto minmax(0,1fr); }
+  .address-search-row button { grid-column:1/-1; width:100%; min-height:3rem; border-radius:0 0 .4rem .4rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .address-spinner { animation:none; }
+}

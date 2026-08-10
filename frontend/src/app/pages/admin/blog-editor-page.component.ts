@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { BlogPostDraft, BlogPostStatus } from '../../core/models/blog-post.model';
+import { BlogPostDraft } from '../../core/models/blog-post.model';
 import { LocalBlogService } from '../../core/services/local-blog.service';
-import { normalizeTag } from '../../core/utils/blog.utils';
+import { normalizeTag, slugify } from '../../core/utils/blog.utils';
 import { RichTextEditorComponent } from '../../shared/components/rich-text-editor/rich-text-editor.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { RichTextEditorComponent } from '../../shared/components/rich-text-edito
 })
 export class BlogEditorPageComponent implements OnInit {
   private readonly blogService = inject(LocalBlogService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private editingId: string | null = null;
@@ -32,11 +34,14 @@ export class BlogEditorPageComponent implements OnInit {
     summary: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(320)] }),
     contentHtml: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     thumbnailUrl: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    thumbnailAlt: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(180)] }),
-    author: new FormControl('Austin Surface Pros', { nonNullable: true, validators: [Validators.required, Validators.maxLength(100)] }),
-    publishedAt: new FormControl(this.localDateTime(new Date()), { nonNullable: true, validators: [Validators.required] }),
-    status: new FormControl<BlogPostStatus>('published', { nonNullable: true, validators: [Validators.required] })
+    thumbnailAlt: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(180)] })
   });
+
+  constructor() {
+    this.form.controls.title.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(title => this.form.controls.slug.setValue(slugify(title), { emitEvent: false }));
+  }
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
@@ -45,7 +50,7 @@ export class BlogEditorPageComponent implements OnInit {
     const post = await this.blogService.getById(id);
     this.loading.set(false);
     if (!post) {
-      this.error.set('The local field note could not be found.');
+      this.error.set('The local blog post could not be found.');
       return;
     }
     this.editingId = post.id;
@@ -57,10 +62,7 @@ export class BlogEditorPageComponent implements OnInit {
       summary: post.summary,
       contentHtml: post.contentHtml,
       thumbnailUrl: post.thumbnailUrl,
-      thumbnailAlt: post.thumbnailAlt,
-      author: post.author,
-      publishedAt: this.localDateTime(new Date(post.publishedAt)),
-      status: post.status
+      thumbnailAlt: post.thumbnailAlt
     });
   }
 
@@ -121,20 +123,15 @@ export class BlogEditorPageComponent implements OnInit {
       const draft: BlogPostDraft = {
         ...value,
         slug: value.slug || undefined,
-        publishedAt: new Date(value.publishedAt).toISOString(),
         tags: this.tags()
       };
       if (this.editingId) await this.blogService.update(this.editingId, draft);
       else await this.blogService.create(draft);
-      await this.router.navigate(['/admin/blogs']);
+      await this.router.navigate(['/blog']);
     } catch {
-      this.error.set('The field note could not be saved locally. Check browser storage and try again.');
+      this.error.set('The blog post could not be saved locally. Check browser storage and try again.');
       this.saving.set(false);
     }
   }
 
-  private localDateTime(date: Date): string {
-    const adjusted = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    return adjusted.toISOString().slice(0, 16);
-  }
 }

@@ -37,8 +37,14 @@ async def test_submit_builds_and_persists_contact_request(
             email_address="taylor@example.com",
             company=None,
             phone=None,
+            property_type="Retail or office",
             service="Asphalt Repair",
             message="Please call me.",
+            address_line="100 Congress Ave",
+            city="Austin",
+            state="TX",
+            postal_code="78701",
+            timeline="Within 1-3 months",
         )
     )
 
@@ -61,8 +67,14 @@ async def test_submit_notifies_after_persisting(
             email_address="taylor@example.com",
             company=None,
             phone=None,
+            property_type="Retail or office",
             service="Asphalt Repair",
             message="Please call me.",
+            address_line="100 Congress Ave",
+            city="Austin",
+            state="TX",
+            postal_code="78701",
+            timeline="Within 1-3 months",
         )
     )
 

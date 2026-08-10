@@ -1,0 +1,150 @@
+<section id="service-area-checker" class="service-area" aria-labelledby="service-area-heading" tabindex="-1">
+  <div class="service-area__map-panel">
+    <div
+      #mapContainer
+      class="service-area__map"
+      role="region"
+      aria-label="Interactive map of Austin Surface Pros core service area"
+      aria-describedby="service-area-map-help"
+    ></div>
+
+    @if (mapUnavailable()) {
+      <div class="service-area__map-fallback" role="status">
+        <strong>Map temporarily unavailable</strong>
+        <span>You can still check an address using the form.</span>
+      </div>
+    }
+
+    <div class="service-area__legend" aria-hidden="true">
+      <i></i>
+      <span>{{ coreRadiusMiles }}-mile core coverage</span>
+    </div>
+
+    <p class="service-area__map-notice">
+      Viewing this map sends technical request data to OpenStreetMap.
+      <a routerLink="/privacy-policy">Privacy details</a>
+    </p>
+
+    <p id="service-area-map-help" class="sr-only">
+      The shaded boundary shows the preliminary core coverage area. Use the map's
+      plus and minus controls to zoom and arrow keys to pan when the map has focus.
+    </p>
+  </div>
+
+  <div class="service-area__copy">
+    <p class="service-area__eyebrow">
+      Based in Austin / Built for Central Texas
+    </p>
+
+    <h2 id="service-area-heading">
+      Local enough<br>
+      <span>to show up fast.</span>
+    </h2>
+
+    <p class="service-area__intro">
+      Our preliminary core area covers properties within {{ coreRadiusMiles }} miles
+      of central Austin, including Cedar Park, Round Rock, Pflugerville, Georgetown,
+      Buda, and Kyle. Regional and multi-property projects are reviewed individually.
+    </p>
+
+    <form class="coverage-form" (submit)="$event.preventDefault(); checkCoverage()" novalidate>
+      <label for="service-address">Check your property address</label>
+
+      <div class="coverage-form__combobox">
+        <div class="coverage-form__input-row">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <input
+            id="service-address"
+            type="search"
+            autocomplete="street-address"
+            placeholder="Start typing an Austin-area address"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-controls="service-address-suggestions"
+            [attr.aria-expanded]="suggestionsOpen()"
+            [attr.aria-activedescendant]="activeSuggestionIndex() >= 0 ? 'service-address-option-' + activeSuggestionIndex() : null"
+            [formControl]="addressControl"
+            (focus)="onAddressFocus()"
+            (blur)="onAddressBlur()"
+            (keydown)="onAddressKeydown($event)"
+          >
+          <button
+            type="submit"
+            aria-label="Check service availability for this address"
+            [disabled]="addressControl.value.trim().length < minimumSearchLength || isSearching()"
+          >
+            @if (isSearching()) {
+              <span class="coverage-form__spinner" aria-hidden="true"></span>
+              <span class="sr-only">Searching addresses</span>
+            } @else {
+              <span>Check</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            }
+          </button>
+        </div>
+
+        @if (suggestionsOpen()) {
+          <div
+            id="service-address-suggestions"
+            class="coverage-form__suggestions"
+            role="listbox"
+            aria-label="Address suggestions"
+          >
+            @for (suggestion of suggestions(); track suggestion.label; let index = $index) {
+              <button
+                [id]="'service-address-option-' + index"
+                type="button"
+                role="option"
+                tabindex="-1"
+                [attr.aria-selected]="activeSuggestionIndex() === index"
+                [class.is-active]="activeSuggestionIndex() === index"
+                (mousedown)="$event.preventDefault()"
+                (click)="selectSuggestion(suggestion)"
+              >
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <span>{{ suggestion.label }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <p class="coverage-form__privacy">
+        After four characters, your search text is sent to
+        <a href="https://github.com/komoot/photon" target="_blank" rel="noopener noreferrer">
+          Photon by Komoot<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        for suggestions; we do not save it. Do not enter confidential information.
+        See our <a routerLink="/privacy-policy">Privacy Policy</a>.
+      </p>
+
+      @if (coverageResult(); as result) {
+        <div
+          class="coverage-result"
+          [class.coverage-result--covered]="result.kind === 'covered'"
+          [class.coverage-result--outside]="result.kind === 'outside'"
+          [class.coverage-result--unavailable]="result.kind === 'unavailable'"
+          role="status"
+          aria-live="polite"
+        >
+          <i
+            class="fa-solid"
+            [class.fa-circle-check]="result.kind === 'covered'"
+            [class.fa-route]="result.kind === 'outside'"
+            [class.fa-circle-info]="result.kind === 'unavailable'"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <strong>{{ result.title }}</strong>
+            <p>{{ result.detail }}</p>
+          </div>
+        </div>
+      }
+    </form>
+
+    <p class="service-area__response-time">
+      <i class="fa-regular fa-clock" aria-hidden="true"></i>
+      Typical site-visit response: 1–2 business days
+    </p>
+  </div>
+</section>

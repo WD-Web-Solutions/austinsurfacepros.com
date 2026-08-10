@@ -23,8 +23,14 @@ def test_submit_contact_request(
             "emailAddress": "taylor@example.com",
             "company": "Example Property Management",
             "phone": "512-555-0100",
+            "propertyType": "Retail or office",
             "service": "Parking Lot Striping",
             "message": "Please provide an estimate.",
+            "addressLine": "100 Congress Ave",
+            "city": "Austin",
+            "state": "TX",
+            "postalCode": "78701",
+            "timeline": "Within 1-3 months",
         },
     )
 
@@ -40,8 +46,14 @@ def test_rejects_invalid_contact_request(client: TestClient) -> None:
         json={
             "name": "Taylor Client",
             "emailAddress": "not-an-email",
+            "propertyType": "Retail or office",
             "service": "Parking Lot Striping",
             "message": "Please provide an estimate.",
+            "addressLine": "100 Congress Ave",
+            "city": "Austin",
+            "state": "TX",
+            "postalCode": "78701",
+            "timeline": "Within 1-3 months",
         },
     )
 
@@ -57,10 +69,41 @@ def test_contact_endpoint_reports_missing_database_configuration() -> None:
             json={
                 "name": "Taylor Client",
                 "emailAddress": "taylor@example.com",
+                "propertyType": "Retail or office",
                 "service": "Parking Lot Striping",
                 "message": "Please provide an estimate.",
+                "addressLine": "100 Congress Ave",
+                "city": "Austin",
+                "state": "TX",
+                "postalCode": "78701",
+                "timeline": "Within 1-3 months",
             },
         )
 
     assert response.status_code == 503
     assert response.json() == {"detail": "Database is not configured"}
+
+
+def test_submit_contact_request_with_phone_instead_of_email(
+    client: TestClient,
+    repository: InMemoryContactRequestRepository,
+) -> None:
+    response = client.post(
+        "/api/contact-requests",
+        json={
+            "name": "Taylor Client",
+            "phone": "512-555-0100",
+            "propertyType": "Industrial",
+            "service": "Concrete Repairs",
+            "message": "Repair the loading area.",
+            "addressLine": "500 Industrial Blvd",
+            "city": "Austin",
+            "state": "TX",
+            "postalCode": "78758",
+            "timeline": "As soon as practical",
+        },
+    )
+
+    assert response.status_code == 202
+    assert repository.contact_requests[-1].email_address is None
+    assert repository.contact_requests[-1].phone == "512-555-0100"

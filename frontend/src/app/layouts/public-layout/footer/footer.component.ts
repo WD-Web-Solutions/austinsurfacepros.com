@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, isDevMode } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
@@ -27,8 +27,6 @@ export class FooterComponent {
 
 
   year = new Date().getFullYear();
-
-  readonly isDevelopment = isDevMode();
 
 
 }

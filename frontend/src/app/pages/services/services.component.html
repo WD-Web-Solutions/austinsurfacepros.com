@@ -1,38 +1,165 @@
-<section class="bg-gray-900 py-24 text-white">
-  <div class="mx-auto max-w-7xl px-6">
-    <p class="text-sm font-semibold uppercase tracking-widest text-orange-400">
-      Commercial Surface Services
-    </p>
-
-    <h1 class="mt-5 max-w-4xl text-5xl font-bold md:text-6xl">
-      Surface Solutions for Central Texas Properties
-    </h1>
-
-    <p class="mt-6 max-w-3xl text-xl leading-relaxed text-gray-300">
-      Asphalt, striping, concrete, and protective coating services planned
-      around the safety, appearance, and operation of your property.
-    </p>
+<section class="services-reveal" [style.--reveal.%]="revealPosition">
+  <div class="services-reveal__media" aria-hidden="true">
+    <img
+      class="services-reveal__image services-reveal__image--before"
+      src="/assets/images/services/parking-lot-before.jpg"
+      alt=""
+      width="1800"
+      height="1200"
+      fetchpriority="high"
+    >
+    <div class="services-reveal__after">
+      <img
+        class="services-reveal__image"
+        src="/assets/images/services/parking-lot-after.jpg"
+        alt=""
+        width="1800"
+        height="1200"
+        fetchpriority="high"
+      >
+    </div>
+    <div class="services-reveal__scrim"></div>
   </div>
+
+  <div class="services-reveal__copy">
+    <p class="services-eyebrow">Commercial surface services</p>
+    <h1>From worn down to ready for what’s next.</h1>
+    <p>
+      Asphalt, striping, concrete, and protective coatings planned around
+      the safety, appearance, and daily operation of your Central Texas property.
+    </p>
+    <a routerLink="/contact">Request Estimate <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="services-reveal__labels" aria-hidden="true">
+    <span>Before</span>
+    <span>After</span>
+  </div>
+
+  <div class="services-reveal__divider" aria-hidden="true">
+    <span>↔</span>
+  </div>
+
+  <label class="sr-only" for="services-image-comparison">
+    Compare the surface before and after improvements
+  </label>
+  <input
+    id="services-image-comparison"
+    class="services-reveal__range"
+    type="range"
+    min="0"
+    max="100"
+    [value]="revealPosition"
+    [attr.aria-valuetext]="revealPosition + '% before image and ' + (100 - revealPosition) + '% after image'"
+    (input)="setReveal($event)"
+    (pointerdown)="beginRevealDrag($event)"
+    (pointermove)="dragReveal($event)"
+    (pointerup)="finishRevealDrag($event)"
+    (pointercancel)="finishRevealDrag($event)"
+  >
 </section>
 
-<section aria-labelledby="services-list-heading" class="py-20">
-  <div class="mx-auto max-w-7xl px-6">
-    <h2 id="services-list-heading" class="sr-only">
-      Available services
-    </h2>
+<app-service-area-map></app-service-area-map>
 
-    <div class="grid gap-8 md:grid-cols-2">
-      @for(service of services; track service.slug)
-      {
+<section aria-labelledby="services-list-heading" class="services-list">
+  <div class="services-shell">
+    <div class="services-list__heading">
+      <div>
+        <p class="services-eyebrow">One accountable surface partner</p>
+        <h2 id="services-list-heading">Services built around your property.</h2>
+      </div>
+      <p>
+        Start with the surface that needs attention now, or bring us the whole
+        exterior plan. We will help organize the work into a practical scope.
+      </p>
+    </div>
+
+    <div class="services-list__grid">
+      @for(service of services; track service.slug) {
         <app-ui-card
           [title]="service.title"
           [description]="service.description"
           [category]="service.category"
           [icon]="service.icon"
           [link]="'/services/' + service.slug"
-        >
-        </app-ui-card>
+        ></app-ui-card>
       }
     </div>
   </div>
+</section>
+
+<section class="warranty" aria-labelledby="warranty-heading">
+  <div class="services-shell warranty__layout">
+    <div class="warranty__seal" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <defs>
+          <path id="services-warranty-path" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"></path>
+        </defs>
+        <circle cx="100" cy="100" r="54"></circle>
+        <text>
+          <textPath href="#services-warranty-path">
+            AUSTIN SURFACE PROS • DONE-RIGHT PROMISE •
+          </textPath>
+        </text>
+        <path class="warranty__check" d="M68 100l20 20 44-49"></path>
+      </svg>
+    </div>
+
+    <div class="warranty__copy">
+      <p class="services-eyebrow">Our workmanship promise</p>
+      <h2 id="warranty-heading">We finish with a walk-through, not just an invoice.</h2>
+      <p>
+        Your project lead reviews the completed scope with you. If the work does
+        not match the agreed plan, tell us so we can review it and make it right.
+      </p>
+    </div>
+
+    <a routerLink="/contact" class="warranty__link">
+      Talk through your scope <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="case-study" aria-labelledby="case-study-heading">
+  <div class="case-study__image">
+    <img
+      src="/assets/images/design-lab/parking-structure.jpg"
+      alt="Clearly marked vehicle lanes in a busy commercial parking area"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="case-study__caption" aria-hidden="true">
+      <span>Commercial parking maintenance</span>
+      <span>Central Texas</span>
+    </div>
+  </div>
+
+  <div class="case-study__copy">
+    <p class="services-eyebrow">Project approach</p>
+    <h2 id="case-study-heading">Refresh the surface. Keep the property moving.</h2>
+    <blockquote>
+      A strong phasing plan protects access before the first work zone closes.
+    </blockquote>
+    <p>
+      For an occupied commercial parking area, the scope starts with traffic flow,
+      tenant routes, work windows, and reopening requirements—then organizes
+      surface preparation and high-visibility markings around them.
+    </p>
+    <a routerLink="/gallery">Explore project examples <span aria-hidden="true">↗</span></a>
+  </div>
+
+  <dl class="case-study__results">
+    <div>
+      <dt>Plan</dt>
+      <dd>Phased work zones</dd>
+    </div>
+    <div>
+      <dt>Priority</dt>
+      <dd>Property access</dd>
+    </div>
+    <div>
+      <dt>Finish</dt>
+      <dd>Final walk-through</dd>
+    </div>
+  </dl>
 </section>

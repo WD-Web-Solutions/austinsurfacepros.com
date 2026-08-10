@@ -1,7 +1,8 @@
 from datetime import datetime
+from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from austin_surface_pros_api.db.models import (
@@ -9,6 +10,7 @@ from austin_surface_pros_api.db.models import (
     BlogPostRecord,
     CommentRecord,
     ContactRequestRecord,
+    GalleryPhotoRecord,
     TagSubscriptionRecord,
     UserRecord,
 )
@@ -22,6 +24,11 @@ from austin_surface_pros_api.domain.blog import (
     TagSubscription,
 )
 from austin_surface_pros_api.domain.contacts import ContactRequest
+from austin_surface_pros_api.domain.gallery import (
+    GalleryPhoto,
+    GalleryPhotoNotFoundError,
+    GalleryPhotoStatus,
+)
 from austin_surface_pros_api.domain.users import AccountStatus, User, UserNotFoundError, UserRole
 
 
@@ -358,11 +365,161 @@ class SqlAlchemyContactRequestRepository:
                 email_address=contact_request.email_address,
                 company=contact_request.company,
                 phone=contact_request.phone,
+                property_type=contact_request.property_type,
                 service=contact_request.service,
                 message=contact_request.message,
+                address_line=contact_request.address_line,
+                city=contact_request.city,
+                state=contact_request.state,
+                postal_code=contact_request.postal_code,
+                timeline=contact_request.timeline,
                 status=contact_request.status.value,
                 created_at=contact_request.created_at,
             )
         )
         await self._session.flush()
         return contact_request
+
+
+def _to_domain_gallery_photo(record: GalleryPhotoRecord) -> GalleryPhoto:
+    return GalleryPhoto(
+        id=record.id,
+        title=record.title,
+        alt_text=record.alt_text,
+        description=record.description,
+        tags=tuple(record.tags),
+        city=record.city,
+        state=record.state,
+        captured_at=record.captured_at,
+        crop_aspect=record.crop_aspect,
+        crop_x=float(record.crop_x),
+        crop_y=float(record.crop_y),
+        crop_zoom=float(record.crop_zoom),
+        staging_key=record.staging_key,
+        image_key=record.image_key,
+        thumbnail_key=record.thumbnail_key,
+        width=record.width,
+        height=record.height,
+        sort_key=Decimal(record.sort_key),
+        status=GalleryPhotoStatus(record.status),
+        uploader_id=record.uploader_id,
+        created_at=record.created_at,
+        updated_at=record.updated_at,
+        published_at=record.published_at,
+    )
+
+
+class SqlAlchemyGalleryPhotoRepository:
+    def __init__(self, session: AsyncSession) -> None:
+        self._session = session
+
+    async def add(self, photo: GalleryPhoto) -> GalleryPhoto:
+        self._session.add(
+            GalleryPhotoRecord(
+                id=photo.id,
+                title=photo.title,
+                alt_text=photo.alt_text,
+                description=photo.description,
+                tags=list(photo.tags),
+                city=photo.city,
+                state=photo.state,
+                captured_at=photo.captured_at,
+                crop_aspect=photo.crop_aspect,
+                crop_x=photo.crop_x,
+                crop_y=photo.crop_y,
+                crop_zoom=photo.crop_zoom,
+                staging_key=photo.staging_key,
+                image_key=photo.image_key,
+                thumbnail_key=photo.thumbnail_key,
+                width=photo.width,
+                height=photo.height,
+                sort_key=photo.sort_key,
+                status=photo.status.value,
+                uploader_id=photo.uploader_id,
+                created_at=photo.created_at,
+                updated_at=photo.updated_at,
+                published_at=photo.published_at,
+            )
+        )
+        await self._session.flush()
+        return photo
+
+    async def update(self, photo: GalleryPhoto) -> GalleryPhoto:
+        record = await self._session.get(GalleryPhotoRecord, photo.id)
+        if record is None:
+            raise GalleryPhotoNotFoundError
+        record.title = photo.title
+        record.alt_text = photo.alt_text
+        record.description = photo.description
+        record.tags = list(photo.tags)
+        record.city = photo.city
+        record.state = photo.state
+        record.captured_at = photo.captured_at
+        record.crop_aspect = photo.crop_aspect
+        record.crop_x = photo.crop_x
+        record.crop_y = photo.crop_y
+        record.crop_zoom = photo.crop_zoom
+        record.staging_key = photo.staging_key
+        record.image_key = photo.image_key
+        record.thumbnail_key = photo.thumbnail_key
+        record.width = photo.width
+        record.height = photo.height
+        record.sort_key = photo.sort_key
+        record.status = photo.status.value
+        record.updated_at = photo.updated_at
+        record.published_at = photo.published_at
+        await self._session.flush()
+        return _to_domain_gallery_photo(record)
+
+    async def delete(self, photo_id: UUID) -> None:
+        record = await self._session.get(GalleryPhotoRecord, photo_id)
+        if record is None:
+            raise GalleryPhotoNotFoundError
+        await self._session.delete(record)
+        await self._session.flush()
+
+    async def get_by_id(self, photo_id: UUID) -> GalleryPhoto | None:
+        record = await self._session.get(GalleryPhotoRecord, photo_id)
+        return None if record is None else _to_domain_gallery_photo(record)
+
+    async def list_ready_page(
+        self,
+        *,
+        limit: int,
+        after: tuple[Decimal, UUID] | None,
+        tag: str | None,
+    ) -> list[GalleryPhoto]:
+        query = select(GalleryPhotoRecord).where(
+            GalleryPhotoRecord.status == GalleryPhotoStatus.READY.value
+        )
+        if tag is not None:
+            query = query.where(GalleryPhotoRecord.tags.any(tag))
+        if after is not None:
+            sort_key, photo_id = after
+            query = query.where(
+                or_(
+                    GalleryPhotoRecord.sort_key > sort_key,
+                    and_(
+                        GalleryPhotoRecord.sort_key == sort_key,
+                        GalleryPhotoRecord.id > photo_id,
+                    ),
+                )
+            )
+        result = await self._session.execute(
+            query.order_by(GalleryPhotoRecord.sort_key, GalleryPhotoRecord.id).limit(limit)
+        )
+        return [_to_domain_gallery_photo(record) for record in result.scalars().all()]
+
+    async def list_all(self) -> list[GalleryPhoto]:
+        result = await self._session.execute(
+            select(GalleryPhotoRecord).order_by(
+                GalleryPhotoRecord.sort_key,
+                GalleryPhotoRecord.id,
+            )
+        )
+        return [_to_domain_gallery_photo(record) for record in result.scalars().all()]
+
+    async def max_sort_key(self) -> Decimal | None:
+        result = await self._session.execute(select(func.max(GalleryPhotoRecord.sort_key)))
+        value = result.scalar_one_or_none()
+        return None if value is None else Decimal(value)

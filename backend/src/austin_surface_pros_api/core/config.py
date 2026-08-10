@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_access_token_expires_minutes: int = 60
     blog_uploads_dir: str = "uploads/blog"
+    enable_gallery_storage: bool = False
+    gallery_bucket_name: str | None = None
+    gallery_region: str = "us-east-1"
+    gallery_public_base_url: str = ""
+    gallery_upload_expires_seconds: int = 300
 
     @model_validator(mode="after")
     def validate_integrations(self) -> Settings:
@@ -37,6 +42,8 @@ class Settings(BaseSettings):
             raise ValueError(
                 "ses_source_email and ses_recipient_emails are required when enable_ses is true"
             )
+        if self.enable_gallery_storage and self.gallery_bucket_name is None:
+            raise ValueError("gallery_bucket_name is required when gallery storage is enabled")
         if (
             self.environment == "production"
             and self.jwt_secret_key == INSECURE_DEFAULT_JWT_SECRET_KEY

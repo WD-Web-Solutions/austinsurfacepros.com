@@ -1,7 +1,17 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import DateTime, ForeignKey, String, Text, UniqueConstraint, func
+from sqlalchemy import (
+    DateTime,
+    ForeignKey,
+    Index,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.dialects.postgresql import UUID as PostgresUUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -105,13 +115,48 @@ class ContactRequestRecord(Base):
 
     id: Mapped[UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True)
     name: Mapped[str] = mapped_column(String(200))
-    email_address: Mapped[str] = mapped_column(String(254))
+    email_address: Mapped[str | None] = mapped_column(String(254))
     company: Mapped[str | None] = mapped_column(String(200))
     phone: Mapped[str | None] = mapped_column(String(40))
+    property_type: Mapped[str] = mapped_column(String(120))
     service: Mapped[str] = mapped_column(String(200))
     message: Mapped[str] = mapped_column(Text)
+    address_line: Mapped[str] = mapped_column(String(240))
+    city: Mapped[str] = mapped_column(String(120))
+    state: Mapped[str] = mapped_column(String(60))
+    postal_code: Mapped[str] = mapped_column(String(10))
+    timeline: Mapped[str] = mapped_column(String(120))
     status: Mapped[str] = mapped_column(String(40), default="received")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
     )
+
+
+class GalleryPhotoRecord(Base):
+    __tablename__ = "gallery_photos"
+    __table_args__ = (Index("ix_gallery_photos_public_order", "status", "sort_key", "id"),)
+
+    id: Mapped[UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True)
+    title: Mapped[str] = mapped_column(String(160))
+    alt_text: Mapped[str] = mapped_column(String(300))
+    description: Mapped[str] = mapped_column(String(1000), default="")
+    tags: Mapped[list[str]] = mapped_column(ARRAY(String(60)))
+    city: Mapped[str | None] = mapped_column(String(120))
+    state: Mapped[str | None] = mapped_column(String(120))
+    captured_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    crop_aspect: Mapped[str] = mapped_column(String(20))
+    crop_x: Mapped[float] = mapped_column(Numeric(6, 3))
+    crop_y: Mapped[float] = mapped_column(Numeric(6, 3))
+    crop_zoom: Mapped[float] = mapped_column(Numeric(6, 3))
+    staging_key: Mapped[str | None] = mapped_column(String(500))
+    image_key: Mapped[str | None] = mapped_column(String(500), unique=True)
+    thumbnail_key: Mapped[str | None] = mapped_column(String(500), unique=True)
+    width: Mapped[int | None] = mapped_column(Integer)
+    height: Mapped[int | None] = mapped_column(Integer)
+    sort_key: Mapped[float] = mapped_column(Numeric(30, 12))
+    status: Mapped[str] = mapped_column(String(20))
+    uploader_id: Mapped[UUID] = mapped_column(PostgresUUID(as_uuid=True), ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

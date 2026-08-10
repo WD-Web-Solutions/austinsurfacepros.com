@@ -100,9 +100,11 @@ class BlogService:
         if post is None:
             raise PostNotFoundError
 
+        slug = await self._unique_slug(command.title, excluded_post_id=post.id)
         updated = replace(
             post,
             title=command.title,
+            slug=slug,
             excerpt=command.excerpt,
             body=command.body,
             tags=_normalize_tags(command.tags),
@@ -212,11 +214,15 @@ class BlogService:
     async def list_subscriptions(self, user_id: UUID) -> list[TagSubscription]:
         return await self._subscriptions.list_for_user(user_id)
 
-    async def _unique_slug(self, title: str) -> str:
+    async def _unique_slug(
+        self, title: str, excluded_post_id: UUID | None = None
+    ) -> str:
         base_slug = slugify(title)
         slug = base_slug
         suffix = 2
-        while await self._posts.slug_exists(slug):
+        existing = await self._posts.get_by_slug(slug)
+        while existing is not None and existing.id != excluded_post_id:
             slug = f"{base_slug}-{suffix}"
             suffix += 1
+            existing = await self._posts.get_by_slug(slug)
         return slug

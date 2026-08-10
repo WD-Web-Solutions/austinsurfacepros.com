@@ -37,6 +37,12 @@ describe('ContactService', () => {
 
   it('submits the contact request to the backend API', () => {
     const payload: ContactFormPayload = {
+      propertyType: 'Retail or office',
+      addressLine: '100 Congress Ave',
+      city: 'Austin',
+      state: 'TX',
+      postalCode: '78701',
+      timeline: 'Within 1–3 months',
       name: 'Taylor Client',
       emailAddress: 'taylor@example.com',
       service: 'Parking Lot Striping',

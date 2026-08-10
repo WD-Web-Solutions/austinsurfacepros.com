@@ -2,12 +2,18 @@ import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface ContactFormPayload {
-  name: string;
-  emailAddress: string;
-  company?: string;
-  phone?: string;
+  propertyType: string;
   service: string;
   message: string;
+  addressLine: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  timeline: string;
+  name: string;
+  emailAddress?: string;
+  company?: string;
+  phone?: string;
 }
 
 export interface ContactResponse {

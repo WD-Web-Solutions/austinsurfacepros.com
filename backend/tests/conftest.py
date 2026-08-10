@@ -1,6 +1,7 @@
 from collections.abc import Iterator
 from dataclasses import replace
 from datetime import datetime
+from decimal import Decimal
 from uuid import UUID
 
 import pytest
@@ -17,12 +18,18 @@ from austin_surface_pros_api.domain.blog import (
     TagSubscription,
 )
 from austin_surface_pros_api.domain.contacts import ContactRequest
+from austin_surface_pros_api.domain.gallery import GalleryPhoto, GalleryPhotoNotFoundError
+from austin_surface_pros_api.domain.gallery_storage import (
+    PresignedGalleryUpload,
+    ProcessedGalleryImage,
+)
 from austin_surface_pros_api.domain.users import AccountStatus, User, UserNotFoundError, UserRole
 from austin_surface_pros_api.main import create_app
 from austin_surface_pros_api.services.admin import AdminService
 from austin_surface_pros_api.services.auth import AuthService
 from austin_surface_pros_api.services.blog import BlogService
 from austin_surface_pros_api.services.contact_requests import ContactRequestService
+from austin_surface_pros_api.services.gallery import GalleryService
 
 
 class InMemoryContactRequestRepository:
@@ -195,6 +202,95 @@ class InMemoryTagSubscriptionRepository:
         return [sub for sub in self.subscriptions if sub.user_id == user_id]
 
 
+class InMemoryGalleryPhotoRepository:
+    def __init__(self) -> None:
+        self.photos: list[GalleryPhoto] = []
+        self.update_count = 0
+
+    async def add(self, photo: GalleryPhoto) -> GalleryPhoto:
+        self.photos.append(photo)
+        return photo
+
+    async def update(self, photo: GalleryPhoto) -> GalleryPhoto:
+        for index, current in enumerate(self.photos):
+            if current.id == photo.id:
+                self.photos[index] = photo
+                self.update_count += 1
+                return photo
+        raise GalleryPhotoNotFoundError
+
+    async def delete(self, photo_id: UUID) -> None:
+        for index, photo in enumerate(self.photos):
+            if photo.id == photo_id:
+                del self.photos[index]
+                return
+        raise GalleryPhotoNotFoundError
+
+    async def get_by_id(self, photo_id: UUID) -> GalleryPhoto | None:
+        return next((photo for photo in self.photos if photo.id == photo_id), None)
+
+    async def list_ready_page(
+        self,
+        *,
+        limit: int,
+        after: tuple[Decimal, UUID] | None,
+        tag: str | None,
+    ) -> list[GalleryPhoto]:
+        from austin_surface_pros_api.domain.gallery import GalleryPhotoStatus
+
+        photos = [photo for photo in self.photos if photo.status is GalleryPhotoStatus.READY]
+        if tag:
+            photos = [photo for photo in photos if tag in photo.tags]
+        photos.sort(key=lambda photo: (photo.sort_key, photo.id))
+        if after:
+            photos = [photo for photo in photos if (photo.sort_key, photo.id) > after]
+        return photos[:limit]
+
+    async def list_all(self) -> list[GalleryPhoto]:
+        return sorted(self.photos, key=lambda photo: (photo.sort_key, photo.id))
+
+    async def max_sort_key(self) -> Decimal | None:
+        return max((photo.sort_key for photo in self.photos), default=None)
+
+
+class FakeGalleryObjectStorage:
+    def __init__(self) -> None:
+        self.created: list[tuple[UUID, str]] = []
+        self.processed: list[tuple[UUID, str]] = []
+        self.deleted: list[tuple[str, ...]] = []
+
+    async def create_upload(
+        self,
+        *,
+        photo_id: UUID,
+        content_type: str,
+    ) -> PresignedGalleryUpload:
+        self.created.append((photo_id, content_type))
+        return PresignedGalleryUpload(
+            url="https://uploads.example.test/signed",
+            key=f"gallery-media/staging/{photo_id}/original",
+            headers={"Content-Type": content_type},
+            expires_in_seconds=300,
+        )
+
+    async def process_upload(
+        self,
+        *,
+        photo_id: UUID,
+        staging_key: str,
+    ) -> ProcessedGalleryImage:
+        self.processed.append((photo_id, staging_key))
+        return ProcessedGalleryImage(
+            image_key=f"gallery-media/processed/{photo_id}/display.webp",
+            thumbnail_key=f"gallery-media/processed/{photo_id}/thumbnail.webp",
+            width=1600,
+            height=1200,
+        )
+
+    async def delete_objects(self, keys: tuple[str, ...]) -> None:
+        self.deleted.append(keys)
+
+
 class FakeFileStorage:
     def __init__(self) -> None:
         self.saved: list[tuple[bytes, str]] = []
@@ -270,6 +366,24 @@ def file_storage() -> FakeFileStorage:
 
 
 @pytest.fixture
+def gallery_photo_repository() -> InMemoryGalleryPhotoRepository:
+    return InMemoryGalleryPhotoRepository()
+
+
+@pytest.fixture
+def gallery_object_storage() -> FakeGalleryObjectStorage:
+    return FakeGalleryObjectStorage()
+
+
+@pytest.fixture
+def gallery_service(
+    gallery_photo_repository: InMemoryGalleryPhotoRepository,
+    gallery_object_storage: FakeGalleryObjectStorage,
+) -> GalleryService:
+    return GalleryService(gallery_photo_repository, gallery_object_storage)
+
+
+@pytest.fixture
 def blog_service(
     blog_post_repository: InMemoryBlogPostRepository,
     comment_repository: InMemoryCommentRepository,
@@ -285,6 +399,7 @@ def app(
     admin_service: AdminService,
     blog_service: BlogService,
     file_storage: FakeFileStorage,
+    gallery_service: GalleryService,
 ) -> FastAPI:
     settings = Settings(environment="test", cors_origins=[], database_url=None)
     return create_app(
@@ -294,6 +409,7 @@ def app(
         admin_service_provider=lambda: admin_service,
         blog_service_provider=lambda: blog_service,
         file_storage_provider=lambda: file_storage,
+        gallery_service_provider=lambda: gallery_service,
     )
 
 

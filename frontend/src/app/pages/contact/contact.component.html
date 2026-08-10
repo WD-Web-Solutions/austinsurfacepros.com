@@ -1,772 +1,375 @@
-<!-- Contact Hero -->
-
-<section
-  class="
-    relative
-    overflow-hidden
-    bg-gray-900
-    py-24
-  "
->
-
-  <app-hero-video></app-hero-video>
-
-  <div
-    class="
-      relative
-      z-10
-      mx-auto
-      max-w-7xl
-      px-6
-      text-center
-    "
+<section class="estimate-page" aria-labelledby="estimate-title">
+  <form
+    #estimateForm
+    class="guided-estimate"
+    [formGroup]="contactForm"
+    (ngSubmit)="submitContactForm()"
+    aria-labelledby="estimate-title"
+    aria-describedby="estimate-privacy-note"
+    [attr.aria-busy]="isSubmitting"
+    novalidate
   >
+    <nav class="estimate-rail" aria-label="Estimate request steps">
+      <strong>START A PROJECT</strong>
+      @for (step of steps; track step; let index = $index) {
+        <button
+          type="button"
+          [class.is-active]="currentStep === index + 1"
+          [class.is-done]="currentStep > index + 1"
+          [attr.aria-label]="'Step ' + (index + 1) + ': ' + step"
+          [attr.aria-current]="currentStep === index + 1 ? 'step' : null"
+          (click)="goToStep(index + 1)"
+        >
+          <i aria-hidden="true">{{ currentStep > index + 1 ? '✓' : index + 1 }}</i>
+          <span>{{ step }}</span>
+        </button>
+      }
+      <small>Five calm steps<br>No obligation</small>
+    </nav>
 
-    <p
-      class="
-        text-sm
-        font-semibold
-        uppercase
-        tracking-widest
-        text-orange-400
-      "
-    >
-      Austin Surface Pros
-    </p>
+    <section class="estimate-panel" [attr.aria-labelledby]="'step-title-' + currentStep">
+      <h1 id="estimate-title" class="estimate-title">Request an estimate</h1>
+      <p class="step-count">STEP {{ currentStep }} OF {{ steps.length }}</p>
 
+      @if (currentStep === 1) {
+        <div class="step-content">
+          <h2 id="step-title-1">Tell us about<br>the property.</h2>
+          <p class="step-lede">Choose the closest property type and confirm its address.</p>
+          <div class="choice-grid property-choices" role="group" aria-label="Property type" tabindex="-1" [attr.aria-invalid]="hasError('propertyType') ? 'true' : null">
+            @for (property of propertyTypes; track property.value) {
+              <button
+                type="button"
+                [class.is-selected]="contactForm.controls.propertyType.value === property.value"
+                [attr.aria-pressed]="contactForm.controls.propertyType.value === property.value"
+                (click)="chooseProperty(property.value)"
+              >
+                <i aria-hidden="true">{{ property.icon }}</i>
+                <span>{{ property.value }}</span>
+                <b aria-hidden="true">{{ contactForm.controls.propertyType.value === property.value ? '✓' : '+' }}</b>
+              </button>
+            }
+          </div>
+          @if (hasError('propertyType')) {
+            <p class="field-error" role="alert">Choose a property type.</p>
+          }
 
-    <h1
-      class="
-        mt-4
-        text-5xl
-        font-bold
-        text-white
-        md:text-6xl
-      "
-    >
-      Request a Project Estimate
-    </h1>
+          <div class="property-address">
+            <label class="field-label" for="contact-address">
+              Project address <span>(required)</span>
+            </label>
+            <div class="address-combobox">
+              <div class="address-search-row">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <input
+                  id="contact-address"
+                  type="search"
+                  formControlName="addressLine"
+                  autocomplete="street-address"
+                  placeholder="Start typing the property address"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-controls="contact-address-suggestions"
+                  [attr.aria-expanded]="addressSuggestionsOpen()"
+                  [attr.aria-activedescendant]="activeAddressSuggestionIndex() >= 0 ? 'contact-address-option-' + activeAddressSuggestionIndex() : null"
+                  [attr.aria-invalid]="hasError('addressLine') || hasError('addressVerified') ? 'true' : null"
+                  [attr.aria-describedby]="hasError('addressLine') || hasError('addressVerified') ? 'contact-address-error contact-address-privacy' : 'contact-address-privacy'"
+                  (focus)="onAddressFocus()"
+                  (blur)="onAddressBlur()"
+                  (keydown)="onAddressKeydown($event)"
+                  required
+                >
+                <button
+                  type="button"
+                  (click)="checkAddressCoverage()"
+                  [disabled]="contactForm.controls.addressVerified.value || contactForm.controls.addressLine.value.trim().length < minimumAddressSearchLength || isSearchingAddress()"
+                >
+                  @if (contactForm.controls.addressVerified.value) {
+                    Checked
+                  } @else if (isSearchingAddress()) {
+                    <span class="address-spinner" aria-hidden="true"></span>
+                    <span class="sr-only">Searching addresses</span>
+                  } @else {
+                    Check
+                  }
+                </button>
+              </div>
 
+              @if (addressSuggestionsOpen()) {
+                <div id="contact-address-suggestions" class="address-suggestions" role="listbox" aria-label="Address suggestions">
+                  @for (suggestion of addressSuggestions(); track suggestion.label; let index = $index) {
+                    <button
+                      [id]="'contact-address-option-' + index"
+                      type="button"
+                      role="option"
+                      tabindex="-1"
+                      [attr.aria-selected]="activeAddressSuggestionIndex() === index"
+                      [class.is-active]="activeAddressSuggestionIndex() === index"
+                      (mousedown)="$event.preventDefault()"
+                      (click)="selectAddressSuggestion(suggestion)"
+                    >
+                      <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                      <span>{{ suggestion.label }}</span>
+                    </button>
+                  }
+                </div>
+              }
+            </div>
 
-    <p
-      class="
-        mx-auto
-        mt-6
-        max-w-3xl
-        text-xl
-        text-gray-300
-      "
-    >
-      Tell us about your asphalt, concrete, striping,
-      or commercial surface project.
-    </p>
+            <p id="contact-address-privacy" class="address-privacy">
+              After four characters, your address text is sent to
+              <a href="https://github.com/komoot/photon" target="_blank" rel="noopener noreferrer">Photon by Komoot<span class="sr-only"> (opens in a new tab)</span></a>
+              for suggestions. We use the selected location to estimate coverage and
+              include the address only if you submit this request. See our
+              <a routerLink="/privacy-policy">Privacy Policy</a>.
+            </p>
 
+            @if (addressLookupMessage()) {
+              <p class="field-error" role="status">{{ addressLookupMessage() }}</p>
+            }
+            @if (hasError('addressLine') || hasError('addressVerified')) {
+              <p id="contact-address-error" class="field-error" role="alert">
+                Choose a suggested property address so we can check the service range.
+              </p>
+            }
 
-  </div>
+            @if (addressCoverage(); as coverage) {
+              <div class="address-coverage" [class.address-coverage--outside]="coverage.kind === 'outside'" role="status">
+                <i class="fa-solid" [class.fa-circle-check]="coverage.kind === 'covered'" [class.fa-route]="coverage.kind === 'outside'" aria-hidden="true"></i>
+                <p>
+                  <strong>{{ coverage.kind === 'covered' ? 'Within our preliminary core area' : 'Outside our core service area' }}</strong>
+                  <span>
+                    Approximately {{ coverage.roundedDistanceMiles }} miles from central Austin.
+                    {{ coverage.kind === 'outside' ? 'You can still continue and request an individual review.' : 'Final availability is confirmed during estimate review.' }}
+                  </span>
+                </p>
+              </div>
+            }
 
-</section>
+            <div class="address-grid">
+              <div>
+                <label class="field-label" for="contact-city">City <span>(required)</span></label>
+                <input id="contact-city" type="text" formControlName="city" autocomplete="address-level2" placeholder="Austin" required [attr.aria-invalid]="hasError('city') ? 'true' : null">
+              </div>
+              <div>
+                <label class="field-label" for="contact-state">State <span>(required)</span></label>
+                <input id="contact-state" type="text" formControlName="state" autocomplete="address-level1" placeholder="TX" required [attr.aria-invalid]="hasError('state') ? 'true' : null">
+              </div>
+              <div>
+                <label class="field-label" for="contact-postal">ZIP code <span>(required)</span></label>
+                <input id="contact-postal" type="text" formControlName="postalCode" autocomplete="postal-code" inputmode="numeric" placeholder="78701" required [attr.aria-invalid]="hasError('postalCode') ? 'true' : null" [attr.aria-describedby]="hasError('postalCode') ? 'contact-postal-error' : null">
+              </div>
+            </div>
+            @if (hasError('city') || hasError('state') || hasError('postalCode')) {
+              <p id="contact-postal-error" class="field-error">Enter a valid city, state, and five-digit ZIP code.</p>
+            }
+          </div>
+        </div>
+      }
 
+      @if (currentStep === 2) {
+        <div class="step-content">
+          <h2 id="step-title-2">Which surfaces need<br>attention?</h2>
+          <p class="step-lede">Choose every service that may be part of the project.</p>
 
-
-
-<!-- Contact Form -->
-
-<section
-  class="
-    py-20
-  "
->
-
-  <div
-    class="
-      mx-auto
-      grid
-      max-w-7xl
-      gap-12
-      px-6
-      lg:grid-cols-2
-    "
-  >
-
-
-    <!-- Contact Information -->
-
-    <div>
-
-
-      <h2
-        id="estimate-form-heading"
-        class="
-          text-4xl
-          font-bold
-          text-gray-900
-        "
-      >
-        Let's Talk About Your Project
-      </h2>
-
-
-
-      <p
-        class="
-          mt-6
-          text-lg
-          leading-relaxed
-          text-gray-600
-        "
-      >
-        Austin Surface Pros provides commercial
-        asphalt, concrete, and pavement solutions
-        throughout Central Texas.
-      </p>
-
-
-
-      <div
-        class="
-          mt-8
-          space-y-5
-        "
-      >
-
-        <div>
-
-          <h3
-            class="
-              font-semibold
-              text-gray-900
-            "
+          <fieldset
+            class="service-fieldset"
+            tabindex="-1"
+            [attr.aria-invalid]="hasError('service') ? 'true' : null"
+            [attr.aria-describedby]="hasError('service') ? 'contact-service-error' : null"
           >
-            Address
-          </h3>
+            <legend class="field-label">
+              Services <span>(choose one or more)</span>
+            </legend>
+            <div class="service-choices">
+              @for (service of services; track service.value) {
+                <button
+                  type="button"
+                  [class.is-selected]="isServiceSelected(service.value)"
+                  [attr.aria-pressed]="isServiceSelected(service.value)"
+                  (click)="toggleService(service.value)"
+                >
+                  <i [class]="'fa-solid fa-' + service.icon" aria-hidden="true"></i>
+                  <span>{{ service.label }}</span>
+                  <b aria-hidden="true">{{ isServiceSelected(service.value) ? '✓' : '+' }}</b>
+                </button>
+              }
+            </div>
+          </fieldset>
+          @if (hasError('service')) {
+            <p id="contact-service-error" class="field-error">Choose at least one service.</p>
+          }
 
-          <p
-            class="
-              text-gray-600
-            "
-          >
-            1239 County Road 250
-            <br>
-            Georgetown, TX 78633
+          <label class="field-label details-label" for="contact-message">
+            What should we know? <span>(required)</span>
+          </label>
+          <textarea
+            id="contact-message"
+            formControlName="message"
+            rows="5"
+            required
+            placeholder="Cracking near the loading area, faded striping, access limits, approximate size..."
+            [attr.aria-invalid]="hasError('message') ? 'true' : null"
+            [attr.aria-describedby]="hasError('message') ? 'contact-message-error' : null"
+          ></textarea>
+          @if (hasError('message')) {
+            <p id="contact-message-error" class="field-error">Add a short project description.</p>
+          }
+        </div>
+      }
+
+      @if (currentStep === 3) {
+        <div class="step-content">
+          <h2 id="step-title-3">When would you like<br>the work completed?</h2>
+          <p class="step-lede">This helps us suggest the most realistic next step.</p>
+          <div class="choice-grid timing-choices" role="group" aria-label="Desired project timing" tabindex="-1" [attr.aria-invalid]="hasError('timeline') ? 'true' : null">
+            @for (timeline of timelines; track timeline) {
+              <button
+                type="button"
+                [class.is-selected]="contactForm.controls.timeline.value === timeline"
+                [attr.aria-pressed]="contactForm.controls.timeline.value === timeline"
+                (click)="chooseTimeline(timeline)"
+              >
+                <span>{{ timeline }}</span><b aria-hidden="true">→</b>
+              </button>
+            }
+          </div>
+          @if (hasError('timeline')) {
+            <p class="field-error" role="alert">Choose an approximate timeline.</p>
+          }
+        </div>
+      }
+
+      @if (currentStep === 4) {
+        <div class="step-content">
+          <h2 id="step-title-4">Have photos ready?</h2>
+          <p class="step-lede">Optional: select up to three photos to organize before we follow up.</p>
+
+          <label class="photo-drop" for="contact-photos">
+            <input
+              id="contact-photos"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              (change)="handlePhotos($event)"
+              [attr.aria-describedby]="photoError ? 'photo-error photo-privacy-note' : 'photo-privacy-note'"
+            >
+            <i aria-hidden="true">＋</i>
+            <strong>Drop photos here or choose files</strong>
+            <span>JPEG, PNG, or WebP · up to 3 files · 5 MB each</span>
+          </label>
+          <p id="photo-privacy-note" class="photo-notice">
+            Photos remain on this device and are not submitted with this form.
+            We can request them during follow-up using your chosen contact method.
+          </p>
+          @if (photoError) {
+            <p id="photo-error" class="field-error" role="alert">{{ photoError }}</p>
+          }
+          @if (selectedPhotos.length) {
+            <ul class="photo-list" aria-label="Selected photos">
+              @for (photo of selectedPhotos; track $index; let index = $index) {
+                <li><span>{{ photo.name }}</span><button type="button" (click)="removePhoto(index)" [attr.aria-label]="'Remove ' + photo.name">Remove</button></li>
+              }
+            </ul>
+          }
+        </div>
+      }
+
+      @if (currentStep === 5) {
+        <div class="step-content">
+          <h2 id="step-title-5">Where should we send<br>your next steps?</h2>
+          <p class="step-lede">Provide an email address, a phone number, or both.</p>
+
+          <div class="contact-grid">
+            <div>
+              <label class="field-label" for="contact-name">Name <span>(required)</span></label>
+              <input id="contact-name" type="text" formControlName="name" autocomplete="name" placeholder="Jordan Lee" required [attr.aria-invalid]="hasError('name') ? 'true' : null" [attr.aria-describedby]="hasError('name') ? 'contact-name-error' : null">
+              @if (hasError('name')) { <p id="contact-name-error" class="field-error">Enter your name.</p> }
+            </div>
+            <div>
+              <label class="field-label" for="contact-company">Company <span>(optional)</span></label>
+              <input id="contact-company" type="text" formControlName="company" autocomplete="organization" placeholder="Capitol Plaza Management">
+            </div>
+          </div>
+
+          <fieldset class="contact-methods" [attr.aria-describedby]="hasContactMethodError ? 'contact-method-error' : 'contact-method-note'">
+            <legend>Contact method <span>(at least one required)</span></legend>
+            <p id="contact-method-note">Email and phone appear together so you can choose how we follow up.</p>
+            <div class="contact-grid">
+              <div>
+                <label class="field-label" for="contact-email">Email</label>
+                <input id="contact-email" type="email" formControlName="emailAddress" autocomplete="email" placeholder="jordan.lee@example.com" [attr.aria-invalid]="hasError('emailAddress') || hasContactMethodError ? 'true' : null" [attr.aria-describedby]="hasError('emailAddress') ? 'contact-email-error' : null">
+                @if (hasError('emailAddress')) { <p id="contact-email-error" class="field-error">Enter a valid email address.</p> }
+              </div>
+              <div>
+                <label class="field-label" for="contact-phone">Phone</label>
+                <input id="contact-phone" type="tel" formControlName="phone" autocomplete="tel" inputmode="tel" placeholder="512-555-0147" [attr.aria-invalid]="hasContactMethodError ? 'true' : null">
+              </div>
+            </div>
+            @if (hasContactMethodError) {
+              <p id="contact-method-error" class="field-error" role="alert">Provide an email address, a phone number, or both.</p>
+            }
+          </fieldset>
+
+          <p id="estimate-privacy-note" class="privacy-note">
+            We use your project, address, and contact details to review and respond
+            to this request. See our <a routerLink="/privacy-policy">Privacy Policy</a>.
           </p>
 
+          @if (isDemo) {
+            <p class="demo-note">Demo mode: the request is validated locally and is not sent or saved.</p>
+          }
         </div>
+      }
 
-
-
-        <div>
-
-          <h3
-            class="
-              font-semibold
-              text-gray-900
-            "
-          >
-            Email
-          </h3>
-
-          <a
-            href="mailto:matt&#64;austinsurfacepros.com"
-            class="
-                text-blue-600
-                hover:underline
-            "
-            >
-            matt&#64;austinsurfacepros.com
-            </a>
-
-        </div>
-
-
+      <div class="form-status" aria-live="polite" aria-atomic="true">
+        @if (errorMessage) { <p class="status-error" role="alert">{{ errorMessage }}</p> }
+        @if (successMessage) { <p class="status-success" role="status">{{ successMessage }}</p> }
       </div>
 
-
-
-      <div
-        class="
-          mt-10
-          rounded-xl
-          bg-gray-100
-          p-6
-        "
-      >
-
-        <h3
-          class="
-            text-xl
-            font-bold
-            text-gray-900
-          "
-        >
-          Services We Provide
-        </h3>
-
-
-        <ul
-          class="
-            mt-4
-            space-y-2
-            text-gray-600
-          "
-        >
-
-          <li>
-            ✓ Parking Lot Striping
-          </li>
-
-          <li>
-            ✓ Steel Coating
-          </li>
-
-          <li>
-            ✓ Asphalt Seal Coating
-          </li>
-
-          <li>
-            ✓ Concrete Repairs
-          </li>
-
-          <li>
-            ✓ Commercial Safety Improvements
-          </li>
-
-        </ul>
-
+      <div class="step-actions">
+        <button class="back-button" type="button" (click)="previousStep()" [disabled]="currentStep === 1">← Back</button>
+        @if (currentStep < steps.length) {
+          <button class="next-button" type="button" (click)="nextStep()">Continue <span aria-hidden="true">→</span></button>
+        } @else {
+          <button class="next-button" type="submit" [disabled]="isSubmitting">{{ isSubmitting ? 'Sending…' : 'Send my project brief' }} <span aria-hidden="true">→</span></button>
+        }
       </div>
+    </section>
 
+    <aside class="estimate-aside">
+      <img src="/assets/images/design-lab/parking-aerial.jpg" alt="Aerial view of a commercial parking surface">
+      <div>
+        <span>WHAT HAPPENS NEXT</span>
+        <h2>A real person reviews every request.</h2>
+        <ol>
+          <li><b>01</b><p><strong>Scope review</strong><small>We read the project details and check the address.</small></p></li>
+          <li><b>02</b><p><strong>Quick follow-up</strong><small>We contact you by email or phone within one business day.</small></p></li>
+          <li><b>03</b><p><strong>Site walk</strong><small>If it is a fit, we schedule an on-site assessment.</small></p></li>
+        </ol>
+        <a href="mailto:austinsurfacepros@gmail.com">austinsurfacepros&#64;gmail.com</a>
+      </div>
+    </aside>
+  </form>
 
+  <dialog
+    #serviceabilityDialog
+    class="serviceability-dialog"
+    aria-labelledby="serviceability-dialog-title"
+    aria-describedby="serviceability-dialog-description"
+    (cancel)="closeServiceabilityDialog()"
+  >
+    <button class="dialog-close" type="button" aria-label="Close serviceability notice" (click)="closeServiceabilityDialog()">×</button>
+    <i class="fa-solid fa-route" aria-hidden="true"></i>
+    <h2 id="serviceability-dialog-title">This property might be outside our serviceable range.</h2>
+    <p id="serviceability-dialog-description">
+      The selected address is outside our {{ coreRadiusMiles }}-mile core service
+      area. Regional and multi-property work is reviewed individually, so you can
+      still send the request for our team to review.
+    </p>
+    <div class="dialog-actions">
+      <button type="button" class="dialog-primary" (click)="continueOutsideServiceArea()">Continue anyway</button>
+      <a routerLink="/services" fragment="service-area-checker" (click)="closeServiceabilityDialog()">Review the service-area checker</a>
+      <button type="button" class="dialog-secondary" (click)="closeServiceabilityDialog()">Keep editing</button>
     </div>
-
-
-
-
-
-    <!-- Form -->
-
-    <form
-
-      #estimateForm
-
-      [formGroup]="contactForm"
-
-      (ngSubmit)="submitContactForm()"
-
-      aria-labelledby="estimate-form-heading"
-
-      aria-describedby="required-fields-note privacy-form-note"
-
-      [attr.aria-busy]="isSubmitting"
-
-      novalidate
-
-      class="
-        rounded-xl
-        bg-white
-        p-8
-        shadow-lg
-      "
-
-    >
-
-      <p id="required-fields-note" class="mb-6 text-sm text-gray-600">
-        Fields marked "required" must be completed.
-      </p>
-
-
-      <div
-        class="
-          grid
-          gap-6
-          md:grid-cols-2
-        "
-      >
-
-
-        <!-- Name -->
-
-        <label for="contact-name">
-
-          <span
-            class="
-              font-semibold
-              text-gray-900
-            "
-          >
-            Name <span class="text-sm font-normal text-gray-600">(required)</span>
-          </span>
-
-
-          <input
-
-            id="contact-name"
-
-            name="name"
-
-            type="text"
-
-            formControlName="name"
-
-            autocomplete="name"
-
-            required
-
-            [attr.aria-invalid]="hasError('name') ? 'true' : null"
-
-            [attr.aria-describedby]="hasError('name') ? 'contact-name-error' : null"
-
-            class="
-              mt-2
-              w-full
-              rounded-lg
-              border
-              border-gray-500
-              p-3
-              focus:border-blue-500
-              focus:outline-none
-            "
-
-          />
-
-
-          @if(hasError('name'))
-          {
-
-            <small
-              id="contact-name-error"
-              class="
-                text-red-600
-              "
-            >
-              Enter your name.
-            </small>
-
-          }
-
-
-        </label>
-
-
-
-
-        <!-- Company -->
-
-        <label for="contact-company">
-
-          <span
-            class="
-              font-semibold
-              text-gray-900
-            "
-          >
-            Company <span class="text-sm font-normal text-gray-600">(optional)</span>
-          </span>
-
-
-          <input
-
-            id="contact-company"
-
-            name="company"
-
-            type="text"
-
-            formControlName="company"
-
-            autocomplete="organization"
-
-            class="
-              mt-2
-              w-full
-              rounded-lg
-              border
-              border-gray-500
-              p-3
-            "
-
-          />
-
-        </label>
-
-
-      </div>
-
-
-
-
-
-      <div
-        class="
-          mt-6
-          grid
-          gap-6
-          md:grid-cols-2
-        "
-      >
-
-
-        <label for="contact-email">
-
-          <span
-            class="
-              font-semibold
-              text-gray-900
-            "
-          >
-            Email <span class="text-sm font-normal text-gray-600">(required)</span>
-          </span>
-
-
-          <input
-
-            id="contact-email"
-
-            name="email"
-
-            type="email"
-
-            formControlName="emailAddress"
-
-            autocomplete="email"
-
-            required
-
-            [attr.aria-invalid]="hasError('emailAddress') ? 'true' : null"
-
-            [attr.aria-describedby]="hasError('emailAddress') ? 'contact-email-error' : null"
-
-            class="
-              mt-2
-              w-full
-              rounded-lg
-              border
-              border-gray-500
-              p-3
-            "
-
-          />
-
-
-
-          @if(hasError('emailAddress'))
-          {
-
-            <small
-              id="contact-email-error"
-              class="
-                text-red-600
-              "
-            >
-              Enter a valid email.
-            </small>
-
-          }
-
-
-        </label>
-
-
-
-
-        <label for="contact-phone">
-
-          <span
-            class="
-              font-semibold
-              text-gray-900
-            "
-          >
-            Phone <span class="text-sm font-normal text-gray-600">(optional)</span>
-          </span>
-
-
-          <input
-
-            id="contact-phone"
-
-            name="phone"
-
-            type="tel"
-
-            formControlName="phone"
-
-            autocomplete="tel"
-
-            inputmode="tel"
-
-            class="
-              mt-2
-              w-full
-              rounded-lg
-              border
-              border-gray-500
-              p-3
-            "
-
-          />
-
-        </label>
-
-
-      </div>
-
-
-
-
-
-
-      <!-- Service -->
-
-      <label
-        for="contact-service"
-        class="
-          mt-6
-          block
-        "
-      >
-
-        <span
-          class="
-            font-semibold
-            text-gray-900
-          "
-        >
-          Service Needed <span class="text-sm font-normal text-gray-600">(required)</span>
-        </span>
-
-
-        <select
-
-          id="contact-service"
-
-          name="service"
-
-          formControlName="service"
-
-          required
-
-          [attr.aria-invalid]="hasError('service') ? 'true' : null"
-
-          [attr.aria-describedby]="hasError('service') ? 'contact-service-error' : null"
-
-          class="
-            mt-2
-            w-full
-            rounded-lg
-            border
-            border-gray-500
-            p-3
-          "
-
-        >
-
-          <option value="">
-            Select a service
-          </option>
-
-
-          @for(service of services; track service)
-          {
-
-            <option [value]="service">
-              {{service}}
-            </option>
-
-          }
-
-
-        </select>
-
-        @if(hasError('service'))
-        {
-          <small id="contact-service-error" class="text-red-700">
-            Select the service you need.
-          </small>
-        }
-
-
-      </label>
-
-
-
-
-
-
-      <!-- Message -->
-
-      <label
-        for="contact-message"
-        class="
-          mt-6
-          block
-        "
-      >
-
-        <span
-          class="
-            font-semibold
-            text-gray-900
-          "
-        >
-          Project Details <span class="text-sm font-normal text-gray-600">(required)</span>
-        </span>
-
-
-        <textarea
-
-          id="contact-message"
-
-          name="message"
-
-          formControlName="message"
-
-          rows="6"
-
-          required
-
-          [attr.aria-invalid]="hasError('message') ? 'true' : null"
-
-          [attr.aria-describedby]="hasError('message') ? 'contact-message-error' : null"
-
-          class="
-            mt-2
-            w-full
-            rounded-lg
-            border
-            border-gray-500
-            placeholder:text-gray-600
-            p-3
-          "
-
-          placeholder="Tell us about your project..."
-
-        ></textarea>
-
-
-
-        @if(hasError('message'))
-        {
-
-          <small
-            id="contact-message-error"
-            class="
-              text-red-600
-            "
-          >
-            Tell us about your project.
-          </small>
-
-        }
-
-
-      </label>
-
-
-      @if(isDemo)
-      {
-
-        <p
-          class="
-            mt-6
-            rounded-lg
-            border
-            border-amber-300
-            bg-amber-50
-            p-4
-            text-sm
-            text-amber-900
-          "
-        >
-          Demo mode: this form validates locally. Submissions are not sent or saved.
-        </p>
-
-      }
-
-
-
-
-
-      <button
-
-        type="submit"
-
-        [disabled]="isSubmitting"
-
-        class="
-          mt-8
-          rounded-lg
-          bg-blue-600
-          px-8
-          py-4
-          font-semibold
-          text-white
-          transition
-          hover:bg-blue-700
-          disabled:opacity-50
-        "
-
-      >
-
-        {{
-          isSubmitting
-            ? 'Sending...'
-            : 'Request Estimate'
-        }}
-
-      </button>
-
-      <p id="privacy-form-note" class="mt-4 max-w-xl text-sm leading-6 text-gray-600">
-        We use the information you submit to respond to your request and manage
-        any resulting project. Learn more in our
-        <a
-          routerLink="/privacy-policy"
-          class="font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900"
-        >
-          Privacy Policy
-        </a>.
-      </p>
-
-
-
-
-
-      @if(successMessage)
-      {
-
-        <p
-          role="status"
-          aria-live="polite"
-          class="
-            mt-6
-            text-green-600
-          "
-        >
-          {{successMessage}}
-        </p>
-
-      }
-
-
-
-
-      @if(errorMessage)
-      {
-
-        <p
-          role="alert"
-          class="
-            mt-6
-            text-red-600
-          "
-        >
-          {{errorMessage}}
-        </p>
-
-      }
-
-
-    </form>
-
-
-  </div>
-
+  </dialog>
 </section>

@@ -25,6 +25,9 @@ def create_api(
     ses_source_email: str | None,
     ses_recipient_emails: tuple[str, ...],
     ses_identity_arn: pulumi.Input[str] | None,
+    gallery_bucket_name: pulumi.Input[str] | None,
+    gallery_bucket_arn: pulumi.Input[str] | None,
+    enable_gallery_storage: bool,
     tags: dict[str, str],
     provider: aws.Provider,
 ) -> ApiOutputs:
@@ -72,6 +75,27 @@ def create_api(
             policy=send_email_policy.json,
             opts=pulumi.ResourceOptions(provider=provider),
         )
+    if gallery_bucket_arn is not None:
+        gallery_policy = aws.iam.get_policy_document_output(
+            statements=[
+                aws.iam.GetPolicyDocumentStatementArgs(
+                    sid="StageAndProcessGalleryPhotos",
+                    effect="Allow",
+                    actions=["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+                    resources=[
+                        pulumi.Output.concat(gallery_bucket_arn, "/gallery-media/staging/*"),
+                        pulumi.Output.concat(gallery_bucket_arn, "/gallery-media/processed/*"),
+                    ],
+                )
+            ],
+            opts=pulumi.InvokeOptions(provider=provider),
+        )
+        aws.iam.RolePolicy(
+            f"{name_prefix}-lambda-gallery-policy",
+            role=role.id,
+            policy=gallery_policy.json,
+            opts=pulumi.ResourceOptions(provider=provider),
+        )
 
     function_name = f"{name_prefix}-api"
     log_group = aws.cloudwatch.LogGroup(
@@ -90,11 +114,17 @@ def create_api(
         "ASP_ENABLE_SES": str(enable_ses).lower(),
         "ASP_SES_REGION": ses_region,
         "ASP_SES_RECIPIENT_EMAILS": json.dumps(ses_recipient_emails),
+        "ASP_ENABLE_GALLERY_STORAGE": str(enable_gallery_storage).lower(),
+        "ASP_GALLERY_REGION": ses_region,
+        "ASP_GALLERY_PUBLIC_BASE_URL": "",
+        "ASP_GALLERY_UPLOAD_EXPIRES_SECONDS": "300",
     }
     if database_url is not None:
         environment_variables["ASP_DATABASE_URL"] = database_url
     if ses_source_email is not None:
         environment_variables["ASP_SES_SOURCE_EMAIL"] = ses_source_email
+    if gallery_bucket_name is not None:
+        environment_variables["ASP_GALLERY_BUCKET_NAME"] = gallery_bucket_name
 
     function = aws.lambda_.Function(
         f"{name_prefix}-api",

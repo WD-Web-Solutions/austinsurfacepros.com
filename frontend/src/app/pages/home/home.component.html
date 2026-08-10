@@ -1,184 +1,41 @@
 <div>
 
 
-    <!-- HERO -->
-    
-    <section
-    
-    class="
-    relative
-    overflow-hidden
-    bg-gray-900
-    "
-    
-    >
+    <!-- HERO / Design Lab 04: Austin Night -->
+    <section class="home-night-hero" aria-labelledby="home-hero-title">
+      <img
+        class="home-night-hero__image"
+        src="/assets/images/design-lab/austin-river.jpg"
+        alt="Austin skyline and the Colorado River at dusk"
+        fetchpriority="high"
+      >
+      <div class="home-night-hero__scrim" aria-hidden="true"></div>
 
-    <app-hero-video></app-hero-video>
+      <div class="home-night-hero__rail" aria-hidden="true">
+        <span>Austin Surface Pros</span>
+        <span>Commercial · Multi-site · Local</span>
+      </div>
 
-    <div
+      <div class="home-night-hero__content">
+        <p class="home-night-hero__eyebrow">Austin's surface experts</p>
+        <h1 id="home-hero-title">
+          We improve the property
+          <em>without interrupting it.</em>
+        </h1>
+        <p class="home-night-hero__summary">
+          Professional asphalt, striping, coatings, and commercial property
+          improvements—planned around your operating hours.
+        </p>
+        <a routerLink="/services" class="home-night-hero__services-link">
+          Explore services <span aria-hidden="true">→</span>
+        </a>
+      </div>
 
-    class="
-    relative
-    z-10
-    mx-auto
-    max-w-7xl
-    px-6
-    py-24
-    lg:flex
-    lg:items-center
-    "
-    
-    >
-    
-    
-    <div
-    
-    class="
-    max-w-3xl
-    "
-    
-    >
-    
-    
-    <p
-    
-    class="
-    text-sm
-    font-semibold
-    uppercase
-    tracking-widest
-    text-orange-400
-    "
-    
-    >
-    
-    Austin's Surface Experts
-    
-    </p>
-    
-    
-    
-    <h1
-    
-    class="
-    mt-6
-    text-5xl
-    font-bold
-    leading-tight
-    text-white
-    
-    md:text-6xl
-    
-    "
-    
-    >
-    
-    Professional Surface Solutions
-    Built To Last
-    
-    </h1>
-    
-    
-    
-    
-    <p
-    
-    class="
-    mt-6
-    text-xl
-    leading-relaxed
-    text-gray-300
-    "
-    
-    >
-    
-    Austin Surface Pros provides professional asphalt,
-    striping, coatings, and commercial property
-    improvement solutions.
-    
-    </p>
-    
-    
-    
-    
-    <div
-    
-    class="
-    mt-10
-    flex
-    flex-wrap
-    gap-4
-    "
-    
-    >
-    
-    
-    <a
-    
-    routerLink="/contact"
-    
-    class="
-    rounded-lg
-    bg-blue-600
-    px-8
-    py-4
-    font-semibold
-    text-white
-    
-    transition
-    duration-300
-    
-    hover:-translate-y-1
-    hover:bg-blue-700
-    hover:shadow-xl
-    "
-    
-    >
-    
-    Request Estimate
-    
-    </a>
-    
-    
-    
-    <a
-    
-    routerLink="/services"
-    
-    class="
-    rounded-lg
-    border
-    border-white
-    px-8
-    py-4
-    font-semibold
-    text-white
-    
-    transition
-    duration-300
-    
-    hover:-translate-y-1
-    hover:bg-white
-    hover:text-gray-900
-    "
-    
-    >
-    
-    View Services
-    
-    </a>
-    
-    
-    </div>
-    
-    
-    
-    </div>
-    
-    
-    </div>
-    
-    
+      <a routerLink="/contact" class="home-night-hero__cta">
+        <small>Start here</small>
+        <span>Request Estimate</span>
+        <b aria-hidden="true">↗</b>
+      </a>
     </section>
     
     
@@ -451,14 +308,45 @@
     
     
     
-    <!-- FIELD NOTES -->
+    <!-- SERVICE AREAS -->
+
+    <section class="home-service-areas" aria-labelledby="home-service-areas-heading">
+      <div class="home-service-areas__inner">
+        <div class="home-service-areas__copy">
+          <p class="home-service-areas__eyebrow">Areas we serve</p>
+          <h2 id="home-service-areas-heading">
+            Commercial surface services across the Austin metro.
+          </h2>
+          <p>
+            Our core service area covers commercial properties within
+            {{ serviceAreaRadiusMiles }} miles of central Austin. Regional and
+            multi-property projects are reviewed individually.
+          </p>
+          <a routerLink="/services">
+            Explore our service area <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <ul class="home-service-areas__list" aria-label="Austin metro service areas">
+          @for (area of serviceAreas; track area) {
+            <li>
+              <span aria-hidden="true"></span>
+              {{ area }}, Texas
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- BLOG -->
 
     @if (recentBlogs().length) {
     <section class="home-blog-section">
       <div class="blog-shell">
         <div class="home-blog-heading">
-          <div><p class="blog-eyebrow">From the field</p><h2>Practical notes for better surfaces.</h2><p>Planning guidance for property teams who want fewer surprises and longer-lasting work.</p></div>
-          <a routerLink="/blog">Explore all field notes <span aria-hidden="true">→</span></a>
+          <div><p class="blog-eyebrow">From the blog</p><h2>Practical guidance for better surfaces.</h2><p>Planning guidance for property teams who want fewer surprises and longer-lasting work.</p></div>
+          <a routerLink="/blog">Explore all blog posts <span aria-hidden="true">→</span></a>
         </div>
         <div class="blog-card-grid compact">
           @for (post of recentBlogs(); track post.id) { <app-blog-card [post]="post" /> }

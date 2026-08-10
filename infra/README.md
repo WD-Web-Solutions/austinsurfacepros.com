@@ -13,7 +13,7 @@ application artifacts.
 
 `austinsurfacepros-infra/demo` owns disposable demo resources:
 
-- private S3 frontend bucket and CloudFront distribution
+- private S3 frontend and gallery-media buckets with CloudFront delivery
 - API Gateway HTTP API and Python Lambda
 - Route 53 `A` and `AAAA` records for the demo host
 - repository-scoped, least-privilege GitHub deployment role
@@ -24,9 +24,10 @@ ACM certificate. It never manages the hosted zone. A stack transformation
 rejects any attempt to add an `aws.route53.Zone` resource.
 
 Database persistence and SES notifications are implemented but disabled in the
-demo stack. The Angular demo adapter keeps contact submissions in the browser
-only. Enabling either backend integration requires an explicit Pulumi config
-change and the corresponding provider configuration.
+demo stack. Gallery media storage is enabled with a private staging prefix,
+short-lived signed PUTs, backend-generated WebP variants, and a one-day cleanup
+rule for abandoned staging objects. The Angular demo adapter keeps gallery edits
+in IndexedDB so content workflows remain usable without writing to AWS.
 
 ## Safety controls
 

@@ -2,6 +2,10 @@ export const environment = {
   production: true,
   demo: false,
   demoMode: false,
+  gallery: {
+    useLocalRepository: false,
+    seedOnFirstRun: false
+  },
   blog: {
     useLocalRepository: false,
     seedOnFirstRun: false,
