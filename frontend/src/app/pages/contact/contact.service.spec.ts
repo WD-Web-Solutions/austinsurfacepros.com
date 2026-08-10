@@ -6,6 +6,8 @@ import {
 import { TestBed } from '@angular/core/testing';
 
 import { ContactFormPayload, ContactService } from './contact.service';
+import { CONTACT_SUBMISSION_GATEWAY } from './contact-submission.gateway';
+import { HttpContactSubmissionGateway } from './http-contact-submission.gateway';
 
 describe('ContactService', () => {
   let service: ContactService;
@@ -15,6 +17,11 @@ describe('ContactService', () => {
     TestBed.configureTestingModule({
       providers: [
         ContactService,
+        HttpContactSubmissionGateway,
+        {
+          provide: CONTACT_SUBMISSION_GATEWAY,
+          useExisting: HttpContactSubmissionGateway
+        },
         provideHttpClient(),
         provideHttpClientTesting()
       ]

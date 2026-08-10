@@ -26,6 +26,8 @@ describe('PrivacyPolicyComponent', () => {
     expect(policyText).toContain('sessionStorage');
     expect(policyText).toContain('processed locally');
     expect(policyText).toContain('not transmitted to');
+    expect(policyText).toContain('email-delivery');
+    expect(policyText).toContain('Last updated: August 10, 2026');
     expect(policyText).toContain('We do not sell personal information');
     expect(policyText).toContain('Your privacy choices and rights');
   });

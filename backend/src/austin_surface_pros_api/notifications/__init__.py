@@ -1,0 +1,1 @@
+"""Contact notification adapters."""

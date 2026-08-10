@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   demo: true,
+  demoMode: false,
   blog: {
     useLocalRepository: true,
     seedOnFirstRun: true,

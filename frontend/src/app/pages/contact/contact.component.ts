@@ -23,6 +23,7 @@ import {
   ContactService,
   ContactFormPayload
 } from './contact.service';
+import { environment } from '../../../environments/environment';
 
 import { SeoService } from '../../core/services/seo.service';
 import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
@@ -50,6 +51,8 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
 
 })
 export class ContactComponent {
+
+  readonly isDemo = environment.demoMode;
 
 
   @ViewChild('estimateForm', { read: ElementRef })

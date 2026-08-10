@@ -1,0 +1,45 @@
+direction: right
+
+developer: Developer {
+  shape: person
+}
+
+github: GitHub {
+  demo_branch: "demo branch"
+  pull_request: "Internal PR targeting demo"
+  actions: "Unprivileged job\nBuild, test, package"
+  environment: "Privileged deploy job\ndemo environment + OIDC"
+}
+
+aws: "AWS account 767688909304" {
+  oidc: "GitHub OIDC provider"
+  role: "Least-privilege deploy role"
+  s3: "Private S3 frontend bucket"
+  lambda: "FastAPI Lambda"
+  cloudfront: "CloudFront distribution"
+  budget: "$5 monthly tagged budget"
+  shared_dns: "Shared wdwebsolutions.com zone\nREAD-ONLY LOOKUP" {
+    style.fill: "#fff7ed"
+    style.stroke: "#f97316"
+  }
+  demo_record: "Owned demo A/AAAA records"
+}
+
+visitor: "Demo visitor" {
+  shape: person
+}
+
+developer -> github.pull_request: "opens or updates"
+developer -> github.demo_branch: "pushes"
+github.pull_request -> github.actions
+github.demo_branch -> github.actions
+github.actions -> github.environment
+github.environment -> aws.oidc: "short-lived token"
+aws.oidc -> aws.role
+aws.role -> aws.s3: "sync frontend"
+aws.role -> aws.lambda: "update code"
+aws.role -> aws.cloudfront: "invalidate cache"
+aws.shared_dns -> aws.demo_record: "parent zone ID only"
+aws.demo_record -> aws.cloudfront
+aws.budget -> developer: "alerts derekd@wdwebsolutions.com"
+visitor -> aws.demo_record: "austinsurfaceprosdemo.wdwebsolutions.com"

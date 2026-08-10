@@ -1,9 +1,9 @@
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { ContactComponent } from './contact.component';
+import { CONTACT_SUBMISSION_GATEWAY } from './contact-submission.gateway';
+import { DemoContactSubmissionGateway } from './demo-contact-submission.gateway';
 
 describe('ContactComponent accessibility', () => {
   beforeEach(async () => {
@@ -11,8 +11,10 @@ describe('ContactComponent accessibility', () => {
       imports: [ContactComponent],
       providers: [
         provideRouter([]),
-        provideHttpClient(),
-        provideHttpClientTesting()
+        {
+          provide: CONTACT_SUBMISSION_GATEWAY,
+          useClass: DemoContactSubmissionGateway
+        }
       ]
     }).compileComponents();
   });

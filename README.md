@@ -14,7 +14,9 @@ independently.
 - `scripts/` — cross-project packaging automation
 
 Review the [architecture plan](docs/architecture/index.html) before changing
-service boundaries or selecting the hosted PostgreSQL provider.
+service boundaries or selecting the hosted PostgreSQL provider. The
+[demo deployment guide](docs/deployment/index.html) documents the AWS safety
+boundaries, Pulumi stacks, GitHub OIDC role, and teardown path.
 
 ## Prerequisites
 
@@ -57,3 +59,9 @@ Pulumi is operator-driven and is not part of application CI/CD. Before any
 preview or deployment, configure and verify the expected AWS account ID, Route
 53 hosted zone, domain, and us-east-1 ACM certificate. No database resource is
 provisioned until the provider decision is approved.
+
+The disposable demo is available at
+<https://austinsurfaceprosdemo.wdwebsolutions.com>. Pushes and same-repository
+pull requests targeting `demo` run validation and deploy through GitHub Actions.
+The build job has no AWS identity permission; only the separate artifact deploy
+job can assume the narrowly scoped OIDC role. Fork pull requests never deploy.

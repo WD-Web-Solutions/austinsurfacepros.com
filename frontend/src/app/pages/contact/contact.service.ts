@@ -1,41 +1,27 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface ContactFormPayload {
-  name: string;
-  emailAddress: string;
-  company?: string;
-  phone?: string;
-  service: string;
-  message: string;
-}
+import {
+  CONTACT_SUBMISSION_GATEWAY,
+  ContactFormPayload,
+  ContactResponse,
+  ContactSubmissionGateway
+} from './contact-submission.gateway';
 
-export interface ContactResponse {
-  message: string;
-}
-
-interface ContactApiResponse {
-  id: string;
-  status: 'received';
-}
+export type { ContactFormPayload, ContactResponse } from './contact-submission.gateway';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    @Inject(CONTACT_SUBMISSION_GATEWAY)
+    private readonly gateway: ContactSubmissionGateway
+  ) {}
 
   submitContactForm(
     payload: ContactFormPayload
   ): Observable<ContactResponse> {
-    return this.http
-      .post<ContactApiResponse>('/api/contact-requests', payload)
-      .pipe(
-        map(() => ({
-          message:
-            'Your estimate request has been received. Austin Surface Pros will contact you soon.'
-        }))
-      );
+    return this.gateway.submit(payload);
   }
 }
