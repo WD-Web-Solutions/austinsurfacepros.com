@@ -1,0 +1,59 @@
+<dialog #dialog class="crop-dialog" aria-labelledby="crop-title" aria-describedby="crop-help" (cancel)="cancel()">
+  <div class="crop-shell">
+    <header>
+      <div>
+        <p class="eyebrow">Photo editor</p>
+        <h2 id="crop-title">Choose the visible crop</h2>
+      </div>
+      <button type="button" class="icon-button" aria-label="Close crop editor" (click)="cancel()">×</button>
+    </header>
+
+    <p id="crop-help" class="help">Drag the preview to position the photo. Arrow keys also move it; hold Shift for larger steps.</p>
+
+    <div class="aspect-choices" aria-label="Crop shape">
+      @for (choice of choices; track choice.value) {
+        <button
+          type="button"
+          [attr.aria-pressed]="aspect() === choice.value"
+          [class.selected]="aspect() === choice.value"
+          (click)="chooseAspect(choice.value)"
+        >{{ choice.label }}</button>
+      }
+    </div>
+
+    <div class="canvas-stage" [class.loading]="!ready()">
+      <canvas
+        #canvas
+        tabindex="0"
+        aria-label="Crop preview. Drag or use arrow keys to reposition the photo."
+        (pointerdown)="beginDrag($event)"
+        (pointermove)="drag($event)"
+        (pointerup)="endDrag()"
+        (pointercancel)="endDrag()"
+        (keydown)="handleCanvasKey($event)"
+      ></canvas>
+      @if (!ready() && !error()) { <p role="status">Preparing preview…</p> }
+    </div>
+
+    <div class="controls">
+      <label>Zoom <span>{{ zoom().toFixed(1) }}×</span>
+        <input type="range" min="1" max="4" step="0.1" [value]="zoom()" (input)="updateZoom($any($event.target).value)">
+      </label>
+      <label>Horizontal position <span>{{ cropX() }}%</span>
+        <input type="range" min="0" max="100" step="1" [value]="cropX()" (input)="updateX($any($event.target).value)">
+      </label>
+      <label>Vertical position <span>{{ cropY() }}%</span>
+        <input type="range" min="0" max="100" step="1" [value]="cropY()" (input)="updateY($any($event.target).value)">
+      </label>
+    </div>
+
+    @if (error()) { <p class="error" role="alert">{{ error() }}</p> }
+
+    <footer>
+      <button type="button" class="secondary" (click)="cancel()">Cancel</button>
+      <button type="button" class="primary" [disabled]="!ready() || saving()" (click)="useCrop()">
+        {{ saving() ? 'Creating crop…' : 'Use this crop' }}
+      </button>
+    </footer>
+  </div>
+</dialog>

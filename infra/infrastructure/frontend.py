@@ -19,6 +19,7 @@ def create_frontend(
     name_prefix: str,
     bucket_name: str,
     api: ApiOutputs,
+    gallery_bucket_domain_name: pulumi.Input[str] | None,
     domain_name: str | None,
     hosted_zone_id: str | None,
     certificate_arn: str | None,
@@ -109,33 +110,55 @@ def create_frontend(
             ssl_support_method="sni-only",
         )
 
-    distribution = aws.cloudfront.Distribution(
-        f"{name_prefix}-distribution",
-        enabled=True,
-        aliases=aliases,
-        default_root_object="index.html",
-        price_class="PriceClass_100",
-        origins=[
-            aws.cloudfront.DistributionOriginArgs(
-                domain_name=api.origin_domain_name,
-                origin_id="backend-api",
-                connection_attempts=3,
-                connection_timeout=10,
-                custom_headers=[],
-                origin_path="",
-                response_completion_timeout=0,
-                custom_origin_config=aws.cloudfront.DistributionOriginCustomOriginConfigArgs(
-                    http_port=80,
-                    https_port=443,
-                    origin_keepalive_timeout=5,
-                    origin_protocol_policy="https-only",
-                    origin_read_timeout=30,
-                    origin_ssl_protocols=["TLSv1.2"],
-                ),
+    origins = [
+        aws.cloudfront.DistributionOriginArgs(
+            domain_name=api.origin_domain_name,
+            origin_id="backend-api",
+            connection_attempts=3,
+            connection_timeout=10,
+            custom_headers=[],
+            origin_path="",
+            response_completion_timeout=0,
+            custom_origin_config=aws.cloudfront.DistributionOriginCustomOriginConfigArgs(
+                http_port=80,
+                https_port=443,
+                origin_keepalive_timeout=5,
+                origin_protocol_policy="https-only",
+                origin_read_timeout=30,
+                origin_ssl_protocols=["TLSv1.2"],
             ),
+        ),
+        aws.cloudfront.DistributionOriginArgs(
+            domain_name=bucket.bucket_regional_domain_name,
+            origin_id="frontend-s3",
+            connection_attempts=3,
+            connection_timeout=10,
+            custom_headers=[],
+            origin_access_control_id=origin_access_control.id,
+            origin_path="",
+            response_completion_timeout=0,
+            s3_origin_config=aws.cloudfront.DistributionOriginS3OriginConfigArgs(
+                origin_access_identity=""
+            ),
+        ),
+    ]
+    ordered_cache_behaviors = [
+        aws.cloudfront.DistributionOrderedCacheBehaviorArgs(
+            path_pattern="/api/*",
+            target_origin_id="backend-api",
+            viewer_protocol_policy="https-only",
+            allowed_methods=["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
+            cached_methods=["GET", "HEAD"],
+            compress=True,
+            cache_policy_id=caching_disabled.id,
+            origin_request_policy_id=all_viewer_except_host.id,
+        )
+    ]
+    if gallery_bucket_domain_name is not None:
+        origins.append(
             aws.cloudfront.DistributionOriginArgs(
-                domain_name=bucket.bucket_regional_domain_name,
-                origin_id="frontend-s3",
+                domain_name=gallery_bucket_domain_name,
+                origin_id="gallery-media-s3",
                 connection_attempts=3,
                 connection_timeout=10,
                 custom_headers=[],
@@ -145,8 +168,28 @@ def create_frontend(
                 s3_origin_config=aws.cloudfront.DistributionOriginS3OriginConfigArgs(
                     origin_access_identity=""
                 ),
+            )
+        )
+        ordered_cache_behaviors.insert(
+            0,
+            aws.cloudfront.DistributionOrderedCacheBehaviorArgs(
+                path_pattern="/gallery-media/processed/*",
+                target_origin_id="gallery-media-s3",
+                viewer_protocol_policy="https-only",
+                allowed_methods=["GET", "HEAD", "OPTIONS"],
+                cached_methods=["GET", "HEAD"],
+                compress=True,
+                cache_policy_id=caching_optimized.id,
             ),
-        ],
+        )
+
+    distribution = aws.cloudfront.Distribution(
+        f"{name_prefix}-distribution",
+        enabled=True,
+        aliases=aliases,
+        default_root_object="index.html",
+        price_class="PriceClass_100",
+        origins=origins,
         default_cache_behavior=aws.cloudfront.DistributionDefaultCacheBehaviorArgs(
             target_origin_id="frontend-s3",
             viewer_protocol_policy="redirect-to-https",
@@ -161,18 +204,7 @@ def create_frontend(
                 )
             ],
         ),
-        ordered_cache_behaviors=[
-            aws.cloudfront.DistributionOrderedCacheBehaviorArgs(
-                path_pattern="/api/*",
-                target_origin_id="backend-api",
-                viewer_protocol_policy="https-only",
-                allowed_methods=["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
-                cached_methods=["GET", "HEAD"],
-                compress=True,
-                cache_policy_id=caching_disabled.id,
-                origin_request_policy_id=all_viewer_except_host.id,
-            )
-        ],
+        ordered_cache_behaviors=ordered_cache_behaviors,
         restrictions=aws.cloudfront.DistributionRestrictionsArgs(
             geo_restriction=aws.cloudfront.DistributionRestrictionsGeoRestrictionArgs(
                 restriction_type="none"

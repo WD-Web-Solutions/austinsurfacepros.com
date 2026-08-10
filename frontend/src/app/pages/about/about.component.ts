@@ -4,8 +4,6 @@ import { RouterLink } from '@angular/router';
 
 import { SeoService } from '../../core/services/seo.service';
 
-import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
-
 
 
 @Component({
@@ -16,9 +14,7 @@ import { HeroVideoComponent } from '../../shared/components/hero-video/hero-vide
 
   imports: [
 
-    RouterLink,
-
-    HeroVideoComponent
+    RouterLink
 
   ],
 

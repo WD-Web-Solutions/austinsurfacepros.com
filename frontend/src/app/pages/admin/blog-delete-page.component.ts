@@ -28,6 +28,6 @@ export class BlogDeletePageComponent implements OnInit {
     if (!post) return;
     this.deleting.set(true);
     await this.blogService.delete(post.id);
-    await this.router.navigate(['/admin/blogs']);
+    await this.router.navigate(['/blog']);
   }
 }

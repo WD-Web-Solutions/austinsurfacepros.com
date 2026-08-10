@@ -1,48 +1,84 @@
-<section class="bg-gray-900 py-20">
-  <div class="mx-auto max-w-7xl px-6">
-    <p class="text-sm font-semibold uppercase tracking-widest text-orange-400">Blog</p>
-    <h1 class="mt-5 text-5xl font-bold text-white">Surface Tips &amp; Updates</h1>
-    <p class="mt-6 max-w-3xl text-xl text-gray-300">
-      Guides and updates on asphalt, concrete, and commercial property maintenance.
-    </p>
-  </div>
-</section>
+<section class="blog-shell blog-page">
+  <h1 class="sr-only">Blog</h1>
 
-<section class="py-16">
-  <div class="mx-auto max-w-7xl px-6">
-
-    @if(tags().length > 0)
-    {
-    <div class="flex flex-wrap gap-2">
-      <button
-        type="button"
-        (click)="selectTag(null)"
-        [attr.aria-pressed]="selectedTag() === null"
-        class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
-        [class.bg-blue-600]="selectedTag() === null"
-        [class.text-white]="selectedTag() === null"
-        [class.bg-gray-100]="selectedTag() !== null"
-        [class.text-gray-600]="selectedTag() !== null"
-      >
-        All
-      </button>
-      @for(tag of tags(); track tag)
-      {
-      <button
-        type="button"
-        (click)="selectTag(tag)"
-        [attr.aria-pressed]="selectedTag() === tag"
-        class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
-        [class.bg-blue-600]="selectedTag() === tag"
-        [class.text-white]="selectedTag() === tag"
-        [class.bg-gray-100]="selectedTag() !== tag"
-        [class.text-gray-600]="selectedTag() !== tag"
-      >
-        {{ tag }}
-      </button>
-      }
+  <div class="blog-controls" aria-label="Blog search and filters">
+    <div class="blog-search-panel">
+      <div class="blog-search-heading">
+        <label for="blog-search">Search blog posts</label>
+        <span role="status" aria-live="polite">
+          {{ visiblePosts().length }}{{ hasMorePosts() ? ' of ' + filteredPosts().length : '' }}
+          {{ filteredPosts().length === 1 ? 'post' : 'posts' }}
+        </span>
+      </div>
+      <div class="blog-search-input">
+        <span aria-hidden="true">⌕</span>
+        <input id="blog-search" type="search" [value]="query()" (input)="setQuery($any($event.target).value)" placeholder="Try “faded parking lines” or “pavement water”…">
+      </div>
     </div>
-    }
+
+    <button
+      #filterTrigger
+      type="button"
+      class="blog-filter-trigger"
+      aria-haspopup="dialog"
+      aria-controls="blog-hashtag-dialog"
+      [attr.aria-expanded]="filterModalOpen()"
+      (click)="openFilters()"
+    >
+      <span>Hashtags</span>
+      <strong>{{ selectedTag() ? '#'+selectedTag() : 'Choose filter' }}</strong>
+    </button>
+
+    <aside class="blog-filter-panel blog-filter-panel-desktop" aria-label="Filter blog posts by hashtag">
+      <div class="blog-filter-heading">
+        <h2>Hashtags</h2>
+        @if (query() || selectedTag()) { <button type="button" (click)="clearFilters()">Clear</button> }
+      </div>
+      <div class="blog-tag-filter-list">
+        @for (tag of tags(); track tag) {
+          <button type="button" (click)="selectTag(selectedTag() === tag ? null : tag)" [class.active]="selectedTag() === tag" [attr.aria-pressed]="selectedTag() === tag">#{{ tag }}</button>
+        }
+      </div>
+    </aside>
+  </div>
+
+  <dialog
+    #filterDialog
+    id="blog-hashtag-dialog"
+    class="blog-filter-modal"
+    aria-labelledby="blog-hashtag-dialog-title"
+    (cancel)="handleFilterCancel($event)"
+    (click)="closeFiltersFromBackdrop($event)"
+  >
+    <div class="blog-filter-modal-content" (click)="$event.stopPropagation()">
+      <div class="blog-filter-modal-header">
+        <div>
+          <h2 id="blog-hashtag-dialog-title">Filter by hashtag</h2>
+          <p>Choose a topic.</p>
+        </div>
+        <button type="button" class="blog-filter-modal-close" aria-label="Close hashtag filters" (click)="closeFilters()">×</button>
+      </div>
+      <div class="blog-tag-filter-list">
+        @for (tag of tags(); track tag) {
+          <button type="button" (click)="selectTag(selectedTag() === tag ? null : tag)" [class.active]="selectedTag() === tag" [attr.aria-pressed]="selectedTag() === tag">#{{ tag }}</button>
+        }
+      </div>
+      <div class="blog-filter-modal-actions">
+        @if (query() || selectedTag()) { <button type="button" class="quiet" (click)="clearFilters()">Clear filters</button> }
+        <button type="button" class="blog-primary-button" (click)="closeFilters()">Show {{ filteredPosts().length }} {{ filteredPosts().length === 1 ? 'post' : 'posts' }}</button>
+      </div>
+    </div>
+  </dialog>
+
+  @if (isAdmin()) {
+    <div class="blog-admin-toolbar" role="region" aria-label="Blog administration">
+      <div><strong>Blog controls</strong><span>Drafts are visible while you are signed in.</span></div>
+      <div><a routerLink="/admin/blog/new" class="blog-primary-button">New post</a></div>
+    </div>
+  }
+
+  <section class="blog-results" aria-labelledby="blog-results-title">
+    <h2 id="blog-results-title" class="sr-only">Blog posts</h2>
 
     @if(errorMessage())
     {
@@ -53,54 +89,52 @@
     {
     <p role="status" class="mt-10 text-gray-600">Loading posts…</p>
     }
-    @else if(posts().length === 0)
+    @else if(filteredPosts().length === 0)
     {
-    <p class="mt-10 text-gray-500">No posts yet. Check back soon.</p>
+    <div class="blog-empty"><span aria-hidden="true">⌕</span><h3>No blog posts matched that search.</h3><p>Try a broader phrase or remove the hashtag filter.</p><button type="button" (click)="clearFilters()">Show all posts</button></div>
     }
     @else
     {
-    <div class="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      @for(post of posts(); track post.id)
+    <div class="blog-card-grid">
+      @for(post of visiblePosts(); track post.id)
       {
-      <a
-        [routerLink]="['/blog', post.slug]"
-        class="
-        block
-        overflow-hidden
-        rounded-xl
-        bg-white
-        shadow-lg
-        transition
-        duration-300
-        hover:-translate-y-2
-        hover:shadow-2xl"
-      >
+      <article class="blog-card">
         @if(post.coverImageUrl)
         {
-        <img
-          [src]="post.coverImageUrl"
-          [alt]="post.title"
-          class="h-48 w-full object-cover"
-        >
+        <a class="blog-card-image" [routerLink]="['/blog', post.slug]" [attr.aria-label]="'Read ' + post.title"><img [src]="post.coverImageUrl" [alt]="post.title" loading="lazy"></a>
         }
 
-        <div class="p-6">
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <time [attr.datetime]="post.publishedAt">{{ post.publishedAt | date: 'MMM d, y' }}</time>
+            @if (post.status === 'draft') { <span>Draft</span> }
+          </div>
+          <h3><a [routerLink]="['/blog', post.slug]">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt }}</p>
           @if(post.tags.length > 0)
           {
-          <p class="text-sm font-semibold text-blue-600">{{ post.tags.join(', ') }}</p>
+          <div class="blog-tags" aria-label="Post tags">
+            @for (tag of post.tags; track tag) { <button type="button" (click)="selectTag(tag)">#{{ tag }}</button> }
+          </div>
           }
-
-          <h2 class="mt-2 text-xl font-bold text-gray-900">{{ post.title }}</h2>
-          <p class="mt-3 text-gray-600">{{ post.excerpt }}</p>
-
-          <p class="mt-4 text-sm text-gray-400">
-            {{ post.authorName }} · {{ post.publishedAt | date: 'mediumDate' }}
-          </p>
+          <a class="blog-read-link" [routerLink]="['/blog', post.slug]">Read blog post <span aria-hidden="true">→</span></a>
+          @if (isAdmin()) {
+            <div class="blog-card-admin-actions" aria-label="Actions for {{ post.title }}">
+              <a [routerLink]="['/admin/blog', post.slug, 'edit']">Edit</a>
+              <button type="button" (click)="togglePublish(post)" [disabled]="isPending(post.id)">{{ post.status === 'published' ? 'Unpublish' : 'Publish' }}</button>
+              <button class="danger" type="button" (click)="deletePost(post)" [disabled]="isPending(post.id)" [attr.aria-label]="'Delete ' + post.title">Delete</button>
+            </div>
+          }
         </div>
-      </a>
+      </article>
       }
     </div>
-    }
 
-  </div>
+    @if (hasMorePosts()) {
+      <div #loadMoreSentinel class="blog-load-more">
+        <button type="button" (click)="loadMore()">Load more posts</button>
+      </div>
+    }
+    }
+  </section>
 </section>

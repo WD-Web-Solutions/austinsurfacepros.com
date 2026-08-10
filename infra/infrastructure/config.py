@@ -19,6 +19,8 @@ class InfrastructureConfig:
     certificate_domain: str
     lambda_archive_path: Path
     frontend_bucket_name: str
+    gallery_bucket_name: str
+    enable_gallery_storage: bool
     database_provider: DatabaseProvider
     enable_database: bool
     enable_ses: bool
@@ -79,6 +81,7 @@ class InfrastructureConfig:
         protect_resources = config.get_bool("protectResources")
         enable_database = config.get_bool("enableDatabase") or False
         enable_ses = config.get_bool("enableSes") or False
+        enable_gallery_storage = config.get_bool("enableGalleryStorage")
 
         instance = cls(
             environment=environment,
@@ -92,6 +95,11 @@ class InfrastructureConfig:
             lambda_archive_path=archive_path,
             frontend_bucket_name=config.get("frontendBucketName")
             or f"asp-{environment}-frontend-{expected_account_id}",
+            gallery_bucket_name=config.get("galleryBucketName")
+            or f"asp-{environment}-gallery-{expected_account_id}",
+            enable_gallery_storage=(
+                True if enable_gallery_storage is None else enable_gallery_storage
+            ),
             database_provider=database_provider,  # type: ignore[arg-type]
             enable_database=enable_database,
             enable_ses=enable_ses,
@@ -137,6 +145,10 @@ class InfrastructureConfig:
         if not self.frontend_bucket_name.endswith(self.expected_account_id):
             raise pulumi.RunError(
                 "frontendBucketName must end with expectedAccountId to prevent cross-account reuse"
+            )
+        if not self.gallery_bucket_name.endswith(self.expected_account_id):
+            raise pulumi.RunError(
+                "galleryBucketName must end with expectedAccountId to prevent cross-account reuse"
             )
         try:
             float(self.budget_amount)

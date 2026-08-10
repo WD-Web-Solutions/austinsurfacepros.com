@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { BlogPost } from '../../core/models/blog-post.model';
+import { DemoAuthService } from '../../core/services/demo-auth.service';
 import { LocalBlogService } from '../../core/services/local-blog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { BlogCardComponent } from '../../shared/components/blog-card/blog-card.component';
@@ -17,6 +18,7 @@ import { ShareButtonsComponent } from '../../shared/components/share-buttons/sha
 })
 export class BlogDetailComponent implements OnInit {
   private readonly blogService = inject(LocalBlogService);
+  private readonly auth = inject(DemoAuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly seo = inject(SeoService);
 
@@ -26,11 +28,11 @@ export class BlogDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const slug = this.route.snapshot.paramMap.get('slug') ?? '';
-    const post = await this.blogService.getBySlug(slug);
+    const post = await this.blogService.getBySlug(slug, this.auth.isAuthenticated());
     this.post.set(post);
     this.loading.set(false);
     if (!post) {
-      this.seo.updatePage('Field Note Not Found | Austin Surface Pros', 'The requested field note could not be found.', 'noindex, follow');
+      this.seo.updatePage('Blog Post Not Found | Austin Surface Pros', 'The requested blog post could not be found.', 'noindex, follow');
       return;
     }
     this.seo.updatePage(`${post.title} | Austin Surface Pros`, post.summary);

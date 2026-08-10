@@ -77,7 +77,9 @@ async def test_create_post_succeeds_as_admin(
 
     assert response.status_code == 201
     body = response.json()
-    assert body["status"] == "draft"
+    assert body["status"] == "published"
+    assert body["publishedAt"] is not None
+    assert body["authorName"] == "Admin Person"
     assert body["slug"] == "sealing-your-parking-lot"
     assert body["tags"] == ["asphalt", "maintenance"]
 
@@ -88,7 +90,13 @@ async def test_list_all_posts_includes_drafts(
     user_repository: InMemoryUserRepository,
 ) -> None:
     admin_token = await _make_admin_token(client, user_repository)
-    client.post("/api/admin/blog/posts", json=_POST_PAYLOAD, headers=_auth_headers(admin_token))
+    created = client.post(
+        "/api/admin/blog/posts", json=_POST_PAYLOAD, headers=_auth_headers(admin_token)
+    ).json()
+    client.post(
+        f"/api/admin/blog/posts/{created['id']}/unpublish",
+        headers=_auth_headers(admin_token),
+    )
 
     response = client.get("/api/admin/blog/posts", headers=_auth_headers(admin_token))
 
@@ -116,6 +124,9 @@ async def test_update_post(
 
     assert response.status_code == 200
     assert response.json()["title"] == "Updated Title"
+    assert response.json()["status"] == "published"
+    assert response.json()["publishedAt"] == created["publishedAt"]
+    assert response.json()["authorName"] == created["authorName"]
 
 
 @pytest.mark.asyncio

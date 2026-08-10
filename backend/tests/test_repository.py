@@ -32,8 +32,14 @@ async def test_repository_maps_and_flushes_contact_request() -> None:
         email_address="taylor@example.com",
         company=None,
         phone=None,
+        property_type="Retail or office",
         service="Asphalt Repair",
         message="Please call me.",
+        address_line="100 Congress Ave",
+        city="Austin",
+        state="TX",
+        postal_code="78701",
+        timeline="Within 1-3 months",
         status=ContactRequestStatus.RECEIVED,
         created_at=datetime(2026, 8, 4, 12, 0, tzinfo=UTC),
     )
@@ -46,3 +52,4 @@ async def test_repository_maps_and_flushes_contact_request() -> None:
     record = session.added[0]
     assert isinstance(record, ContactRequestRecord)
     assert record.email_address == contact_request.email_address
+    assert record.address_line == contact_request.address_line

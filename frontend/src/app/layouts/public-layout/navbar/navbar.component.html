@@ -1,5 +1,8 @@
 <header
+[class.site-navbar--home]="isHome()"
+[class.site-navbar--transparent]="isTransparent()"
 class="
+site-navbar
 sticky
 top-0
 z-50
@@ -12,6 +15,7 @@ bg-white
 <nav
 aria-label="Primary navigation"
 class="
+site-navbar__primary
 mx-auto
 flex
 max-w-7xl
@@ -29,6 +33,7 @@ routerLink="/"
 (click)="closeMenu()"
 aria-label="Austin Surface Pros home"
 class="
+site-navbar__logo
 group
 flex
 items-center
@@ -59,6 +64,7 @@ group-hover:scale-105
 
 <div
 class="
+site-navbar__desktop-nav
 hidden
 items-center
 gap-8
@@ -180,34 +186,6 @@ Gallery
 
 
 <a
-routerLink="/resources"
-routerLinkActive="text-blue-600"
-ariaCurrentWhenActive="page"
-class="
-relative
-font-medium
-text-gray-700
-transition
-duration-300
-hover:text-blue-600
-
-after:absolute
-after:-bottom-2
-after:left-0
-after:h-0.5
-after:w-0
-after:bg-blue-600
-after:transition-all
-after:duration-300
-hover:after:w-full
-"
->
-Resources
-</a>
-
-
-
-<a
 routerLink="/blog"
 routerLinkActive="text-blue-600"
 ariaCurrentWhenActive="page"
@@ -244,6 +222,7 @@ Blog
 
 <div
 class="
+site-navbar__actions
 hidden
 items-center
 gap-4
@@ -255,7 +234,7 @@ xl:flex
 @if (isDemo) {
 
 @if (demoAuth.isAuthenticated()) {
-<a routerLink="/admin/blogs" class="font-medium text-blue-700 transition hover:text-blue-900">Content Studio</a>
+<a routerLink="/admin/gallery" class="font-medium text-blue-700 transition hover:text-blue-900">Manage Gallery</a>
 <button (click)="logout()" type="button" class="font-medium text-gray-600 transition hover:text-blue-600">Sign out</button>
 } @else {
 <a routerLink="/login" class="font-medium text-gray-600 transition hover:text-blue-600">Admin demo</a>
@@ -381,6 +360,7 @@ routerLinkActive="bg-blue-700"
 ariaCurrentWhenActive="page"
 
 class="
+site-navbar__estimate
 rounded-lg
 bg-blue-600
 px-5
@@ -421,6 +401,7 @@ aria-controls="mobile-navigation"
 [attr.aria-label]="mobileMenuOpen ? 'Close main menu' : 'Open main menu'"
 
 class="
+site-navbar__menu-button
 h-11
 w-11
 text-2xl
@@ -537,21 +518,6 @@ Gallery
 
 
 <a
-routerLink="/resources"
-routerLinkActive="text-blue-600"
-ariaCurrentWhenActive="page"
-(click)="closeMenu()"
-class="
-block
-transition
-hover:text-blue-600
-"
->
-Resources
-</a>
-
-
-<a
 routerLink="/blog"
 routerLinkActive="text-blue-600"
 ariaCurrentWhenActive="page"
@@ -569,7 +535,7 @@ Blog
 @if (isDemo) {
 
 @if (demoAuth.isAuthenticated()) {
-<a routerLink="/admin/blogs" (click)="closeMenu()" class="block font-semibold text-blue-700">Content Studio</a>
+<a routerLink="/admin/gallery" (click)="closeMenu()" class="block font-semibold text-blue-700">Manage Gallery</a>
 <button (click)="logout()" type="button" class="block w-full text-left transition hover:text-blue-600">Sign out</button>
 } @else {
 <a routerLink="/login" (click)="closeMenu()" class="block transition hover:text-blue-600">Admin demo</a>

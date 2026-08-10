@@ -19,11 +19,17 @@ from austin_surface_pros_api.notifications.contact_requests import (
 @dataclass(frozen=True, slots=True)
 class SubmitContactRequest:
     name: str
-    email_address: str
+    email_address: str | None
     company: str | None
     phone: str | None
+    property_type: str
     service: str
     message: str
+    address_line: str
+    city: str
+    state: str
+    postal_code: str
+    timeline: str
 
 
 class ContactRequestService:
@@ -46,8 +52,14 @@ class ContactRequestService:
             email_address=command.email_address,
             company=command.company,
             phone=command.phone,
+            property_type=command.property_type,
             service=command.service,
             message=command.message,
+            address_line=command.address_line,
+            city=command.city,
+            state=command.state,
+            postal_code=command.postal_code,
+            timeline=command.timeline,
             status=ContactRequestStatus.RECEIVED,
             created_at=self._clock(),
         )

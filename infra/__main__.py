@@ -18,6 +18,10 @@ from infrastructure.deployment import (
 from infrastructure.dns_guard import reject_hosted_zone_resources
 from infrastructure.email import create_ses_domain_identity
 from infrastructure.frontend import create_frontend
+from infrastructure.gallery_storage import (
+    allow_cloudfront_gallery_reads,
+    create_gallery_storage,
+)
 
 pulumi.runtime.register_stack_transformation(reject_hosted_zone_resources)
 
@@ -84,6 +88,18 @@ if not config.lambda_archive_path.is_file():
     )
 
 database_url = project_config.require_secret("databaseUrl") if config.enable_database else None
+gallery_storage = (
+    create_gallery_storage(
+        name_prefix=config.name_prefix,
+        bucket_name=config.gallery_bucket_name,
+        site_origin=f"https://{config.domain_name}",
+        protect_resources=config.protect_resources,
+        tags=config.tags,
+        provider=provider,
+    )
+    if config.enable_gallery_storage
+    else None
+)
 ses_identity_arn: pulumi.Input[str] | None = None
 if config.enable_ses:
     if config.ses_domain_name is None:
@@ -108,6 +124,9 @@ api = create_api(
     ses_source_email=config.ses_source_email,
     ses_recipient_emails=config.ses_recipient_emails,
     ses_identity_arn=ses_identity_arn,
+    gallery_bucket_name=(gallery_storage.bucket_name if gallery_storage else None),
+    gallery_bucket_arn=(gallery_storage.bucket_arn if gallery_storage else None),
+    enable_gallery_storage=config.enable_gallery_storage,
     tags=config.tags,
     provider=provider,
 )
@@ -115,6 +134,9 @@ frontend = create_frontend(
     name_prefix=config.name_prefix,
     bucket_name=config.frontend_bucket_name,
     api=api,
+    gallery_bucket_domain_name=(
+        gallery_storage.bucket_regional_domain_name if gallery_storage else None
+    ),
     domain_name=config.domain_name,
     hosted_zone_id=hosted_zone.zone_id,
     certificate_arn=validated_certificate_arn,
@@ -122,6 +144,13 @@ frontend = create_frontend(
     tags=config.tags,
     provider=provider,
 )
+if gallery_storage is not None:
+    allow_cloudfront_gallery_reads(
+        name_prefix=config.name_prefix,
+        storage=gallery_storage,
+        distribution_arn=frontend.distribution_arn,
+        provider=provider,
+    )
 
 foundation = pulumi.StackReference(config.github_oidc_stack_reference)
 github_subject = immutable_github_environment_subject(
@@ -165,3 +194,6 @@ pulumi.export("githubOidcSubject", github_subject)
 pulumi.export("databaseProvider", config.database_provider)
 pulumi.export("databaseEnabled", config.enable_database)
 pulumi.export("sesEnabled", config.enable_ses)
+pulumi.export("galleryStorageEnabled", config.enable_gallery_storage)
+if gallery_storage is not None:
+    pulumi.export("galleryBucketName", gallery_storage.bucket_name)

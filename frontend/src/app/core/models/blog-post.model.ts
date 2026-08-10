@@ -24,9 +24,6 @@ export interface BlogPostDraft {
   contentHtml: string;
   thumbnailUrl: string;
   thumbnailAlt: string;
-  author: string;
-  publishedAt: string;
-  status: BlogPostStatus;
   tags: string[];
 }
 

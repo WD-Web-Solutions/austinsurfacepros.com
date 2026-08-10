@@ -35,4 +35,17 @@ describe('BlogSearchService', () => {
     expect(results).toHaveLength(1);
     expect(results[0]?.post.tags).toContain('accessibility');
   });
+
+  it('indexes newly created posts after they are published automatically', async () => {
+    const post = await blog.create({
+      title: 'Maintenance checklist',
+      summary: 'A checklist for property teams.',
+      contentHtml: '<p>Review the site before scheduling work.</p>',
+      thumbnailUrl: '/assets/images/design-lab/asphalt-road.jpg',
+      thumbnailAlt: 'Commercial asphalt pavement',
+      tags: ['maintenance']
+    });
+
+    expect((await search.search('maintenance checklist')).some(result => result.post.id === post.id)).toBe(true);
+  });
 });

@@ -76,8 +76,8 @@ export class LoginComponent {
         this.errorMessage.set('Those credentials do not match the local demo administrator.');
         return;
       }
-      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/admin/blogs';
-      void this.router.navigateByUrl(returnUrl.startsWith('/') ? returnUrl : '/admin/blogs');
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/blog';
+      void this.router.navigateByUrl(returnUrl.startsWith('/') ? returnUrl : '/blog');
       return;
     }
 

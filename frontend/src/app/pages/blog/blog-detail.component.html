@@ -1,15 +1,16 @@
 @if (loading()) {
-  <main class="blog-shell blog-detail-loading"><div></div><div></div><div></div></main>
+  <div class="blog-shell blog-detail-loading" role="status" aria-label="Loading blog post"><div></div><div></div><div></div></div>
 } @else if (post(); as article) {
   <article>
     <header class="article-header">
       <div class="blog-shell article-header-grid">
         <div>
-          <a routerLink="/blog" class="article-back">← All field notes</a>
+          <a routerLink="/blog" class="article-back">← All blog posts</a>
           <div class="blog-tags article-tags">
             @for (tag of article.tags; track tag) { <a routerLink="/blog" [queryParams]="{ tag }">#{{ tag }}</a> }
           </div>
           <h1>{{ article.title }}</h1>
+          @if (article.status === 'draft') { <span class="post-status draft">Draft preview</span> }
           <p class="article-summary">{{ article.summary }}</p>
           <div class="article-byline">
             <span class="article-author-mark">ASP</span>
@@ -29,7 +30,7 @@
   @if (related().length) {
     <section class="related-posts">
       <div class="blog-shell">
-        <p class="blog-eyebrow">Keep planning</p><h2>Related field notes</h2>
+        <p class="blog-eyebrow">Keep planning</p><h2>Related blog posts</h2>
         <div class="blog-card-grid compact">
           @for (relatedPost of related(); track relatedPost.id) { <app-blog-card [post]="relatedPost" /> }
         </div>
@@ -37,5 +38,5 @@
     </section>
   }
 } @else {
-  <main class="blog-shell blog-empty blog-not-found"><span>404</span><h1>That field note is no longer here.</h1><p>Browse the latest surface planning guides instead.</p><a routerLink="/blog">View all field notes</a></main>
+  <div class="blog-shell blog-empty blog-not-found"><span>404</span><h1>That blog post is no longer here.</h1><p>Browse the latest surface planning guides instead.</p><a routerLink="/blog">View all blog posts</a></div>
 }

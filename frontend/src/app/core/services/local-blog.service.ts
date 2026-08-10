@@ -23,6 +23,7 @@ export class LocalBlogService {
   readonly error = signal<string | null>(null);
   readonly publishedPosts = computed(() => this.postsState().filter(post => post.status === 'published'));
   readonly tags = computed<BlogTag[]>(() => this.deriveTags(this.publishedPosts()));
+  readonly allTags = computed<BlogTag[]>(() => this.deriveTags(this.postsState()));
 
   constructor() {
     this.readyPromise = this.initialize();
@@ -70,8 +71,11 @@ export class LocalBlogService {
       ...this.prepareDraft(draft),
       id: this.createId(),
       slug: this.uniqueSlug(draft.slug || draft.title),
+      author: 'Austin Surface Pros',
+      publishedAt: now,
       createdAt: now,
       updatedAt: now,
+      status: 'published',
       readingMinutes: calculateReadingMinutes(draft.contentHtml)
     };
     await this.repository.putPost(post);
@@ -91,6 +95,7 @@ export class LocalBlogService {
       ...this.prepareDraft(draft),
       slug: this.uniqueSlug(draft.slug || draft.title, id),
       updatedAt: new Date().toISOString(),
+      status: 'published',
       readingMinutes: calculateReadingMinutes(draft.contentHtml)
     };
     await this.repository.putPost(updated);
@@ -145,9 +150,6 @@ export class LocalBlogService {
       contentHtml: this.sanitizeRichHtml(draft.contentHtml),
       thumbnailUrl: draft.thumbnailUrl.trim(),
       thumbnailAlt: draft.thumbnailAlt.trim(),
-      author: draft.author.trim(),
-      publishedAt: new Date(draft.publishedAt).toISOString(),
-      status: draft.status,
       tags: normalizeTags(draft.tags)
     };
   }

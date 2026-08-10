@@ -8,6 +8,8 @@ config:
   austinsurfacepros-infra:domainName: austinsurfaceprosdemo.wdwebsolutions.com
   austinsurfacepros-infra:certificateDomain: wdwebsolutions.com
   austinsurfacepros-infra:lambdaArchivePath: ../backend/dist/lambda.zip
+  austinsurfacepros-infra:galleryBucketName: asp-demo-gallery-767688909304
+  austinsurfacepros-infra:enableGalleryStorage: true
   austinsurfacepros-infra:databaseProvider: deferred
   austinsurfacepros-infra:enableDatabase: false
   austinsurfacepros-infra:enableSes: false

@@ -10,13 +10,13 @@ import { BlogService } from '../../core/services/blog.service';
 import { LocalBlogService } from '../../core/services/local-blog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { BlogCardComponent } from '../../shared/components/blog-card/blog-card.component';
-import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
 import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
+import { SERVICE_AREA_CONFIG } from '../services/service-area-map/service-area.config';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, UiCardComponent, HeroVideoComponent, BlogCardComponent],
+  imports: [RouterLink, UiCardComponent, BlogCardComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './home.component.css'
@@ -27,6 +27,8 @@ export class HomeComponent {
   private readonly localBlogService = inject(LocalBlogService);
 
   readonly services = SERVICES.slice(0, 3);
+  readonly serviceAreas = SERVICE_AREA_CONFIG.places.map(place => place.name);
+  readonly serviceAreaRadiusMiles = SERVICE_AREA_CONFIG.coreRadiusMiles;
   readonly recentBlogs = signal<BlogPost[]>([]);
 
   constructor() {

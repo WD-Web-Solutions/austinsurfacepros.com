@@ -1,9 +1,9 @@
 <section class="admin-hero compact">
-  <div class="blog-shell admin-hero-row"><div><p class="blog-eyebrow">Content studio</p><h1>{{ editing() ? 'Edit field note' : 'Create field note' }}</h1><p>Compose, tag, preview, and publish entirely in this browser.</p></div><a routerLink="/admin/blogs" class="article-back">← Back to field notes</a></div>
+  <div class="blog-shell admin-hero-row"><div><p class="blog-eyebrow">Blog editor</p><h1>{{ editing() ? 'Edit blog post' : 'Create blog post' }}</h1><p>Compose, tag, preview, and publish entirely in this browser.</p></div><a routerLink="/blog" class="article-back">← Back to the blog</a></div>
 </section>
 
 <div class="blog-shell admin-editor-page">
-  @if (loading()) { <p class="admin-status">Loading local field note…</p> }
+  @if (loading()) { <p class="admin-status">Loading local blog post…</p> }
   @if (error()) { <p class="admin-error" role="alert">{{ error() }}</p> }
   <form [formGroup]="form" (ngSubmit)="submit()" class="admin-editor-form">
     <section class="admin-panel editor-main-panel">
@@ -16,10 +16,8 @@
     <aside class="admin-editor-sidebar">
       <section class="admin-panel">
         <p class="blog-eyebrow">Publishing</p><h2>Post settings</h2>
-        <div class="form-field"><label for="post-status">Status *</label><select id="post-status" formControlName="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
-        <div class="form-field"><label for="post-date">Publish date *</label><input id="post-date" type="datetime-local" formControlName="publishedAt"></div>
-        <div class="form-field"><label for="post-author">Author *</label><input id="post-author" type="text" formControlName="author"></div>
-        <div class="form-field"><label for="post-slug">URL slug</label><input id="post-slug" type="text" formControlName="slug" placeholder="Generated from title"><small>Leave blank to generate automatically.</small></div>
+        <p class="form-helper">Posts publish immediately. The publish date and author are assigned automatically.</p>
+        <div class="form-field"><label for="post-slug">URL slug</label><input id="post-slug" type="text" formControlName="slug" placeholder="Generated from title" aria-describedby="post-slug-help"><small id="post-slug-help">Updates whenever the title changes. You can override it afterward.</small></div>
       </section>
 
       <section class="admin-panel">
@@ -39,7 +37,7 @@
       </section>
 
       <div class="demo-storage-notice"><strong>Local demo storage</strong><p>Saving writes the article, tags, and uploaded images to IndexedDB on this device. Nothing is uploaded to Austin Surface Pros or an AI provider.</p></div>
-      <div class="editor-save-actions"><button type="submit" class="blog-primary-button" [disabled]="saving()">{{ saving() ? 'Saving…' : (editing() ? 'Save changes' : 'Create field note') }}</button><a routerLink="/admin/blogs">Cancel</a></div>
+      <div class="editor-save-actions"><button type="submit" class="blog-primary-button" [disabled]="saving()">{{ saving() ? 'Saving…' : (editing() ? 'Save changes' : 'Create blog post') }}</button><a routerLink="/blog">Cancel</a></div>
     </aside>
   </form>
 </div>

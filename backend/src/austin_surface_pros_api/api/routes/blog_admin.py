@@ -71,6 +71,7 @@ async def create_post(
             author_name=current_user.full_name,
         )
     )
+    post = await service.publish_post(post.id)
     return to_detail(post)
 
 
@@ -95,6 +96,7 @@ async def update_post(
                 cover_image_url=payload.cover_image_url,
             ),
         )
+        post = await service.publish_post(post.id)
     except PostNotFoundError as error:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

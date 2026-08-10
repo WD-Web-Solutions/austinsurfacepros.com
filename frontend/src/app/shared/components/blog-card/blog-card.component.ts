@@ -13,5 +13,5 @@ import { BlogPost } from '../../../core/models/blog-post.model';
 })
 export class BlogCardComponent {
   readonly post = input.required<BlogPost>();
-  readonly featured = input(false);
+  readonly showAdminActions = input(false);
 }

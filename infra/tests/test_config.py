@@ -18,6 +18,8 @@ def make_config(**overrides: object) -> InfrastructureConfig:
         "certificate_domain": "wdwebsolutions.com",
         "lambda_archive_path": Path("../backend/dist/lambda.zip"),
         "frontend_bucket_name": "asp-demo-frontend-767688909304",
+        "gallery_bucket_name": "asp-demo-gallery-767688909304",
+        "enable_gallery_storage": True,
         "database_provider": "deferred",
         "enable_database": False,
         "enable_ses": False,
@@ -74,3 +76,6 @@ def test_ses_settings_are_required_when_ses_is_enabled() -> None:
 def test_bucket_name_is_scoped_to_expected_account() -> None:
     with pytest.raises(pulumi.RunError, match="expectedAccountId"):
         make_config(frontend_bucket_name="unsafe-global-bucket-name").validate()
+
+    with pytest.raises(pulumi.RunError, match="galleryBucketName"):
+        make_config(gallery_bucket_name="unsafe-gallery-bucket-name").validate()

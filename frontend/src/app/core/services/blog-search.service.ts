@@ -36,8 +36,10 @@ export class BlogSearchService {
     return this.preloadPromise;
   }
 
-  async search(query: string, selectedTags: string[] = []): Promise<BlogSearchResult[]> {
-    const posts = await this.blogService.getPublishedPosts();
+  async search(query: string, selectedTags: string[] = [], includeDrafts = false): Promise<BlogSearchResult[]> {
+    const posts = includeDrafts
+      ? await this.blogService.getAllPosts()
+      : await this.blogService.getPublishedPosts();
     const tags = normalizeTags(selectedTags);
     const candidates = tags.length
       ? posts.filter(post => tags.some(tag => post.tags.includes(tag)))

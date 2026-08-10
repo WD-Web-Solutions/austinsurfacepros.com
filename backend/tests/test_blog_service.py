@@ -76,6 +76,43 @@ async def test_update_post_raises_when_missing(service: BlogService) -> None:
 
 
 @pytest.mark.asyncio
+async def test_update_post_regenerates_slug_from_edited_title(service: BlogService) -> None:
+    post = await service.create_post(_create_command())
+
+    updated = await service.update_post(
+        post.id,
+        UpdatePost(
+            title="Planning Surface Work in Austin",
+            excerpt=post.excerpt,
+            body=post.body,
+            tags=post.tags,
+            cover_image_url=post.cover_image_url,
+        ),
+    )
+
+    assert updated.slug == "planning-surface-work-in-austin"
+
+
+@pytest.mark.asyncio
+async def test_update_post_deduplicates_regenerated_slug(service: BlogService) -> None:
+    existing = await service.create_post(_create_command(title="Existing Guide"))
+    post = await service.create_post(_create_command(title="Different Guide"))
+
+    updated = await service.update_post(
+        post.id,
+        UpdatePost(
+            title=existing.title,
+            excerpt=post.excerpt,
+            body=post.body,
+            tags=post.tags,
+            cover_image_url=post.cover_image_url,
+        ),
+    )
+
+    assert updated.slug == "existing-guide-2"
+
+
+@pytest.mark.asyncio
 async def test_publish_then_unpublish_post(service: BlogService) -> None:
     post = await service.create_post(_create_command())
 

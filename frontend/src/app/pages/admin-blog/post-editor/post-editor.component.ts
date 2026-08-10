@@ -120,7 +120,7 @@ export class PostEditorComponent implements OnInit {
         : this.blogAdminService.createPost(payload);
 
     request$.pipe(finalize(() => this.isSaving.set(false))).subscribe({
-      next: () => this.router.navigateByUrl('/admin/blog'),
+      next: () => this.router.navigateByUrl('/blog'),
       error: () => this.errorMessage.set('Unable to save this post. Please try again.')
     });
   }
