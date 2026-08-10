@@ -8,7 +8,7 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_COLOR_INDEX
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 
 
 REFERENCE = Path(
@@ -190,6 +190,7 @@ def build() -> None:
     heading_style.font.name = FONT
     heading_style.font.size = BODY_SIZE
     heading_style.font.bold = True
+    heading_style.font.color.rgb = RGBColor(0, 0, 0)
     heading_style.paragraph_format.space_before = Pt(9)
     heading_style.paragraph_format.space_after = Pt(3)
     heading_style.paragraph_format.keep_with_next = True
