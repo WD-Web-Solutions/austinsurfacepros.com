@@ -1,50 +1,117 @@
-<section class="flex min-h-screen items-center justify-center bg-gray-50 px-6">
+<section class="flex min-h-screen items-center justify-center bg-gray-50 px-6 py-16">
+  <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
+    <h1 class="text-center text-3xl font-bold text-gray-900">Create Account</h1>
 
-    <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-  
-      <h1 class="text-center text-3xl font-bold text-gray-900">
-        Create Account
-      </h1>
-  
-      <p class="mt-2 text-center text-gray-500">
-        Register for Austin Surface Pros.
+    <p id="registration-description" class="mt-2 text-center text-gray-600">
+      Register for Austin Surface Pros.
+    </p>
+
+    @if(errorMessage()) {
+      <p id="registration-error" role="alert" class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+        {{ errorMessage() }}
       </p>
-  
-  
-      <form class="mt-8 space-y-5">
-  
+    }
+
+    <form
+      #registerFormElement
+      [formGroup]="registerForm"
+      (ngSubmit)="submitRegisterForm()"
+      [attr.aria-busy]="isSubmitting()"
+      aria-describedby="registration-description registration-privacy-note"
+      class="mt-8 space-y-5"
+      novalidate
+    >
+      <div>
+        <label for="registration-name" class="font-semibold text-gray-900">Full name</label>
         <input
-          placeholder="Full Name"
-          class="w-full rounded-lg border px-4 py-3">
-  
-  
+          id="registration-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          formControlName="fullName"
+          required
+          [attr.aria-invalid]="hasError('fullName')"
+          [attr.aria-describedby]="hasError('fullName') ? 'registration-name-error' : null"
+          class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+        >
+        @if(hasError('fullName')) {
+          <p id="registration-name-error" class="mt-1 text-sm text-red-700">Full name is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="registration-email" class="font-semibold text-gray-900">Email</label>
         <input
+          id="registration-email"
+          name="email"
           type="email"
-          placeholder="Email"
-          class="w-full rounded-lg border px-4 py-3">
-  
-  
+          autocomplete="email"
+          formControlName="emailAddress"
+          required
+          [attr.aria-invalid]="hasError('emailAddress')"
+          [attr.aria-describedby]="hasError('emailAddress') ? 'registration-email-error' : null"
+          class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+        >
+        @if(hasError('emailAddress')) {
+          <p id="registration-email-error" class="mt-1 text-sm text-red-700">A valid email address is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="registration-password" class="font-semibold text-gray-900">Password</label>
         <input
+          id="registration-password"
+          name="password"
           type="password"
-          placeholder="Password"
-          class="w-full rounded-lg border px-4 py-3">
-  
-  
-        <button
-          type="button"
-          class="
-          w-full
-          rounded-lg
-          bg-blue-700
-          py-3
-          font-semibold
-          text-white
-          hover:bg-blue-800">
-          Register
-        </button>
-  
-      </form>
-  
-    </div>
-  
-  </section>
+          autocomplete="new-password"
+          formControlName="password"
+          required
+          [attr.aria-invalid]="hasError('password')"
+          [attr.aria-describedby]="hasError('password') ? 'registration-password-error' : null"
+          class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+        >
+        @if(hasError('password')) {
+          <p id="registration-password-error" class="mt-1 text-sm text-red-700">Password must be at least 8 characters.</p>
+        }
+      </div>
+
+      <div>
+        <label for="registration-confirm-password" class="font-semibold text-gray-900">Confirm password</label>
+        <input
+          id="registration-confirm-password"
+          name="confirm-password"
+          type="password"
+          autocomplete="new-password"
+          formControlName="confirmPassword"
+          required
+          [attr.aria-invalid]="passwordsMismatch || hasError('confirmPassword')"
+          [attr.aria-describedby]="passwordsMismatch || hasError('confirmPassword') ? 'registration-confirm-password-error' : null"
+          class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+        >
+        @if(passwordsMismatch || hasError('confirmPassword')) {
+          <p id="registration-confirm-password-error" class="mt-1 text-sm text-red-700">
+            {{ passwordsMismatch ? 'Passwords do not match.' : 'Please confirm your password.' }}
+          </p>
+        }
+      </div>
+
+      <p id="registration-privacy-note" class="text-sm leading-6 text-gray-600">
+        We use your name and email to create and administer your account. Signing in stores an access token and basic account details in this browser.
+        See our <a routerLink="/privacy-policy" class="font-semibold text-blue-700 underline">Privacy Policy</a>.
+      </p>
+
+      <button
+        type="submit"
+        [disabled]="isSubmitting()"
+        class="w-full rounded-lg bg-blue-700 py-3 font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {{ isSubmitting() ? 'Creating account…' : 'Register' }}
+      </button>
+
+      <p class="text-center text-sm text-gray-600">
+        Already have an account?
+        <a routerLink="/login" class="font-semibold text-blue-700 hover:text-blue-900">Login</a>
+      </p>
+    </form>
+  </div>
+</section>

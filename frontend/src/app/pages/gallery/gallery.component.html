@@ -2,13 +2,19 @@
 
 <section
   class="
+    relative
+    overflow-hidden
     bg-gray-900
     py-24
   "
 >
 
+  <app-hero-video></app-hero-video>
+
   <div
     class="
+      relative
+      z-10
       mx-auto
       max-w-7xl
       px-6
@@ -65,6 +71,7 @@
 <!-- Gallery Projects -->
 
 <section
+  aria-labelledby="project-gallery-heading"
   class="
     py-20
   "
@@ -77,6 +84,11 @@
       px-6
     "
   >
+
+
+    <h2 id="project-gallery-heading" class="sr-only">
+      Project gallery
+    </h2>
 
 
     <div
@@ -93,6 +105,8 @@
       {
 
         <app-ui-card
+
+          class="gallery-card"
 
           [title]="item.title"
 
@@ -161,7 +175,7 @@
         mt-5
         max-w-2xl
         text-lg
-        text-blue-100
+        text-white
       "
     >
       Contact Austin Surface Pros today for a professional

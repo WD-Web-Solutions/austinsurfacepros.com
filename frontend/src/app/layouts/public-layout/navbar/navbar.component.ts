@@ -1,10 +1,18 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  HostListener,
+  inject
+} from '@angular/core';
 
 import {
+  Router,
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
 
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../core/services/auth.service';
 import { DemoAuthService } from '../../../core/services/demo-auth.service';
 
 
@@ -27,7 +35,7 @@ import { DemoAuthService } from '../../../core/services/demo-auth.service';
 
     './navbar.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './navbar.component.css'
@@ -35,7 +43,12 @@ import { DemoAuthService } from '../../../core/services/demo-auth.service';
 })
 export class NavbarComponent {
 
-  constructor(readonly auth: DemoAuthService) {}
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  readonly currentUser = this.authService.currentUser;
+  readonly demoAuth = inject(DemoAuthService);
+  readonly isDemo = environment.demo && environment.blog.useLocalRepository;
 
 
   mobileMenuOpen = false;
@@ -58,9 +71,23 @@ export class NavbarComponent {
 
   }
 
-  logout(): void {
-    this.auth.logout();
+
+  @HostListener('document:keydown.escape')
+  closeMenuWithEscape(): void {
     this.closeMenu();
+  }
+
+  logout(): void {
+    if (this.isDemo) {
+      this.demoAuth.logout();
+    } else {
+      this.authService.logout();
+    }
+
+    this.closeMenu();
+
+    this.router.navigateByUrl('/');
+
   }
 
 

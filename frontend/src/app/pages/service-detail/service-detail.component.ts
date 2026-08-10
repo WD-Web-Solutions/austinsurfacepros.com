@@ -10,6 +10,8 @@ import { Service } from '../../core/models/service.model';
 
 import { SeoService } from '../../core/services/seo.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -20,7 +22,9 @@ import { SeoService } from '../../core/services/seo.service';
 
   imports: [
 
-    RouterLink
+    RouterLink,
+
+    HeroVideoComponent
 
   ],
 
@@ -28,7 +32,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './service-detail.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './service-detail.component.css'
@@ -82,6 +86,22 @@ this.service.description
 
 );
 
+
+}
+
+else
+
+{
+
+this.seoService.updatePage(
+
+'Service Not Found | Austin Surface Pros',
+
+'The requested service could not be found.',
+
+'noindex, follow'
+
+);
 
 }
 

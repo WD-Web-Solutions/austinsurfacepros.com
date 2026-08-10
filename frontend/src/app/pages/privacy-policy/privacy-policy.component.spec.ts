@@ -4,17 +4,41 @@ import { PrivacyPolicyComponent } from './privacy-policy.component';
 
 describe('PrivacyPolicyComponent', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [PrivacyPolicyComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [PrivacyPolicyComponent]
+    }).compileComponents();
   });
 
-  it('discloses browser-local blog storage, search processing, and deletion choices', () => {
+  it('discloses the current collection and tracking practices', () => {
     const fixture = TestBed.createComponent(PrivacyPolicyComponent);
     fixture.detectChanges();
-    const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain('IndexedDB');
-    expect(text).toContain('sessionStorage');
-    expect(text).toContain('processed locally in the browser');
-    expect(text).toContain('clearing this site’s browser data');
-    expect(text).toContain('not transmitted to Hugging Face');
+
+    const element = fixture.nativeElement as HTMLElement;
+    const policyText = element.textContent ?? '';
+
+    expect(policyText).toContain('Privacy Policy');
+    expect(policyText).toContain('estimate request');
+    expect(policyText).toContain('does not set cookies');
+    expect(policyText).toContain('access token');
+    expect(policyText).toContain('cryptographic hash');
+    expect(policyText).toContain('displayed publicly');
+    expect(policyText).toContain('IndexedDB');
+    expect(policyText).toContain('sessionStorage');
+    expect(policyText).toContain('processed locally');
+    expect(policyText).toContain('not transmitted to');
+    expect(policyText).toContain('We do not sell personal information');
+    expect(policyText).toContain('Your privacy choices and rights');
+  });
+
+  it('sets privacy-specific page metadata', () => {
+    const fixture = TestBed.createComponent(PrivacyPolicyComponent);
+    fixture.detectChanges();
+
+    const description = document.head.querySelector<HTMLMetaElement>(
+      'meta[name="description"]'
+    );
+
+    expect(document.title).toBe('Privacy Policy | Austin Surface Pros');
+    expect(description?.content).toContain('collects, uses, protects, and shares');
   });
 });

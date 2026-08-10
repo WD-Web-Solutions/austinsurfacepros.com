@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { BlogPost } from '../../core/models/blog-post.model';
-import { BlogService } from '../../core/services/blog.service';
+import { LocalBlogService } from '../../core/services/local-blog.service';
 
 @Component({
   selector: 'app-blog-delete-page',
@@ -13,7 +13,7 @@ import { BlogService } from '../../core/services/blog.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogDeletePageComponent implements OnInit {
-  private readonly blogService = inject(BlogService);
+  private readonly blogService = inject(LocalBlogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly post = signal<BlogPost | null>(null);

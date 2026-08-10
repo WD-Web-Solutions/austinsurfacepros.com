@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { BlogPost } from '../../core/models/blog-post.model';
-import { BlogService } from '../../core/services/blog.service';
+import { LocalBlogService } from '../../core/services/local-blog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { BlogCardComponent } from '../../shared/components/blog-card/blog-card.component';
 import { ShareButtonsComponent } from '../../shared/components/share-buttons/share-buttons.component';
@@ -16,7 +16,7 @@ import { ShareButtonsComponent } from '../../shared/components/share-buttons/sha
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogDetailComponent implements OnInit {
-  private readonly blogService = inject(BlogService);
+  private readonly blogService = inject(LocalBlogService);
   private readonly route = inject(ActivatedRoute);
   private readonly seo = inject(SeoService);
 

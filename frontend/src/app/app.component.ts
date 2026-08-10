@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
 
+import { environment } from '../environments/environment';
 import { BlogSearchService } from './core/services/blog-search.service';
 
 
@@ -20,7 +21,7 @@ import { BlogSearchService } from './core/services/blog-search.service';
   templateUrl:
     './app.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './app.component.css'
 
@@ -29,7 +30,7 @@ export class AppComponent {
   private readonly blogSearch = inject(BlogSearchService);
 
   constructor() {
-    if (typeof window === 'undefined') {
+    if (!environment.blog.useLocalRepository || typeof window === 'undefined') {
       return;
     }
     const warmSearch = (): void => {

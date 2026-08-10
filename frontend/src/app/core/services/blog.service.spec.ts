@@ -1,77 +1,79 @@
-import 'fake-indexeddb/auto';
-
+import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { BLOG_SEEDS } from '../data/blog-seeds.data';
+import { BlogPostSummary } from '../models/blog.model';
 import { BlogService } from './blog.service';
 
 describe('BlogService', () => {
   let service: BlogService;
+  let http: HttpTestingController;
 
-  beforeEach(async () => {
-    TestBed.resetTestingModule();
+  const post: BlogPostSummary = {
+    id: '9a53d09a-f258-4b09-9fb3-ef6df4c2f9fd',
+    title: 'Sealing Your Parking Lot',
+    slug: 'sealing-your-parking-lot',
+    excerpt: 'Why sealing matters.',
+    coverImageUrl: null,
+    tags: ['asphalt'],
+    authorName: 'Admin Person',
+    status: 'published',
+    publishedAt: '2026-08-09T12:00:00Z',
+    createdAt: '2026-08-09T12:00:00Z'
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [BlogService, provideHttpClient(), provideHttpClientTesting()]
+    });
     service = TestBed.inject(BlogService);
-    await service.ready();
-    await service.resetDemoContent();
+    http = TestBed.inject(HttpTestingController);
   });
 
-  it('loads image-backed demo content newest first and limits homepage results', async () => {
-    const recent = await service.getPublishedPosts(3);
-    expect(recent).toHaveLength(3);
-    expect(recent[0]?.id).toBe(BLOG_SEEDS[0]?.id);
-    expect(recent.every(post => Boolean(post.thumbnailUrl))).toBe(true);
+  afterEach(() => http.verify());
+
+  it('lists posts without a tag filter', () => {
+    service.listPosts().subscribe();
+    const request = http.expectOne(r => r.url === '/api/blog/posts');
+    expect(request.request.params.has('tag')).toBe(false);
+    request.flush([post]);
   });
 
-  it('creates, updates, and deletes a local post while deriving hashtag categories', async () => {
-    const created = await service.create({
-      title: 'Drainage Planning for Parking Lots',
-      summary: 'A local service test post about drainage planning.',
-      contentHtml: '<h2>Start with water</h2><p>Map the route before planning a repair.</p>',
-      thumbnailUrl: '/assets/images/design-lab/parking-aerial.jpg',
-      thumbnailAlt: 'Parking lot viewed from above',
-      author: 'Test Author',
-      publishedAt: '2026-08-09T12:00:00.000Z',
-      status: 'published',
-      tags: ['#Drainage', 'Parking Lots', '#drainage']
-    });
-    expect(created.tags).toEqual(['drainage', 'parking-lots']);
-
-    const updated = await service.update(created.id, {
-      ...created,
-      title: 'Drainage Planning for Busy Parking Lots',
-      tags: ['drainage', 'property-management']
-    });
-    expect(updated.slug).toBe('drainage-planning-for-parking-lots');
-    expect((await service.getAllTags()).some(tag => tag.name === 'property-management')).toBe(true);
-
-    await service.delete(created.id);
-    expect(await service.getById(created.id)).toBeNull();
+  it('lists posts filtered by tag', () => {
+    service.listPosts('asphalt').subscribe();
+    const request = http.expectOne(r => r.url === '/api/blog/posts');
+    expect(request.request.params.get('tag')).toBe('asphalt');
+    request.flush([post]);
   });
 
-  it('sanitizes executable rich-text markup before persistence', async () => {
-    const created = await service.create({
-      title: 'Safe content', summary: 'Sanitizer coverage',
-      contentHtml: '<p onclick="alert(1)">Useful</p><script>alert(2)</script><a href="javascript:alert(3)">bad</a>',
-      thumbnailUrl: '/assets/images/design-lab/asphalt-road.jpg', thumbnailAlt: 'Road',
-      author: 'Test', publishedAt: '2026-08-09T12:00:00.000Z', status: 'draft', tags: ['safety']
-    });
-    expect(created.contentHtml).not.toContain('script');
-    expect(created.contentHtml).not.toContain('onclick');
-    expect(created.contentHtml).not.toContain('javascript:');
+  it('gets a post by slug', () => {
+    service.getPost('sealing-your-parking-lot').subscribe();
+    const request = http.expectOne('/api/blog/posts/sealing-your-parking-lot');
+    expect(request.request.method).toBe('GET');
+    request.flush({ ...post, body: 'Full body', updatedAt: post.createdAt });
   });
 
-  it('clears persisted article vectors when local content changes', async () => {
-    const seed = (await service.getPublishedPosts())[0]!;
-    await service.cacheEmbedding(seed, [0.1, 0.2]);
-    expect(await service.getCachedEmbedding(seed)).toEqual([0.1, 0.2]);
-
-    await service.create({
-      title: 'Cache invalidation', summary: 'Changes require fresh search vectors.',
-      contentHtml: '<p>Fresh content needs a fresh vector.</p>',
-      thumbnailUrl: '/assets/images/design-lab/asphalt-road.jpg', thumbnailAlt: 'Road',
-      author: 'Test', publishedAt: '2026-08-09T12:00:00.000Z', status: 'draft', tags: ['search']
+  it('adds a comment', () => {
+    service.addComment('sealing-your-parking-lot', 'Great post!').subscribe();
+    const request = http.expectOne('/api/blog/posts/sealing-your-parking-lot/comments');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual({ body: 'Great post!' });
+    request.flush({
+      id: '1',
+      authorId: '2',
+      authorName: 'Taylor Client',
+      body: 'Great post!',
+      createdAt: post.createdAt
     });
+  });
 
-    expect(await service.getCachedEmbedding(seed)).toBeNull();
+  it('subscribes and unsubscribes to a tag', () => {
+    service.subscribeToTag('asphalt').subscribe();
+    http.expectOne('/api/blog/tags/asphalt/subscribe').flush(null);
+    service.unsubscribeFromTag('asphalt').subscribe();
+    http.expectOne('/api/blog/tags/asphalt/subscribe').flush(null);
   });
 });

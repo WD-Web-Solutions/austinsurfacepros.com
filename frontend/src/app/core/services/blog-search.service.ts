@@ -3,7 +3,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { BlogPost, BlogSearchResult, BlogSearchState } from '../models/blog-post.model';
 import { normalizeTags, searchablePostText, sortPostsNewestFirst } from '../utils/blog.utils';
-import { BlogService } from './blog.service';
+import { LocalBlogService } from './local-blog.service';
 
 interface TensorOutput {
   tolist(): unknown;
@@ -21,7 +21,7 @@ interface ModelProgress {
 
 @Injectable({ providedIn: 'root' })
 export class BlogSearchService {
-  private readonly blogService = inject(BlogService);
+  private readonly blogService = inject(LocalBlogService);
   private readonly embeddingMemory = new Map<string, number[]>();
   private pipeline: FeatureExtractionPipeline | null = null;
   private preloadPromise: Promise<void> | null = null;

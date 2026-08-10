@@ -3,15 +3,15 @@ import 'fake-indexeddb/auto';
 import { TestBed } from '@angular/core/testing';
 
 import { BlogSearchService } from './blog-search.service';
-import { BlogService } from './blog.service';
+import { LocalBlogService } from './local-blog.service';
 
 describe('BlogSearchService', () => {
-  let blog: BlogService;
+  let blog: LocalBlogService;
   let search: BlogSearchService;
 
   beforeEach(async () => {
     TestBed.resetTestingModule();
-    blog = TestBed.inject(BlogService);
+    blog = TestBed.inject(LocalBlogService);
     search = TestBed.inject(BlogSearchService);
     await blog.ready();
     await blog.resetDemoContent();

@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   demo: false,
   blog: {
-    useLocalRepository: true,
+    useLocalRepository: false,
     seedOnFirstRun: false,
     demoAdminEmail: '',
     demoAdminPassword: '',

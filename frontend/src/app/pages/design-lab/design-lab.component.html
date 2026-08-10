@@ -14,7 +14,12 @@
 
     <nav class="dl-filterbar" aria-label="Filter design concepts">
       @for (filter of filters; track filter.id) {
-        <button type="button" [class.is-active]="activeCategory === filter.id" (click)="setCategory(filter.id)">
+        <button
+          type="button"
+          [class.is-active]="activeCategory === filter.id"
+          [attr.aria-pressed]="activeCategory === filter.id"
+          (click)="setCategory(filter.id)"
+        >
           {{ filter.label }} <small>{{ filter.count }}</small>
         </button>
       }
@@ -159,9 +164,9 @@
       <div class="dl-selector">
         <div class="dl-selector__nav">
           <span>WHAT ARE YOU MANAGING?</span>
-          <button type="button" [class.is-active]="selectedService === 'asphalt'" (click)="selectedService = 'asphalt'"><b>01</b> Asphalt lot <i>→</i></button>
-          <button type="button" [class.is-active]="selectedService === 'concrete'" (click)="selectedService = 'concrete'"><b>02</b> Concrete walk <i>→</i></button>
-          <button type="button" [class.is-active]="selectedService === 'garage'" (click)="selectedService = 'garage'"><b>03</b> Parking garage <i>→</i></button>
+          <button type="button" [class.is-active]="selectedService === 'asphalt'" [attr.aria-pressed]="selectedService === 'asphalt'" (click)="selectedService = 'asphalt'"><b>01</b> Asphalt lot <i>→</i></button>
+          <button type="button" [class.is-active]="selectedService === 'concrete'" [attr.aria-pressed]="selectedService === 'concrete'" (click)="selectedService = 'concrete'"><b>02</b> Concrete walk <i>→</i></button>
+          <button type="button" [class.is-active]="selectedService === 'garage'" [attr.aria-pressed]="selectedService === 'garage'" (click)="selectedService = 'garage'"><b>03</b> Parking garage <i>→</i></button>
         </div>
         <div class="dl-selector__panel">
           @switch (selectedService) {
@@ -429,9 +434,9 @@
       <header class="dl-concept__label dl-concept__label--light"><span>24 / Tool</span><h2>Problem Diagnoser</h2><p>A visual choose-your-symptom utility</p></header>
       <div class="dl-diagnose">
         <div class="dl-diagnose__question"><span>SURFACE CHECK / 01</span><h3>What are you seeing?</h3><div>
-          <button type="button" [class.is-active]="selectedProblem === 'cracks'" (click)="selectedProblem = 'cracks'"><i class="dl-crack-icon"></i>Branching cracks</button>
-          <button type="button" [class.is-active]="selectedProblem === 'fade'" (click)="selectedProblem = 'fade'"><i class="dl-fade-icon"></i>Gray + faded</button>
-          <button type="button" [class.is-active]="selectedProblem === 'water'" (click)="selectedProblem = 'water'"><i class="dl-water-icon"></i>Standing water</button>
+          <button type="button" [class.is-active]="selectedProblem === 'cracks'" [attr.aria-pressed]="selectedProblem === 'cracks'" (click)="selectedProblem = 'cracks'"><i class="dl-crack-icon"></i>Branching cracks</button>
+          <button type="button" [class.is-active]="selectedProblem === 'fade'" [attr.aria-pressed]="selectedProblem === 'fade'" (click)="selectedProblem = 'fade'"><i class="dl-fade-icon"></i>Gray + faded</button>
+          <button type="button" [class.is-active]="selectedProblem === 'water'" [attr.aria-pressed]="selectedProblem === 'water'" (click)="selectedProblem = 'water'"><i class="dl-water-icon"></i>Standing water</button>
         </div></div>
         <div class="dl-diagnose__answer">
           @if (selectedProblem === 'cracks') { <small>LIKELY CONDITION</small><h4>Water is finding a way in.</h4><p>Connected cracks can signal movement below the wearing surface. Seal early; evaluate the base where cracks repeat.</p><span>Next: photo review + site walk</span> }
@@ -467,7 +472,7 @@
         <div class="dl-calendar__head"><span>BEST TIME TO BOOK</span><h3>Plan around heat,<br>rain, and traffic.</h3><p>Select a season to see the smartest work to schedule.</p></div>
         <div class="dl-calendar__months">
           @for (month of ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']; track month; let i = $index) {
-            <button type="button" [class.is-active]="selectedMonth === i" (click)="selectedMonth = i"><span>{{ month }}</span><i [style.height.px]="18 + ((i * 7) % 34)"></i></button>
+            <button type="button" [class.is-active]="selectedMonth === i" [attr.aria-pressed]="selectedMonth === i" (click)="selectedMonth = i"><span>{{ month }}</span><i [style.height.px]="18 + ((i * 7) % 34)"></i></button>
           }
         </div>
         <div class="dl-calendar__note"><span>{{ selectedMonth >= 2 && selectedMonth <= 4 ? 'SPRING WINDOW' : selectedMonth >= 8 && selectedMonth <= 10 ? 'FALL WINDOW' : 'CONDITIONAL WINDOW' }}</span><strong>{{ selectedMonth >= 2 && selectedMonth <= 4 ? 'Ideal for assessment + striping' : selectedMonth >= 8 && selectedMonth <= 10 ? 'Prime sealcoating conditions' : 'Schedule with a weather hold' }}</strong><small>Current planning signal / Austin climate</small></div>
@@ -579,7 +584,7 @@
             { q: 'Do you work nights and weekends?', a: 'Yes. We recommend work windows based on tenant traffic, noise constraints, weather, and crew safety.' },
             { q: 'Can you help prioritize a large property?', a: 'Yes. A condition map separates immediate safety needs, preventive work, and future capital items.' }
           ]; track item.q; let i = $index) {
-            <div [class.is-open]="activeFaq === i"><button type="button" (click)="toggleFaq(i)"><span>{{ (i + 1).toString().padStart(2, '0') }}</span><b>{{ item.q }}</b><i>{{ activeFaq === i ? '−' : '+' }}</i></button>@if (activeFaq === i) { <p>{{ item.a }}</p> }</div>
+            <div [class.is-open]="activeFaq === i"><button type="button" [attr.aria-expanded]="activeFaq === i" [attr.aria-controls]="'faq-answer-' + i" (click)="toggleFaq(i)"><span>{{ (i + 1).toString().padStart(2, '0') }}</span><b>{{ item.q }}</b><i aria-hidden="true">{{ activeFaq === i ? '−' : '+' }}</i></button>@if (activeFaq === i) { <p [id]="'faq-answer-' + i">{{ item.a }}</p> }</div>
           }
         </div>
       </div>
@@ -691,7 +696,7 @@
         <div class="dl-stepform__rail">
           <strong>START A PROJECT</strong>
           @for (step of ['Property','Surface','Timing','Contact']; track step; let i = $index) {
-            <button type="button" [class.is-active]="estimateStep === i + 1" [class.is-done]="estimateStep > i + 1" (click)="estimateStep = i + 1"><i>{{ estimateStep > i + 1 ? '✓' : i + 1 }}</i><span>{{ step }}</span></button>
+            <button type="button" [class.is-active]="estimateStep === i + 1" [class.is-done]="estimateStep > i + 1" [attr.aria-current]="estimateStep === i + 1 ? 'step' : null" (click)="estimateStep = i + 1"><i>{{ estimateStep > i + 1 ? '✓' : i + 1 }}</i><span>{{ step }}</span></button>
           }
           <small>About 2 minutes<br>No obligation</small>
         </div>
@@ -771,7 +776,7 @@
         <div class="dl-callback__copy"><span>HAVE 60 SECONDS?</span><h3>We’ll call.<br>You keep moving.</h3><p>Leave a number and choose a window. No phone tree.</p></div>
         <form (submit)="$event.preventDefault()" novalidate>
           <label>Phone number<input type="tel" placeholder="(512) 555-____"></label>
-          <fieldset><legend>Best time</legend>@for (time of ['Morning','Midday','Afternoon']; track time) { <button type="button" [class.is-active]="callbackTime === time" (click)="callbackTime = time">{{ time }}</button> }</fieldset>
+          <fieldset><legend>Best time</legend>@for (time of ['Morning','Midday','Afternoon']; track time) { <button type="button" [class.is-active]="callbackTime === time" [attr.aria-pressed]="callbackTime === time" (click)="callbackTime = time">{{ time }}</button> }</fieldset>
           <button type="submit">Request callback <span>→</span></button>
         </form>
         <small>MON–FRI · 7:30 AM–5:30 PM CT</small>
@@ -841,7 +846,7 @@
     <article id="concept-50" class="dl-concept dl-concept--50">
       <header class="dl-concept__label"><span>50 / CTA</span><h2>Mood Switcher</h2><p>One message, three possible visual directions</p></header>
       <div class="dl-moods" [attr.data-mood]="mood">
-        <nav aria-label="Choose visual mood"><span>TRY A DIRECTION</span><button type="button" [class.is-active]="mood === 'precision'" (click)="mood = 'precision'">01 Precision</button><button type="button" [class.is-active]="mood === 'warm'" (click)="mood = 'warm'">02 Warm local</button><button type="button" [class.is-active]="mood === 'bold'" (click)="mood = 'bold'">03 High impact</button></nav>
+        <nav aria-label="Choose visual mood"><span>TRY A DIRECTION</span><button type="button" [class.is-active]="mood === 'precision'" [attr.aria-pressed]="mood === 'precision'" (click)="mood = 'precision'">01 Precision</button><button type="button" [class.is-active]="mood === 'warm'" [attr.aria-pressed]="mood === 'warm'" (click)="mood = 'warm'">02 Warm local</button><button type="button" [class.is-active]="mood === 'bold'" [attr.aria-pressed]="mood === 'bold'" (click)="mood = 'bold'">03 High impact</button></nav>
         <div class="dl-moods__stage">
           <div class="dl-moods__art"><img loading="lazy" decoding="async" src="/assets/images/design-lab/austin-skyline.jpg" alt="Austin skyline in daylight"><i></i></div>
           <div class="dl-moods__copy"><span>AUSTIN SURFACE PROS</span><h3>Take care of<br>the ground<br><em>you’ve gained.</em></h3><p>Commercial surface care planned around your property, people, and priorities.</p><a href="/contact">Start a conversation <b>↗</b></a></div>

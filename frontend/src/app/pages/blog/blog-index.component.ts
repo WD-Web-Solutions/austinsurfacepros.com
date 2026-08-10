@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { BlogSearchResult } from '../../core/models/blog-post.model';
 import { BlogSearchService } from '../../core/services/blog-search.service';
-import { BlogService } from '../../core/services/blog.service';
+import { LocalBlogService } from '../../core/services/local-blog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { normalizeTag } from '../../core/utils/blog.utils';
 import { BlogCardComponent } from '../../shared/components/blog-card/blog-card.component';
@@ -16,7 +16,7 @@ import { BlogCardComponent } from '../../shared/components/blog-card/blog-card.c
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogIndexComponent {
-  readonly blogService = inject(BlogService);
+  readonly blogService = inject(LocalBlogService);
   readonly blogSearch = inject(BlogSearchService);
   readonly query = signal('');
   readonly selectedTags = signal<string[]>([]);

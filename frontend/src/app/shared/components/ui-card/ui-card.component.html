@@ -79,11 +79,15 @@ p-6
 
 class="
 text-5xl
+
+text-blue-600
 "
+
+aria-hidden="true"
 
 >
 
-{{icon}}
+<i [class]="'fas fa-' + icon"></i>
 
 </div>
 
@@ -164,6 +168,8 @@ text-gray-600
 <a
 
 [routerLink]="link"
+
+[attr.aria-label]="'Learn more about ' + title"
 
 class="
 mt-6

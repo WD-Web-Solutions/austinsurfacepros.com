@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, isDevMode } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
   templateUrl:
     './footer.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './footer.component.css'
 
@@ -27,6 +27,8 @@ export class FooterComponent {
 
 
   year = new Date().getFullYear();
+
+  readonly isDevelopment = isDevMode();
 
 
 }

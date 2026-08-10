@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Inject
+} from '@angular/core';
+
+import { DOCUMENT } from '@angular/common';
 
 import { RouterOutlet } from '@angular/router';
 
@@ -26,12 +32,25 @@ import { FooterComponent } from './footer/footer.component';
   templateUrl:
     './public-layout.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './public-layout.component.css'
 
 })
 export class PublicLayoutComponent {
+  constructor(@Inject(DOCUMENT) private readonly document: Document) {}
+  private hasActivatedRoute = false;
+
+  onRouteActivate(): void {
+    if (!this.hasActivatedRoute) {
+      this.hasActivatedRoute = true;
+      return;
+    }
+
+    setTimeout(() => {
+      this.document.getElementById('main-content')?.focus();
+    });
+  }
 
 
 }

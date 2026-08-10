@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { BlogPost, BlogTag } from '../../core/models/blog-post.model';
-import { BlogService } from '../../core/services/blog.service';
+import { LocalBlogService } from '../../core/services/local-blog.service';
 import { DemoAuthService } from '../../core/services/demo-auth.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { DemoAuthService } from '../../core/services/demo-auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogAdminListComponent implements OnInit {
-  private readonly blogService = inject(BlogService);
+  private readonly blogService = inject(LocalBlogService);
   readonly auth = inject(DemoAuthService);
   readonly posts = signal<BlogPost[]>([]);
   readonly tags = signal<BlogTag[]>([]);

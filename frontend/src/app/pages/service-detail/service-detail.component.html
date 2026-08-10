@@ -1,18 +1,24 @@
 @if(service)
 {
 
-<main>
+<div>
 
 
 <section
 class="
+relative
+overflow-hidden
 bg-gray-900
 py-20
 "
 >
 
+<app-hero-video></app-hero-video>
+
 <div
 class="
+relative
+z-10
 mx-auto
 max-w-7xl
 px-6
@@ -250,7 +256,7 @@ Ready to Improve Your Property?
 class="
 mt-5
 text-lg
-text-blue-100
+text-white
 "
 
 >
@@ -298,7 +304,7 @@ Get Started
 
 
 
-</main>
+</div>
 
 }
 
@@ -312,20 +318,37 @@ flex
 min-h-[50vh]
 items-center
 justify-center
+px-6
 "
 
 >
 
-<p
+<div class="max-w-xl text-center">
+
+<h1
 
 class="
-text-xl
-text-gray-600
+text-4xl
+font-bold
+text-gray-900
 "
 
 >
-Loading service information...
+Service not found
+</h1>
+
+<p class="mt-5 text-lg text-gray-600">
+The service you are looking for may have moved, or the link may be incorrect.
 </p>
+
+<a
+routerLink="/services"
+class="mt-8 inline-flex rounded-lg bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
+>
+View all services
+</a>
+
+</div>
 
 
 </div>

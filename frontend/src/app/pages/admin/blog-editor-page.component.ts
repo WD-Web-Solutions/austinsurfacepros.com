@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { BlogPostDraft, BlogPostStatus } from '../../core/models/blog-post.model';
-import { BlogService } from '../../core/services/blog.service';
+import { LocalBlogService } from '../../core/services/local-blog.service';
 import { normalizeTag } from '../../core/utils/blog.utils';
 import { RichTextEditorComponent } from '../../shared/components/rich-text-editor/rich-text-editor.component';
 
@@ -15,7 +15,7 @@ import { RichTextEditorComponent } from '../../shared/components/rich-text-edito
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogEditorPageComponent implements OnInit {
-  private readonly blogService = inject(BlogService);
+  private readonly blogService = inject(LocalBlogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private editingId: string | null = null;

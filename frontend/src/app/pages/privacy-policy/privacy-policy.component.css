@@ -1,0 +1,25 @@
+.policy-content ul {
+  list-style: disc;
+}
+
+.policy-content li::marker {
+  color: #2563eb;
+}
+
+.policy-content a {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.policy-content a:hover {
+  color: #1e3a8a;
+}
+
+.policy-content a:focus-visible {
+  border-radius: 0.125rem;
+  outline: 3px solid #fb923c;
+  outline-offset: 3px;
+}
