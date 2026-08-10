@@ -1,0 +1,39 @@
+<div class="blog-editor-shell" [class.is-disabled]="!editor()?.isEditable">
+  <div class="blog-editor-toolbar" role="toolbar" aria-label="Rich text formatting">
+    <button type="button" (click)="setParagraph()" [class.active]="isActive('paragraph')">Text</button>
+    <button type="button" (click)="toggleHeading(2)" [class.active]="isActive('heading', { level: 2 })">H2</button>
+    <button type="button" (click)="toggleHeading(3)" [class.active]="isActive('heading', { level: 3 })">H3</button>
+    <span class="toolbar-divider" aria-hidden="true"></span>
+    <button type="button" aria-label="Bold" title="Bold" (click)="toggleBold()" [class.active]="isActive('bold')"><strong>B</strong></button>
+    <button type="button" aria-label="Italic" title="Italic" (click)="toggleItalic()" [class.active]="isActive('italic')"><em>I</em></button>
+    <button type="button" aria-label="Underline" title="Underline" (click)="toggleUnderline()" [class.active]="isActive('underline')"><u>U</u></button>
+    <button type="button" aria-label="Strikethrough" title="Strikethrough" (click)="toggleStrike()" [class.active]="isActive('strike')"><s>S</s></button>
+    <span class="toolbar-divider" aria-hidden="true"></span>
+    <button type="button" title="Bullet list" (click)="toggleBulletList()" [class.active]="isActive('bulletList')">• List</button>
+    <button type="button" title="Numbered list" (click)="toggleOrderedList()" [class.active]="isActive('orderedList')">1. List</button>
+    <button type="button" title="Quote" (click)="toggleBlockquote()" [class.active]="isActive('blockquote')">Quote</button>
+    <button type="button" title="Divider" (click)="addHorizontalRule()">Rule</button>
+    <span class="toolbar-divider" aria-hidden="true"></span>
+    <button type="button" title="Add or edit link" (click)="openLinkEditor()" [class.active]="isActive('link')">Link</button>
+    <button type="button" title="Upload image" (click)="chooseImage()">Image</button>
+    <span class="toolbar-divider" aria-hidden="true"></span>
+    <button type="button" title="Undo" (click)="undo()" [disabled]="!editor()?.can()?.undo()">Undo</button>
+    <button type="button" title="Redo" (click)="redo()" [disabled]="!editor()?.can()?.redo()">Redo</button>
+    <button type="button" title="Clear formatting" (click)="clearFormatting()">Clear</button>
+  </div>
+
+  @if (linkEditorOpen()) {
+    <div class="blog-editor-link-row">
+      <label for="rich-editor-link">Link URL</label>
+      <input #linkUrl id="rich-editor-link" type="url" placeholder="https://example.com">
+      <button type="button" (click)="applyLink(linkUrl.value)">Apply</button>
+      <button type="button" class="quiet" (click)="applyLink('')">Remove link</button>
+    </div>
+  }
+
+  <div #editorHost></div>
+  <input #imageInput class="sr-only" type="file" accept="image/png,image/jpeg,image/gif,image/webp" (change)="uploadImage($event)">
+  @if (imageError()) {
+    <p class="field-error" role="alert">{{ imageError() }}</p>
+  }
+</div>

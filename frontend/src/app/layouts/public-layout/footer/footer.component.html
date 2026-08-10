@@ -157,6 +157,10 @@ hover:text-white
 Resources
 </a>
 
+<a routerLink="/blog" class="block hover:text-white">
+Field Notes
+</a>
+
 
 <a
 
@@ -210,7 +214,10 @@ text-sm
 
 >
 
-© {{year}} Austin Surface Pros. All rights reserved.
+<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
+<span>© {{year}} Austin Surface Pros. All rights reserved.</span>
+<nav aria-label="Legal" class="flex gap-5"><a routerLink="/privacy-policy" class="hover:text-white">Privacy Policy</a><a routerLink="/terms" class="hover:text-white">Terms</a></nav>
+</div>
 
 </div>
 

@@ -1,0 +1,8 @@
+<div class="share-buttons" aria-label="Share this article">
+  <span>Share</span>
+  <button type="button" (click)="share()">Share…</button>
+  <a [href]="'https://www.linkedin.com/sharing/share-offsite/?url=' + encodedUrl" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl" target="_blank" rel="noopener noreferrer">Facebook</a>
+  <a [href]="emailHref">Email</a>
+  <button type="button" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy link' }}</button>
+</div>

@@ -1,0 +1,19 @@
+<article class="blog-card" [class.blog-card-featured]="featured()">
+  <a class="blog-card-image" [routerLink]="['/blog', post().slug]" [attr.aria-label]="'Read ' + post().title">
+    <img [src]="post().thumbnailUrl" [alt]="post().thumbnailAlt" loading="lazy">
+  </a>
+  <div class="blog-card-body">
+    <div class="blog-card-meta">
+      <time [attr.datetime]="post().publishedAt">{{ post().publishedAt | date:'MMM d, y' }}</time>
+      <span>{{ post().readingMinutes }} min read</span>
+    </div>
+    <h3><a [routerLink]="['/blog', post().slug]">{{ post().title }}</a></h3>
+    <p>{{ post().summary }}</p>
+    <div class="blog-tags" aria-label="Post tags">
+      @for (tag of post().tags; track tag) {
+        <a [routerLink]="['/blog']" [queryParams]="{ tag }">#{{ tag }}</a>
+      }
+    </div>
+    <a class="blog-read-link" [routerLink]="['/blog', post().slug]">Read field note <span aria-hidden="true">→</span></a>
+  </div>
+</article>

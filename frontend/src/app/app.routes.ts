@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { demoAdminGuard } from './core/guards/demo-admin.guard';
 
 
 export const routes: Routes = [
@@ -69,6 +70,20 @@ export const routes: Routes = [
 
       },
 
+      {
+        path: 'blog',
+        loadComponent: () =>
+          import('./pages/blog/blog-index.component')
+            .then(m => m.BlogIndexComponent)
+      },
+
+      {
+        path: 'blog/:slug',
+        loadComponent: () =>
+          import('./pages/blog/blog-detail.component')
+            .then(m => m.BlogDetailComponent)
+      },
+
 
       {
         path: 'contact',
@@ -77,6 +92,45 @@ export const routes: Routes = [
           import('./pages/contact/contact.component')
             .then(m => m.ContactComponent)
 
+      },
+
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/login/login.component')
+            .then(m => m.LoginComponent)
+      },
+
+      {
+        path: 'admin/blogs',
+        canActivate: [demoAdminGuard],
+        loadComponent: () =>
+          import('./pages/admin/blog-admin-list.component')
+            .then(m => m.BlogAdminListComponent)
+      },
+
+      {
+        path: 'admin/blogs/new',
+        canActivate: [demoAdminGuard],
+        loadComponent: () =>
+          import('./pages/admin/blog-editor-page.component')
+            .then(m => m.BlogEditorPageComponent)
+      },
+
+      {
+        path: 'admin/blogs/:id/edit',
+        canActivate: [demoAdminGuard],
+        loadComponent: () =>
+          import('./pages/admin/blog-editor-page.component')
+            .then(m => m.BlogEditorPageComponent)
+      },
+
+      {
+        path: 'admin/blogs/:id/delete',
+        canActivate: [demoAdminGuard],
+        loadComponent: () =>
+          import('./pages/admin/blog-delete-page.component')
+            .then(m => m.BlogDeletePageComponent)
       },
 
 

@@ -1,0 +1,64 @@
+<section class="blog-hero">
+  <div class="blog-shell blog-hero-grid">
+    <div>
+      <p class="blog-eyebrow">Surface intelligence for Central Texas</p>
+      <h1>Field notes for properties built to last.</h1>
+      <p class="blog-hero-copy">Straightforward guidance on pavement, striping, concrete, cleaning, and planning—written for the people responsible for keeping commercial sites moving.</p>
+    </div>
+    <div class="blog-search-panel">
+      <label for="blog-search">Search field notes</label>
+      <div class="blog-search-input">
+        <span aria-hidden="true">⌕</span>
+        <input id="blog-search" type="search" [value]="query()" (input)="setQuery($any($event.target).value)" placeholder="Try “faded parking lines” or “pavement water”…">
+      </div>
+      <div class="search-mode" aria-live="polite">
+        @switch (blogSearch.state()) {
+          @case ('loading') { <span class="status-dot warming"></span><span>Semantic search warming up {{ blogSearch.progress() }}%</span> }
+          @case ('ready') { <span class="status-dot ready"></span><span>Hybrid keyword, fuzzy, and meaning search ready</span> }
+          @case ('fallback') { <span class="status-dot"></span><span>Fast keyword and fuzzy search active</span> }
+          @default { <span class="status-dot warming"></span><span>Search model queued for idle loading</span> }
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="blog-shell blog-index-layout">
+  <aside class="blog-filter-panel" aria-label="Filter articles by hashtag">
+    <div class="blog-filter-heading">
+      <div><p class="blog-eyebrow">Browse topics</p><h2>Hashtags</h2></div>
+      @if (query() || selectedTags().length) { <button type="button" (click)="clearFilters()">Clear</button> }
+    </div>
+    <div class="blog-tag-filter-list">
+      @for (tag of blogService.tags(); track tag.name) {
+        <button type="button" [class.active]="isTagSelected(tag.name)" [attr.aria-pressed]="isTagSelected(tag.name)" (click)="toggleTag(tag.name)">
+          <span>#{{ tag.name }}</span><strong>{{ tag.count }}</strong>
+        </button>
+      }
+    </div>
+  </aside>
+
+  <section class="blog-results" aria-live="polite">
+    <div class="blog-results-heading">
+      <div>
+        <p class="blog-eyebrow">Knowledge center</p>
+        <h2>{{ query() || selectedTags().length ? 'Search results' : 'Latest field notes' }}</h2>
+      </div>
+      <span>{{ results().length }} {{ results().length === 1 ? 'article' : 'articles' }}</span>
+    </div>
+
+    @if (blogService.error()) {
+      <div class="blog-empty"><h3>Local content is unavailable</h3><p>{{ blogService.error() }}</p></div>
+    } @else if (searching() && results().length === 0) {
+      <div class="blog-loading-grid" aria-label="Loading articles"><span></span><span></span><span></span></div>
+    } @else if (results().length === 0) {
+      <div class="blog-empty"><span aria-hidden="true">⌕</span><h3>No field notes matched that search.</h3><p>Try a broader phrase or remove one of the hashtag filters.</p><button type="button" (click)="clearFilters()">Show all field notes</button></div>
+    } @else {
+      <div class="blog-card-grid">
+        @for (result of results(); track result.post.id; let first = $first) {
+          <app-blog-card [post]="result.post" [featured]="first && !query() && selectedTags().length === 0" />
+        }
+      </div>
+    }
+  </section>
+</div>

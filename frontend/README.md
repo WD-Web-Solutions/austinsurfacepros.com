@@ -19,6 +19,36 @@ Once the server is running, open your browser and navigate to `http://localhost:
 Requests under `/api` are proxied to the local FastAPI server at
 `http://127.0.0.1:8000`.
 
+## Local blog demo
+
+The development configuration includes a complete browser-local blog demo.
+Posts, drafts, hashtags, uploaded images, and cached article embeddings are
+stored in IndexedDB. The temporary administrator session uses sessionStorage.
+No blog content is sent to the API while the database integration is deferred.
+
+Run the optimized demo configuration with:
+
+```bash
+npm run start:demo
+```
+
+Open `/login` and select **Use demo admin** to fill the mock credentials. The
+button uses these demo-only values:
+
+- Email: `admin@austinsurfacepros.demo`
+- Password: `SurfaceProsDemo!`
+
+The production build does not enable the mock account or seed demo posts.
+
+Hybrid blog search combines exact keyword, fuzzy trigram, and semantic ranking.
+The Apache-2.0 `Xenova/all-MiniLM-L6-v2` quantized ONNX model is served from
+`public/assets/models` and loaded during browser idle time. Remote model loading
+is disabled, so article text and search phrases stay on the visitor's device.
+
+To restore the original demo posts, use **Reset demo content** in the content
+studio. To remove all local data, clear site data for the development origin in
+the browser.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

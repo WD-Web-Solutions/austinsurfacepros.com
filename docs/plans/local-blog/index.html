@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Blog Platform — Implementation Plan</title>
+  <style>
+    :root { color-scheme: dark; --ink:#eef4ff; --muted:#9db0cb; --panel:#111a2b; --line:#263753; --blue:#5aa7ff; --orange:#ff9a57; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.6 Inter,ui-sans-serif,system-ui,sans-serif; color:var(--ink); background:#08101e; }
+    header,main { width:min(1160px,calc(100% - 40px)); margin:auto; }
+    header { padding:80px 0 44px; }
+    h1 { max-width:860px; margin:.3rem 0 1rem; font-size:clamp(2.7rem,7vw,5.6rem); line-height:.95; letter-spacing:-.055em; }
+    h2 { margin:0 0 1rem; font-size:1.55rem; }
+    h3 { margin:.2rem 0 .6rem; }
+    p { color:var(--muted); }
+    code { color:#bcdcff; }
+    .eyebrow { color:var(--orange); font-size:.78rem; font-weight:850; letter-spacing:.18em; text-transform:uppercase; }
+    .lede { max-width:760px; font-size:1.18rem; }
+    .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:18px; padding-bottom:70px; }
+    .card { grid-column:span 6; padding:26px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(150deg,var(--panel),#0c1525); }
+    .wide { grid-column:1/-1; }
+    .third { grid-column:span 4; }
+    .decision { border-left:4px solid var(--blue); }
+    ol,ul { padding-left:1.25rem; color:#c8d6e9; }
+    li+li { margin-top:.55rem; }
+    .flow { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:20px; }
+    .node { padding:12px 14px; border:1px solid #385276; border-radius:10px; background:#0c1628; font-weight:750; }
+    .arrow { color:var(--orange); font-size:1.3rem; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:#fff; }
+    .status { display:inline-block; padding:4px 9px; border-radius:999px; color:#b9e7cd; background:#103522; font-size:.78rem; font-weight:800; }
+    @media(max-width:760px){ .card,.third { grid-column:1/-1; } header { padding-top:48px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Austin Surface Pros · demo platform</p>
+    <h1>Local-first blog, ready for a database later.</h1>
+    <p class="lede">A complete Angular blog experience with browser-persisted CRUD, derived hashtag categories, rich editing, same-origin semantic search, and a deliberately replaceable repository boundary.</p>
+  </header>
+  <main class="grid">
+    <section class="card wide">
+      <span class="status">Approved direction</span>
+      <div class="flow" aria-label="System flow">
+        <div class="node">Angular pages</div><span class="arrow">→</span>
+        <div class="node">BlogService</div><span class="arrow">→</span>
+        <div class="node">IndexedDB repository</div>
+        <span class="arrow">+</span><div class="node">Tiptap editor</div>
+        <span class="arrow">+</span><div class="node">Hybrid search</div>
+        <span class="arrow">→</span><div class="node">Self-hosted MiniLM</div>
+      </div>
+    </section>
+    <section class="card decision">
+      <h2>Storage boundary</h2>
+      <p><strong>Selected:</strong> IndexedDB behind <code>BlogService</code>. It tolerates uploaded image data better than localStorage and keeps the UI independent from the future API.</p>
+      <p>Production migration replaces the repository, not the page components.</p>
+    </section>
+    <section class="card decision">
+      <h2>Admin access</h2>
+      <p><strong>Selected:</strong> demo-only credentials with a one-click autofill action and a session-scoped browser flag.</p>
+      <p>The login page and collection point explicitly warn that this is not production authentication.</p>
+    </section>
+    <section class="card decision">
+      <h2>Rich-text editor</h2>
+      <p><strong>Selected:</strong> Tiptap’s MIT-licensed core instead of the APWU TinyMCE setup, whose current self-hosted release requires GPLv2+ compliance or a commercial license.</p>
+      <p>Toolbar scope: headings, emphasis, lists, quote, rule, links, undo/redo, and locally persisted images.</p>
+    </section>
+    <section class="card decision">
+      <h2>Search model</h2>
+      <p><strong>Selected:</strong> quantized <code>Xenova/all-MiniLM-L6-v2</code>, served from this site. The Apache-2.0 model runs in-browser through Transformers.js.</p>
+      <p>It warms during idle time, uses WebGPU when suitable, falls back to WASM, and never blocks keyword/fuzzy search.</p>
+    </section>
+    <section class="card wide">
+      <h2>Requirement-to-evidence map</h2>
+      <table>
+        <thead><tr><th>Requirement</th><th>Implementation evidence</th><th>Verification</th></tr></thead>
+        <tbody>
+          <tr><td>Service-backed public blog</td><td>List/detail/home components consume <code>BlogService</code></td><td>Component and service tests</td></tr>
+          <tr><td>Fully local CRUD</td><td>Create, update, delete, seed reset, thumbnail/body uploads persist in IndexedDB</td><td>Repository tests and browser smoke test</td></tr>
+          <tr><td>Demo seeds with images</td><td>Environment-gated seed set using licensed project imagery</td><td>Demo build plus rendered inspection</td></tr>
+          <tr><td>Tags manage categories</td><td>No independent category store; tag index is derived from post hashtags</td><td>Tag aggregation/search tests</td></tr>
+          <tr><td>Three newest on home</td><td>Home requests published posts with a limit of three</td><td>Home component test</td></tr>
+          <tr><td>Hybrid search</td><td>Weighted exact/keyword, trigram fuzzy, and cosine semantic score</td><td>Ranking tests plus model fallback test</td></tr>
+          <tr><td>Privacy accuracy</td><td>Browser storage, local uploads, and same-origin model behavior disclosed</td><td>Privacy content test</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="card third"><h3>Phase 1</h3><p>Repository, models, seeds, environments, and local demo auth.</p></section>
+    <section class="card third"><h3>Phase 2</h3><p>Public index/detail/home cards, tag filters, metadata, and sharing.</p></section>
+    <section class="card third"><h3>Phase 3</h3><p>Admin CRUD, Tiptap uploads, hybrid search, privacy, tests, and visual QA.</p></section>
+  </main>
+</body>
+</html>

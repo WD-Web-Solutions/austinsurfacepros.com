@@ -1,0 +1,36 @@
+<section class="admin-hero">
+  <div class="blog-shell admin-hero-row">
+    <div><p class="blog-eyebrow">Local content studio</p><h1>Field notes</h1><p>Create and manage demo content stored only in this browser.</p></div>
+    <div class="admin-hero-actions"><a routerLink="/admin/blogs/new" class="blog-primary-button">+ New field note</a><button type="button" (click)="logout()">End demo session</button></div>
+  </div>
+</section>
+
+<div class="blog-shell admin-workspace">
+  @if (status()) { <p class="admin-status" role="status">{{ status() }}</p> }
+  <section class="admin-panel">
+    <div class="admin-panel-heading"><div><p class="blog-eyebrow">Content</p><h2>{{ posts().length }} field notes</h2></div>@if (demo) { <button type="button" class="danger-quiet" (click)="resetDemoContent()">Reset demo content</button> }</div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Article</th><th>Status</th><th>Published</th><th>Hashtags</th><th><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody>
+          @for (post of posts(); track post.id) {
+            <tr>
+              <td><div class="admin-post-cell"><img [src]="post.thumbnailUrl" [alt]="post.thumbnailAlt"><div><strong>{{ post.title }}</strong><small>{{ post.author }}</small></div></div></td>
+              <td><span class="post-status" [class.draft]="post.status === 'draft'">{{ post.status }}</span></td>
+              <td>{{ post.publishedAt | date:'MMM d, y' }}</td>
+              <td><div class="admin-tag-stack">@for (tag of post.tags.slice(0, 3); track tag) { <span>#{{ tag }}</span> }</div></td>
+              <td><div class="admin-row-actions">@if (post.status === 'published') { <a [routerLink]="['/blog', post.slug]">View</a> }<a [routerLink]="['/admin/blogs', post.id, 'edit']">Edit</a><a class="danger" [routerLink]="['/admin/blogs', post.id, 'delete']">Delete</a></div></td>
+            </tr>
+          } @empty { <tr><td colspan="5" class="admin-empty-row">No local posts yet. Create the first field note.</td></tr> }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="admin-panel tag-registry">
+    <div class="admin-panel-heading"><div><p class="blog-eyebrow">Derived registry</p><h2>Hashtag categories</h2></div><p>Managed automatically from each post’s Tags section.</p></div>
+    <div class="tag-registry-grid">
+      @for (tag of tags(); track tag.name) { <div><strong>#{{ tag.name }}</strong><span>{{ tag.count }} {{ tag.count === 1 ? 'post' : 'posts' }}</span></div> }
+    </div>
+  </section>
+</div>

@@ -198,6 +198,14 @@ hover:after:w-full
 Resources
 </a>
 
+<a
+routerLink="/blog"
+routerLinkActive="text-blue-600"
+class="relative font-medium text-gray-700 transition duration-300 hover:text-blue-600 after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all after:duration-300 hover:after:w-full"
+>
+Field Notes
+</a>
+
 
 </div>
 
@@ -217,47 +225,12 @@ lg:flex
 >
 
 
-<a
-
-routerLink="/login"
-
-class="
-font-medium
-text-gray-600
-transition
-duration-300
-hover:text-blue-600
-"
->
-Login
-</a>
-
-
-
-
-<a
-
-routerLink="/register"
-
-class="
-rounded-lg
-border
-border-blue-600
-px-4
-py-2
-font-semibold
-text-blue-600
-transition
-duration-300
-
-hover:-translate-y-1
-hover:bg-blue-600
-hover:text-white
-hover:shadow-lg
-"
->
-Register
-</a>
+@if (auth.isAuthenticated()) {
+<a routerLink="/admin/blogs" class="font-medium text-blue-700 transition hover:text-blue-900">Content Studio</a>
+<button type="button" (click)="logout()" class="font-medium text-gray-600 transition hover:text-blue-600">Sign out</button>
+} @else {
+<a routerLink="/login" class="font-medium text-gray-600 transition duration-300 hover:text-blue-600">Admin</a>
+}
 
 
 
@@ -411,6 +384,15 @@ hover:text-blue-600
 >
 Resources
 </a>
+
+<a routerLink="/blog" (click)="closeMenu()" class="block transition hover:text-blue-600">Field Notes</a>
+
+@if (auth.isAuthenticated()) {
+<a routerLink="/admin/blogs" (click)="closeMenu()" class="block font-semibold text-blue-700">Content Studio</a>
+<button type="button" (click)="logout()" class="block text-left transition hover:text-blue-600">Sign out</button>
+} @else {
+<a routerLink="/login" (click)="closeMenu()" class="block transition hover:text-blue-600">Admin demo</a>
+}
 
 
 <a

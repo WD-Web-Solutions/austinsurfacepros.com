@@ -5,6 +5,8 @@ import {
   RouterLinkActive
 } from '@angular/router';
 
+import { DemoAuthService } from '../../../core/services/demo-auth.service';
+
 
 
 @Component({
@@ -33,6 +35,8 @@ import {
 })
 export class NavbarComponent {
 
+  constructor(readonly auth: DemoAuthService) {}
+
 
   mobileMenuOpen = false;
 
@@ -52,6 +56,11 @@ export class NavbarComponent {
     this.mobileMenuOpen =
       false;
 
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.closeMenu();
   }
 
 

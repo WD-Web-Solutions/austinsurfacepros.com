@@ -1,0 +1,27 @@
+direction: right
+
+visitor: "Visitor pages" {
+  shape: rectangle
+}
+admin: "Demo admin CRUD" {
+  shape: rectangle
+}
+service: "BlogService" {
+  style.fill: "#15325f"
+}
+repository: "IndexedDB repository" {
+  shape: cylinder
+}
+search: "Hybrid search" {
+  lexical: "Keyword + fuzzy"
+  semantic: "MiniLM embeddings"
+}
+model: "Same-origin model assets" {
+  shape: package
+}
+
+visitor -> service
+admin -> service
+service -> repository: "posts, uploads, cached vectors"
+service -> search
+search.semantic -> model: "idle warm-up; WebGPU/WASM"

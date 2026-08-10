@@ -448,6 +448,23 @@
     
     
     
+    <!-- FIELD NOTES -->
+
+    @if (recentBlogs().length) {
+    <section class="home-blog-section">
+      <div class="blog-shell">
+        <div class="home-blog-heading">
+          <div><p class="blog-eyebrow">From the field</p><h2>Practical notes for better surfaces.</h2><p>Planning guidance for property teams who want fewer surprises and longer-lasting work.</p></div>
+          <a routerLink="/blog">Explore all field notes <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="blog-card-grid compact">
+          @for (post of recentBlogs(); track post.id) { <app-blog-card [post]="post" /> }
+        </div>
+      </div>
+    </section>
+    }
+
+
     <!-- WHY US -->
     
     <section
