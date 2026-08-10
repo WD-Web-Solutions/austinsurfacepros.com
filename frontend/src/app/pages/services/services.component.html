@@ -1,20 +1,38 @@
-@for(service of services; track service.slug)
-{
+<section class="bg-gray-900 py-24 text-white">
+  <div class="mx-auto max-w-7xl px-6">
+    <p class="text-sm font-semibold uppercase tracking-widest text-orange-400">
+      Commercial Surface Services
+    </p>
 
-<app-ui-card
+    <h1 class="mt-5 max-w-4xl text-5xl font-bold md:text-6xl">
+      Surface Solutions for Central Texas Properties
+    </h1>
 
-[title]="service.title"
+    <p class="mt-6 max-w-3xl text-xl leading-relaxed text-gray-300">
+      Asphalt, striping, concrete, and protective coating services planned
+      around the safety, appearance, and operation of your property.
+    </p>
+  </div>
+</section>
 
-[description]="service.description"
+<section aria-labelledby="services-list-heading" class="py-20">
+  <div class="mx-auto max-w-7xl px-6">
+    <h2 id="services-list-heading" class="sr-only">
+      Available services
+    </h2>
 
-[category]="service.category"
-
-[icon]="service.icon"
-
-[link]="'/services/' + service.slug"
-
->
-
-</app-ui-card>
-
-}
+    <div class="grid gap-8 md:grid-cols-2">
+      @for(service of services; track service.slug)
+      {
+        <app-ui-card
+          [title]="service.title"
+          [description]="service.description"
+          [category]="service.category"
+          [icon]="service.icon"
+          [link]="'/services/' + service.slug"
+        >
+        </app-ui-card>
+      }
+    </div>
+  </div>
+</section>

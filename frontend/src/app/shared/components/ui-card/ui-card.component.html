@@ -81,6 +81,8 @@ class="
 text-5xl
 "
 
+aria-hidden="true"
+
 >
 
 {{icon}}
@@ -164,6 +166,8 @@ text-gray-600
 <a
 
 [routerLink]="link"
+
+[attr.aria-label]="'Learn more about ' + title"
 
 class="
 mt-6

@@ -1,4 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  HostListener
+} from '@angular/core';
 
 import {
   RouterLink,
@@ -52,6 +56,12 @@ export class NavbarComponent {
     this.mobileMenuOpen =
       false;
 
+  }
+
+
+  @HostListener('document:keydown.escape')
+  closeMenuWithEscape(): void {
+    this.closeMenu();
   }
 
 

@@ -65,7 +65,7 @@ serving Central Texas.
 <div>
 
 
-<h3
+<h2
 
 class="
 font-bold
@@ -74,7 +74,7 @@ text-white
 
 >
 Contact
-</h3>
+</h2>
 
 
 
@@ -108,7 +108,7 @@ matt&#64;austinsurfacepros.com
 <div>
 
 
-<h3
+<h2
 
 class="
 font-bold
@@ -117,10 +117,12 @@ text-white
 
 >
 Quick Links
-</h3>
+</h2>
 
 
-<div
+<nav
+
+aria-label="Footer navigation"
 
 class="
 mt-4
@@ -172,6 +174,8 @@ Contact
 </a>
 
 
+@if (isDevelopment) {
+
 <a
 
 routerLink="/design-lab"
@@ -185,8 +189,10 @@ hover:text-white
 Design Lab
 </a>
 
+}
 
-</div>
+
+</nav>
 
 
 </div>
@@ -203,14 +209,30 @@ Design Lab
 class="
 border-t
 border-gray-800
+px-6
 py-6
-text-center
 text-sm
 "
 
 >
 
-© {{year}} Austin Surface Pros. All rights reserved.
+<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+
+<p>© {{year}} Austin Surface Pros. All rights reserved.</p>
+
+<nav aria-label="Legal" class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+
+<a routerLink="/privacy-policy" class="inline-flex min-h-6 items-center hover:text-white">
+Privacy Policy
+</a>
+
+<a routerLink="/terms" class="inline-flex min-h-6 items-center hover:text-white">
+Terms &amp; Conditions
+</a>
+
+</nav>
+
+</div>
 
 </div>
 

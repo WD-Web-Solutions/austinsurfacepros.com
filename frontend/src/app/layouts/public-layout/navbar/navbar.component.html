@@ -10,6 +10,7 @@ bg-white
 >
 
 <nav
+aria-label="Primary navigation"
 class="
 mx-auto
 flex
@@ -26,6 +27,7 @@ py-4
 <a
 routerLink="/"
 (click)="closeMenu()"
+aria-label="Austin Surface Pros home"
 class="
 group
 flex
@@ -68,6 +70,7 @@ lg:flex
 <a
 routerLink="/"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -95,6 +98,7 @@ Home
 <a
 routerLink="/about"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -122,6 +126,7 @@ About
 <a
 routerLink="/services"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -149,6 +154,7 @@ Services
 <a
 routerLink="/gallery"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -176,6 +182,7 @@ Gallery
 <a
 routerLink="/resources"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -220,6 +227,8 @@ lg:flex
 <a
 
 routerLink="/contact"
+routerLinkActive="bg-blue-700"
+ariaCurrentWhenActive="page"
 
 class="
 rounded-lg
@@ -251,10 +260,20 @@ Request Estimate
 
 <button
 
+type="button"
+
 (click)="toggleMenu()"
 
+[attr.aria-expanded]="mobileMenuOpen"
+
+aria-controls="mobile-navigation"
+
+[attr.aria-label]="mobileMenuOpen ? 'Close main menu' : 'Open main menu'"
+
 class="
-text-3xl
+h-11
+w-11
+text-2xl
 text-gray-700
 transition
 duration-300
@@ -264,7 +283,7 @@ lg:hidden
 
 >
 
-☰
+<span aria-hidden="true">{{mobileMenuOpen ? '×' : '☰'}}</span>
 
 </button>
 
@@ -280,7 +299,11 @@ lg:hidden
 @if(mobileMenuOpen)
 {
 
-<div
+<nav
+
+id="mobile-navigation"
+
+aria-label="Mobile navigation"
 
 class="
 border-t
@@ -305,6 +328,8 @@ space-y-5
 
 <a
 routerLink="/"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -318,6 +343,8 @@ Home
 
 <a
 routerLink="/about"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -331,6 +358,8 @@ About
 
 <a
 routerLink="/services"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -344,6 +373,8 @@ Services
 
 <a
 routerLink="/gallery"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -357,6 +388,8 @@ Gallery
 
 <a
 routerLink="/resources"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -370,6 +403,8 @@ Resources
 
 <a
 routerLink="/contact"
+routerLinkActive="bg-blue-700"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -394,7 +429,7 @@ Request Estimate
 </div>
 
 
-</div>
+</nav>
 
 }
 

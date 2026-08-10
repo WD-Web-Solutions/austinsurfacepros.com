@@ -89,6 +89,7 @@
 
 
       <h2
+        id="estimate-form-heading"
         class="
           text-4xl
           font-bold
@@ -238,9 +239,19 @@
 
     <form
 
+      #estimateForm
+
       [formGroup]="contactForm"
 
       (ngSubmit)="submitContactForm()"
+
+      aria-labelledby="estimate-form-heading"
+
+      aria-describedby="required-fields-note privacy-form-note"
+
+      [attr.aria-busy]="isSubmitting"
+
+      novalidate
 
       class="
         rounded-xl
@@ -250,6 +261,10 @@
       "
 
     >
+
+      <p id="required-fields-note" class="mb-6 text-sm text-gray-600">
+        Fields marked "required" must be completed.
+      </p>
 
 
       <div
@@ -263,7 +278,7 @@
 
         <!-- Name -->
 
-        <label>
+        <label for="contact-name">
 
           <span
             class="
@@ -271,11 +286,15 @@
               text-gray-900
             "
           >
-            Name
+            Name <span class="text-sm font-normal text-gray-600">(required)</span>
           </span>
 
 
           <input
+
+            id="contact-name"
+
+            name="name"
 
             type="text"
 
@@ -283,12 +302,18 @@
 
             autocomplete="name"
 
+            required
+
+            [attr.aria-invalid]="hasError('name') ? 'true' : null"
+
+            [attr.aria-describedby]="hasError('name') ? 'contact-name-error' : null"
+
             class="
               mt-2
               w-full
               rounded-lg
               border
-              border-gray-300
+              border-gray-500
               p-3
               focus:border-blue-500
               focus:outline-none
@@ -301,6 +326,7 @@
           {
 
             <small
+              id="contact-name-error"
               class="
                 text-red-600
               "
@@ -318,7 +344,7 @@
 
         <!-- Company -->
 
-        <label>
+        <label for="contact-company">
 
           <span
             class="
@@ -326,11 +352,15 @@
               text-gray-900
             "
           >
-            Company
+            Company <span class="text-sm font-normal text-gray-600">(optional)</span>
           </span>
 
 
           <input
+
+            id="contact-company"
+
+            name="company"
 
             type="text"
 
@@ -343,7 +373,7 @@
               w-full
               rounded-lg
               border
-              border-gray-300
+              border-gray-500
               p-3
             "
 
@@ -368,7 +398,7 @@
       >
 
 
-        <label>
+        <label for="contact-email">
 
           <span
             class="
@@ -376,11 +406,15 @@
               text-gray-900
             "
           >
-            Email
+            Email <span class="text-sm font-normal text-gray-600">(required)</span>
           </span>
 
 
           <input
+
+            id="contact-email"
+
+            name="email"
 
             type="email"
 
@@ -388,12 +422,18 @@
 
             autocomplete="email"
 
+            required
+
+            [attr.aria-invalid]="hasError('emailAddress') ? 'true' : null"
+
+            [attr.aria-describedby]="hasError('emailAddress') ? 'contact-email-error' : null"
+
             class="
               mt-2
               w-full
               rounded-lg
               border
-              border-gray-300
+              border-gray-500
               p-3
             "
 
@@ -405,6 +445,7 @@
           {
 
             <small
+              id="contact-email-error"
               class="
                 text-red-600
               "
@@ -420,7 +461,7 @@
 
 
 
-        <label>
+        <label for="contact-phone">
 
           <span
             class="
@@ -428,11 +469,15 @@
               text-gray-900
             "
           >
-            Phone
+            Phone <span class="text-sm font-normal text-gray-600">(optional)</span>
           </span>
 
 
           <input
+
+            id="contact-phone"
+
+            name="phone"
 
             type="tel"
 
@@ -440,12 +485,14 @@
 
             autocomplete="tel"
 
+            inputmode="tel"
+
             class="
               mt-2
               w-full
               rounded-lg
               border
-              border-gray-300
+              border-gray-500
               p-3
             "
 
@@ -464,6 +511,7 @@
       <!-- Service -->
 
       <label
+        for="contact-service"
         class="
           mt-6
           block
@@ -476,20 +524,30 @@
             text-gray-900
           "
         >
-          Service Needed
+          Service Needed <span class="text-sm font-normal text-gray-600">(required)</span>
         </span>
 
 
         <select
 
+          id="contact-service"
+
+          name="service"
+
           formControlName="service"
+
+          required
+
+          [attr.aria-invalid]="hasError('service') ? 'true' : null"
+
+          [attr.aria-describedby]="hasError('service') ? 'contact-service-error' : null"
 
           class="
             mt-2
             w-full
             rounded-lg
             border
-            border-gray-300
+            border-gray-500
             p-3
           "
 
@@ -512,6 +570,13 @@
 
         </select>
 
+        @if(hasError('service'))
+        {
+          <small id="contact-service-error" class="text-red-700">
+            Select the service you need.
+          </small>
+        }
+
 
       </label>
 
@@ -523,6 +588,7 @@
       <!-- Message -->
 
       <label
+        for="contact-message"
         class="
           mt-6
           block
@@ -535,22 +601,33 @@
             text-gray-900
           "
         >
-          Project Details
+          Project Details <span class="text-sm font-normal text-gray-600">(required)</span>
         </span>
 
 
         <textarea
 
+          id="contact-message"
+
+          name="message"
+
           formControlName="message"
 
           rows="6"
+
+          required
+
+          [attr.aria-invalid]="hasError('message') ? 'true' : null"
+
+          [attr.aria-describedby]="hasError('message') ? 'contact-message-error' : null"
 
           class="
             mt-2
             w-full
             rounded-lg
             border
-            border-gray-300
+            border-gray-500
+            placeholder:text-gray-600
             p-3
           "
 
@@ -564,6 +641,7 @@
         {
 
           <small
+            id="contact-message-error"
             class="
               text-red-600
             "
@@ -609,6 +687,17 @@
 
       </button>
 
+      <p id="privacy-form-note" class="mt-4 max-w-xl text-sm leading-6 text-gray-600">
+        We use the information you submit to respond to your request and manage
+        any resulting project. Learn more in our
+        <a
+          routerLink="/privacy-policy"
+          class="font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900"
+        >
+          Privacy Policy
+        </a>.
+      </p>
+
 
 
 
@@ -617,6 +706,8 @@
       {
 
         <p
+          role="status"
+          aria-live="polite"
           class="
             mt-6
             text-green-600
@@ -634,6 +725,7 @@
       {
 
         <p
+          role="alert"
           class="
             mt-6
             text-red-600

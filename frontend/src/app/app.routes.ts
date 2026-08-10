@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { isDevMode } from '@angular/core';
+
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 
 
@@ -83,6 +85,8 @@ export const routes: Routes = [
       {
         path: 'login',
 
+        canMatch: [() => isDevMode()],
+
         loadComponent: () =>
           import('./pages/login/login.component')
             .then(m => m.LoginComponent)
@@ -92,6 +96,8 @@ export const routes: Routes = [
 
       {
         path: 'register',
+
+        canMatch: [() => isDevMode()],
 
         loadComponent: () =>
           import('./pages/register/register.component')
@@ -120,6 +126,8 @@ export const routes: Routes = [
       },
       {
         path: 'design-lab',
+
+        canMatch: [() => isDevMode()],
 
         loadComponent: () =>
           import('./pages/design-lab/design-lab.component')

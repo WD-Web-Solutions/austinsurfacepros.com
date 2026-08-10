@@ -1,6 +1,11 @@
 
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 
 import {
   FormBuilder,
@@ -12,10 +17,14 @@ import {
   finalize
 } from 'rxjs';
 
+import { RouterLink } from '@angular/router';
+
 import {
   ContactService,
   ContactFormPayload
 } from './contact.service';
+
+import { SeoService } from '../../core/services/seo.service';
 
 
 
@@ -26,7 +35,8 @@ import {
   standalone: true,
 
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
 ],
 
   templateUrl:
@@ -38,6 +48,10 @@ import {
 
 })
 export class ContactComponent {
+
+
+  @ViewChild('estimateForm', { read: ElementRef })
+  private estimateForm?: ElementRef<HTMLFormElement>;
 
 
   isSubmitting = false;
@@ -75,7 +89,9 @@ export class ContactComponent {
 
     private readonly formBuilder: FormBuilder,
 
-    private readonly contactService: ContactService
+    private readonly contactService: ContactService,
+
+    private readonly seoService: SeoService
 
   ) {
 
@@ -177,6 +193,12 @@ export class ContactComponent {
       });
 
 
+    this.seoService.updatePage(
+      'Request an Estimate | Austin Surface Pros',
+      'Contact Austin Surface Pros to request an estimate for asphalt, striping, concrete, coating, or commercial surface work.'
+    );
+
+
   }
 
 
@@ -195,6 +217,17 @@ export class ContactComponent {
 
 
       this.contactForm.markAllAsTouched();
+
+
+      this.errorMessage =
+        'Please correct the highlighted fields and try again.';
+
+
+      setTimeout(() => {
+        this.estimateForm?.nativeElement
+          .querySelector<HTMLElement>('[aria-invalid="true"]')
+          ?.focus();
+      });
 
 
       return;
