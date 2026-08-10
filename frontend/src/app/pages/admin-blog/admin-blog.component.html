@@ -27,12 +27,12 @@
 
   @if(errorMessage())
   {
-  <p class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">{{ errorMessage() }}</p>
+  <p role="alert" class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ errorMessage() }}</p>
   }
 
   @if(isLoading())
   {
-  <p class="mt-8 text-gray-500">Loading posts…</p>
+  <p role="status" class="mt-8 text-gray-600">Loading posts…</p>
   }
   @else if(posts().length === 0)
   {
@@ -76,7 +76,7 @@
                 class="
                 rounded-lg
                 border
-                border-gray-300
+                border-gray-500
                 px-3
                 py-1.5
                 text-xs
@@ -95,7 +95,7 @@
                 class="
                 rounded-lg
                 border
-                border-gray-300
+                border-gray-500
                 px-3
                 py-1.5
                 text-xs

@@ -5,6 +5,7 @@ import { Observable, finalize } from 'rxjs';
 
 import { BlogPostSummary } from '../../core/models/blog.model';
 import { BlogAdminService } from '../../core/services/blog-admin.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-admin-blog',
@@ -16,11 +17,20 @@ import { BlogAdminService } from '../../core/services/blog-admin.service';
 })
 export class AdminBlogComponent implements OnInit {
   private readonly blogAdminService = inject(BlogAdminService);
+  private readonly seoService = inject(SeoService);
 
   readonly posts = signal<BlogPostSummary[]>([]);
   readonly isLoading = signal(false);
   readonly errorMessage = signal('');
   readonly pendingPostIds = signal<Set<string>>(new Set());
+
+  constructor() {
+    this.seoService.updatePage(
+      'Blog Administration | Austin Surface Pros',
+      'Austin Surface Pros blog administration.',
+      'noindex, nofollow'
+    );
+  }
 
   ngOnInit(): void {
     this.loadPosts();

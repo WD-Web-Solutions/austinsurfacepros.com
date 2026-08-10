@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 
 import { BlogAdminService } from '../../../core/services/blog-admin.service';
 import { BlogService } from '../../../core/services/blog.service';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-post-editor',
@@ -20,6 +21,7 @@ export class PostEditorComponent implements OnInit {
   private readonly blogAdminService = inject(BlogAdminService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly seoService = inject(SeoService);
 
   readonly isEditMode = signal(false);
   readonly isLoading = signal(false);
@@ -29,6 +31,14 @@ export class PostEditorComponent implements OnInit {
   readonly coverImageUrl = signal<string | null>(null);
 
   private postId: string | null = null;
+
+  constructor() {
+    this.seoService.updatePage(
+      'Blog Post Editor | Austin Surface Pros',
+      'Create or edit Austin Surface Pros blog posts.',
+      'noindex, nofollow'
+    );
+  }
 
   postForm = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(200)]],

@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 
 import { BlogPostSummary } from '../../core/models/blog.model';
 import { BlogService } from '../../core/services/blog.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-blog',
@@ -16,12 +17,20 @@ import { BlogService } from '../../core/services/blog.service';
 })
 export class BlogComponent implements OnInit {
   private readonly blogService = inject(BlogService);
+  private readonly seoService = inject(SeoService);
 
   readonly posts = signal<BlogPostSummary[]>([]);
   readonly tags = signal<string[]>([]);
   readonly selectedTag = signal<string | null>(null);
   readonly isLoading = signal(false);
   readonly errorMessage = signal('');
+
+  constructor() {
+    this.seoService.updatePage(
+      'Surface Tips & Updates | Austin Surface Pros',
+      'Read Austin Surface Pros guides and updates about commercial asphalt, concrete, and surface maintenance.'
+    );
+  }
 
   ngOnInit(): void {
     this.blogService.listTags().subscribe({

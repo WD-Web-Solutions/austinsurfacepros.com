@@ -1,0 +1,41 @@
+@if (loading()) {
+  <main class="blog-shell blog-detail-loading"><div></div><div></div><div></div></main>
+} @else if (post(); as article) {
+  <article>
+    <header class="article-header">
+      <div class="blog-shell article-header-grid">
+        <div>
+          <a routerLink="/blog" class="article-back">← All field notes</a>
+          <div class="blog-tags article-tags">
+            @for (tag of article.tags; track tag) { <a routerLink="/blog" [queryParams]="{ tag }">#{{ tag }}</a> }
+          </div>
+          <h1>{{ article.title }}</h1>
+          <p class="article-summary">{{ article.summary }}</p>
+          <div class="article-byline">
+            <span class="article-author-mark">ASP</span>
+            <div><strong>{{ article.author }}</strong><span><time [attr.datetime]="article.publishedAt">{{ article.publishedAt | date:'MMMM d, y' }}</time> · {{ article.readingMinutes }} min read</span></div>
+          </div>
+        </div>
+        <figure><img [src]="article.thumbnailUrl" [alt]="article.thumbnailAlt"></figure>
+      </div>
+    </header>
+
+    <div class="blog-shell article-layout">
+      <aside><div class="article-sticky-share"><app-share-buttons [title]="article.title" [summary]="article.summary" /></div></aside>
+      <div class="blog-rich-content" [innerHTML]="article.contentHtml"></div>
+    </div>
+  </article>
+
+  @if (related().length) {
+    <section class="related-posts">
+      <div class="blog-shell">
+        <p class="blog-eyebrow">Keep planning</p><h2>Related field notes</h2>
+        <div class="blog-card-grid compact">
+          @for (relatedPost of related(); track relatedPost.id) { <app-blog-card [post]="relatedPost" /> }
+        </div>
+      </div>
+    </section>
+  }
+} @else {
+  <main class="blog-shell blog-empty blog-not-found"><span>404</span><h1>That field note is no longer here.</h1><p>Browse the latest surface planning guides instead.</p><a routerLink="/blog">View all field notes</a></main>
+}

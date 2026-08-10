@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+  inject,
+  signal
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,6 +17,7 @@ import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
+import { SeoService } from '../../core/services/seo.service';
 
 function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -29,11 +37,15 @@ export class RegisterComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly seoService = inject(SeoService);
+
+  @ViewChild('registerFormElement', { read: ElementRef })
+  private formElement?: ElementRef<HTMLFormElement>;
 
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal('');
 
-  registerForm = this.formBuilder.nonNullable.group(
+  readonly registerForm = this.formBuilder.nonNullable.group(
     {
       fullName: ['', [Validators.required, Validators.maxLength(200)]],
       emailAddress: ['', [Validators.required, Validators.email]],
@@ -43,11 +55,21 @@ export class RegisterComponent {
     { validators: passwordsMatchValidator }
   );
 
+  constructor() {
+    this.seoService.updatePage(
+      'Register | Austin Surface Pros',
+      'Create an Austin Surface Pros account.',
+      'noindex, nofollow'
+    );
+  }
+
   submitRegisterForm(): void {
     this.errorMessage.set('');
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      this.errorMessage.set('Please correct the highlighted fields and try again.');
+      this.focusFirstInvalidControl();
       return;
     }
 
@@ -81,5 +103,13 @@ export class RegisterComponent {
       this.registerForm.hasError('passwordsMismatch') &&
       (confirmPassword.touched || confirmPassword.dirty)
     );
+  }
+
+  private focusFirstInvalidControl(): void {
+    setTimeout(() => {
+      this.formElement?.nativeElement
+        .querySelector<HTMLElement>('[aria-invalid="true"]')
+        ?.focus();
+    });
   }
 }

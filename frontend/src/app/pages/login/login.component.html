@@ -1,88 +1,136 @@
-<section class="flex min-h-screen items-center justify-center bg-gray-50 px-6">
+@if (isDemo) {
+  <div class="demo-login-page">
+    <section class="demo-login-card">
+      <div class="demo-login-brand">
+        <span>ASP</span>
+        <div><strong>Austin Surface Pros</strong><small>Local content studio</small></div>
+      </div>
+      <p class="blog-eyebrow">Demo administrator</p>
+      <h1>Manage field notes locally.</h1>
+      <p class="demo-login-intro">
+        This temporary login unlocks the browser-only blog studio. It is for demonstrations and is
+        not production authentication.
+      </p>
 
+      <button type="button" class="demo-credential-button" (click)="useDemoCredentials()">
+        <span aria-hidden="true">✦</span>
+        <span><strong>Use demo admin</strong><small>Automatically fill the mock credentials</small></span>
+      </button>
+
+      @if (errorMessage()) {
+        <p class="field-error" role="alert">{{ errorMessage() }}</p>
+      }
+
+      <form
+        #loginFormElement
+        [formGroup]="loginForm"
+        (ngSubmit)="submitLoginForm()"
+        class="demo-login-form"
+        aria-describedby="demo-login-storage-note"
+        novalidate
+      >
+        <label for="demo-email">Email</label>
+        <input
+          id="demo-email"
+          type="email"
+          formControlName="emailAddress"
+          autocomplete="username"
+          required
+          [attr.aria-invalid]="hasError('emailAddress')"
+        >
+        <label for="demo-password">Password</label>
+        <input
+          id="demo-password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          required
+          [attr.aria-invalid]="hasError('password')"
+        >
+        <button type="submit" class="blog-primary-button" [disabled]="loginForm.invalid">
+          Open content studio
+        </button>
+      </form>
+
+      <div id="demo-login-storage-note" class="demo-storage-notice">
+        <strong>What stays in this browser</strong>
+        <p>
+          Your signed-in state lasts for this tab session. Blog drafts and uploaded images are stored
+          in this browser’s IndexedDB until you delete them or clear site data.
+          <a routerLink="/privacy-policy">Privacy Policy</a>
+        </p>
+      </div>
+      <a routerLink="/blog" class="article-back">← Return to field notes</a>
+    </section>
+    <aside class="demo-login-visual">
+      <div><p>DEMO WORKSPACE</p><strong>Write.<br>Edit.<br>Publish.</strong><span>Without waiting on the database.</span></div>
+    </aside>
+  </div>
+} @else {
+  <section class="flex min-h-screen items-center justify-center bg-gray-50 px-6 py-16">
     <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-
-      <h1 class="text-center text-3xl font-bold text-gray-900">
-        Login
-      </h1>
-
-      <p class="mt-2 text-center text-gray-500">
+      <h1 class="text-center text-3xl font-bold text-gray-900">Login</h1>
+      <p id="login-description" class="mt-2 text-center text-gray-600">
         Access your Austin Surface Pros account.
       </p>
 
-      @if(errorMessage())
-      {
-      <p class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
-        {{ errorMessage() }}
-      </p>
+      @if (errorMessage()) {
+        <p id="login-error" role="alert" class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+          {{ errorMessage() }}
+        </p>
       }
 
-      <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()" class="mt-8 space-y-5">
-
+      <form
+        #loginFormElement
+        [formGroup]="loginForm"
+        (ngSubmit)="submitLoginForm()"
+        [attr.aria-busy]="isSubmitting()"
+        aria-describedby="login-description login-storage-note"
+        class="mt-8 space-y-5"
+        novalidate
+      >
         <div>
+          <label for="login-email" class="font-semibold text-gray-900">Email</label>
           <input
+            id="login-email"
+            name="email"
             type="email"
+            autocomplete="username"
             formControlName="emailAddress"
-            placeholder="Email"
-            class="
-            w-full
-            rounded-lg
-            border
-            px-4
-            py-3
-            focus:outline-none
-            focus:ring-2
-            focus:ring-blue-600">
-          @if(hasError('emailAddress'))
-          {
-          <p class="mt-1 text-sm text-red-600">A valid email address is required.</p>
-          }
+            required
+            [attr.aria-invalid]="hasError('emailAddress')"
+            class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+          >
         </div>
-
         <div>
+          <label for="login-password" class="font-semibold text-gray-900">Password</label>
           <input
+            id="login-password"
+            name="password"
             type="password"
+            autocomplete="current-password"
             formControlName="password"
-            placeholder="Password"
-            class="
-            w-full
-            rounded-lg
-            border
-            px-4
-            py-3
-            focus:outline-none
-            focus:ring-2
-            focus:ring-blue-600">
-          @if(hasError('password'))
-          {
-          <p class="mt-1 text-sm text-red-600">Password is required.</p>
-          }
+            required
+            [attr.aria-invalid]="hasError('password')"
+            class="mt-2 w-full rounded-lg border border-gray-500 px-4 py-3"
+          >
         </div>
-
+        <p id="login-storage-note" class="text-sm leading-6 text-gray-600">
+          Signing in stores an access token and basic account details in this browser until you log out.
+          See our <a routerLink="/privacy-policy" class="font-semibold text-blue-700 underline">Privacy Policy</a>.
+        </p>
         <button
           type="submit"
           [disabled]="isSubmitting()"
-          class="
-          w-full
-          rounded-lg
-          bg-blue-700
-          py-3
-          font-semibold
-          text-white
-          transition
-          hover:bg-blue-800
-          disabled:cursor-not-allowed
-          disabled:opacity-60">
+          class="w-full rounded-lg bg-blue-700 py-3 font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+        >
           {{ isSubmitting() ? 'Logging in…' : 'Login' }}
         </button>
-
-        <p class="text-center text-sm text-gray-500">
+        <p class="text-center text-sm text-gray-600">
           Don't have an account?
-          <a routerLink="/register" class="font-semibold text-blue-600 hover:text-blue-800">Register</a>
+          <a routerLink="/register" class="font-semibold text-blue-700 hover:text-blue-900">Register</a>
         </p>
-
       </form>
-
     </div>
-
   </section>
+}

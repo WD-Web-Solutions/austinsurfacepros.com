@@ -1,6 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
+
+import { environment } from '../environments/environment';
+import { BlogSearchService } from './core/services/blog-search.service';
 
 
 @Component({
@@ -24,6 +27,22 @@ import { RouterOutlet } from '@angular/router';
 
 })
 export class AppComponent {
+  private readonly blogSearch = inject(BlogSearchService);
 
-
+  constructor() {
+    if (!environment.blog.useLocalRepository || typeof window === 'undefined') {
+      return;
+    }
+    const warmSearch = (): void => {
+      void this.blogSearch.preload();
+    };
+    const browserWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+    };
+    if (typeof browserWindow.requestIdleCallback === 'function') {
+      browserWindow.requestIdleCallback(warmSearch, { timeout: 4000 });
+    } else {
+      globalThis.setTimeout(warmSearch, 1200);
+    }
+  }
 }

@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  HostListener,
+  inject
+} from '@angular/core';
 
 import {
   Router,
@@ -6,7 +11,9 @@ import {
   RouterLinkActive
 } from '@angular/router';
 
+import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../core/services/auth.service';
+import { DemoAuthService } from '../../../core/services/demo-auth.service';
 
 
 
@@ -40,6 +47,8 @@ export class NavbarComponent {
   private readonly router = inject(Router);
 
   readonly currentUser = this.authService.currentUser;
+  readonly demoAuth = inject(DemoAuthService);
+  readonly isDemo = environment.demo && environment.blog.useLocalRepository;
 
 
   mobileMenuOpen = false;
@@ -63,10 +72,17 @@ export class NavbarComponent {
   }
 
 
+  @HostListener('document:keydown.escape')
+  closeMenuWithEscape(): void {
+    this.closeMenu();
+  }
 
   logout(): void {
-
-    this.authService.logout();
+    if (this.isDemo) {
+      this.demoAuth.logout();
+    } else {
+      this.authService.logout();
+    }
 
     this.closeMenu();
 

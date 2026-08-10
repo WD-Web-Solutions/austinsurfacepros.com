@@ -10,66 +10,83 @@
 
   @if(errorMessage())
   {
-  <p class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">{{ errorMessage() }}</p>
+  <p role="alert" class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ errorMessage() }}</p>
   }
 
   @if(isLoading())
   {
-  <p class="mt-8 text-gray-500">Loading post…</p>
+  <p role="status" class="mt-8 text-gray-600">Loading post…</p>
   }
   @else
   {
   <form [formGroup]="postForm" (ngSubmit)="submit()" class="mt-8 space-y-6">
 
     <div>
-      <label class="block text-sm font-semibold text-gray-700">Title</label>
+      <label for="post-title" class="block text-sm font-semibold text-gray-700">Title</label>
       <input
+        id="post-title"
+        name="title"
         formControlName="title"
-        class="mt-1 w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        required
+        [attr.aria-invalid]="hasError('title')"
+        [attr.aria-describedby]="hasError('title') ? 'post-title-error' : null"
+        class="mt-1 w-full rounded-lg border border-gray-500 px-4 py-3"
       >
       @if(hasError('title'))
       {
-      <p class="mt-1 text-sm text-red-600">Title is required.</p>
+      <p id="post-title-error" class="mt-1 text-sm text-red-700">Title is required.</p>
       }
     </div>
 
     <div>
-      <label class="block text-sm font-semibold text-gray-700">Excerpt</label>
+      <label for="post-excerpt" class="block text-sm font-semibold text-gray-700">Excerpt</label>
       <textarea
+        id="post-excerpt"
+        name="excerpt"
         formControlName="excerpt"
         rows="2"
-        class="mt-1 w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        required
+        [attr.aria-invalid]="hasError('excerpt')"
+        [attr.aria-describedby]="hasError('excerpt') ? 'post-excerpt-error' : null"
+        class="mt-1 w-full rounded-lg border border-gray-500 px-4 py-3"
       ></textarea>
       @if(hasError('excerpt'))
       {
-      <p class="mt-1 text-sm text-red-600">Excerpt is required.</p>
+      <p id="post-excerpt-error" class="mt-1 text-sm text-red-700">Excerpt is required.</p>
       }
     </div>
 
     <div>
-      <label class="block text-sm font-semibold text-gray-700">Body</label>
+      <label for="post-body" class="block text-sm font-semibold text-gray-700">Body</label>
       <textarea
+        id="post-body"
+        name="body"
         formControlName="body"
         rows="12"
-        class="mt-1 w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        required
+        [attr.aria-invalid]="hasError('body')"
+        [attr.aria-describedby]="hasError('body') ? 'post-body-error' : null"
+        class="mt-1 w-full rounded-lg border border-gray-500 px-4 py-3"
       ></textarea>
       @if(hasError('body'))
       {
-      <p class="mt-1 text-sm text-red-600">Body is required.</p>
+      <p id="post-body-error" class="mt-1 text-sm text-red-700">Body is required.</p>
       }
     </div>
 
     <div>
-      <label class="block text-sm font-semibold text-gray-700">Tags (comma-separated)</label>
+      <label for="post-tags" class="block text-sm font-semibold text-gray-700">Tags (comma-separated)</label>
       <input
+        id="post-tags"
+        name="tags"
         formControlName="tags"
         placeholder="asphalt, maintenance"
-        class="mt-1 w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        class="mt-1 w-full rounded-lg border border-gray-500 px-4 py-3 placeholder:text-gray-600"
       >
     </div>
 
     <div>
-      <label class="block text-sm font-semibold text-gray-700">Cover Image</label>
+      <label for="post-cover-image" class="block text-sm font-semibold text-gray-700">Cover Image</label>
 
       @if(coverImageUrl())
       {
@@ -77,12 +94,20 @@
       }
 
       <input
+        id="post-cover-image"
+        name="cover-image"
         type="file"
         accept="image/jpeg,image/png,image/webp,image/gif"
         (change)="onImageSelected($event)"
         [disabled]="isUploadingImage()"
         class="mt-2 block text-sm text-gray-600"
+        aria-describedby="post-cover-image-note"
       >
+
+      <p id="post-cover-image-note" class="mt-2 text-sm leading-6 text-gray-600">
+        Upload only images you are authorized to publish. Remove unnecessary
+        personal information and obtain any required permission from identifiable people.
+      </p>
 
       @if(isUploadingImage())
       {

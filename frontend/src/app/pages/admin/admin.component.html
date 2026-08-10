@@ -9,14 +9,14 @@
 
   @if(errorMessage())
   {
-  <p class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+  <p role="alert" class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
     {{ errorMessage() }}
   </p>
   }
 
   @if(isLoading())
   {
-  <p class="mt-8 text-gray-500">Loading accounts…</p>
+  <p role="status" class="mt-8 text-gray-600">Loading accounts…</p>
   }
   @else
   {
@@ -80,7 +80,7 @@
                 class="
                 rounded-lg
                 border
-                border-gray-300
+                border-gray-500
                 px-3
                 py-1.5
                 text-xs
@@ -101,7 +101,7 @@
                 class="
                 rounded-lg
                 border
-                border-gray-300
+                border-gray-500
                 px-3
                 py-1.5
                 text-xs
@@ -118,6 +118,8 @@
               <button
                 type="button"
                 (click)="toggleNotesPanel(user)"
+                [attr.aria-expanded]="selectedUserId() === user.id"
+                [attr.aria-controls]="'account-notes-' + user.id"
                 class="
                 rounded-lg
                 bg-blue-600
@@ -135,7 +137,7 @@
 
             @if(rowError(user.id))
             {
-            <p class="mt-1 text-xs text-red-600">{{ rowError(user.id) }}</p>
+            <p role="alert" class="mt-1 text-xs text-red-700">{{ rowError(user.id) }}</p>
             }
           </td>
         </tr>
@@ -144,18 +146,27 @@
         {
         <tr>
           <td colspan="7" class="bg-gray-50 px-4 py-4">
-            <div class="max-w-2xl">
+            <div [id]="'account-notes-' + user.id" class="max-w-2xl">
               <h2 class="text-sm font-semibold text-gray-700">Notes for {{ user.fullName }}</h2>
 
-              <div class="mt-3 flex gap-2">
+              <label for="account-note" class="mt-3 block text-sm font-semibold text-gray-700">
+                New administrative note
+              </label>
+
+              <div class="mt-2 flex gap-2">
                 <textarea
+                  id="account-note"
+                  name="account-note"
                   [(ngModel)]="newNoteBody"
                   rows="2"
                   placeholder="Add a note about this account…"
+                  aria-describedby="account-note-privacy"
                   class="
                   w-full
                   rounded-lg
                   border
+                  border-gray-500
+                  placeholder:text-gray-600
                   px-3
                   py-2
                   text-sm
@@ -185,9 +196,14 @@
                 </button>
               </div>
 
+              <p id="account-note-privacy" class="mt-2 text-xs leading-5 text-gray-600">
+                Authorized staff can view these notes. Do not enter passwords,
+                payment information, medical information, or other sensitive data.
+              </p>
+
               @if(notesLoading())
               {
-              <p class="mt-3 text-sm text-gray-500">Loading notes…</p>
+              <p role="status" class="mt-3 text-sm text-gray-600">Loading notes…</p>
               }
               @else if(notes().length === 0)
               {

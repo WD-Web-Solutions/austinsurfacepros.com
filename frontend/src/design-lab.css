@@ -454,3 +454,18 @@
   .dl-moods { padding:16px; }.dl-moods nav { flex-wrap:wrap; }.dl-moods nav>span { width:100%; margin-bottom:8px; }.dl-moods__art { min-height:360px; }.dl-moods__copy { padding:45px 24px; }
   .dl-pagefoot { grid-template-columns:1fr auto; min-height:180px; }.dl-pagefoot>button { grid-column:1/-1; justify-self:start; margin-top:20px; }
 }
+
+/* WCAG 2.2 AA contrast corrections for solid-color concept surfaces. */
+.dl-intro h1 em { color:#d45228; }
+.dl-intro__note p { color:#5f6762; }
+.dl-concept__label:not(.dl-concept__label--light)>span,
+.dl-concept__label:not(.dl-concept__label--light)>p { color:#5f6762; }
+.dl-blueprint__coords { color:#add1ed; }
+.dl-bento__tile--asphalt p { color:#c6d0cb; }
+.dl-bento__tile--wash p { color:#4d5651; }
+.dl-selector__nav>span { color:#5d6560; }
+.dl-selector__panel>div span { color:#b43c1e; }
+.dl-lifecycle__heading span { color:#b43c1e; }
+.dl-lifecycle__year b,
+.dl-lifecycle__year small { color:#606864; }
+.dl-pagination p { color:#59625d; }

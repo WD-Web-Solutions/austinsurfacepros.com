@@ -1,0 +1,45 @@
+<section class="admin-hero compact">
+  <div class="blog-shell admin-hero-row"><div><p class="blog-eyebrow">Content studio</p><h1>{{ editing() ? 'Edit field note' : 'Create field note' }}</h1><p>Compose, tag, preview, and publish entirely in this browser.</p></div><a routerLink="/admin/blogs" class="article-back">← Back to field notes</a></div>
+</section>
+
+<div class="blog-shell admin-editor-page">
+  @if (loading()) { <p class="admin-status">Loading local field note…</p> }
+  @if (error()) { <p class="admin-error" role="alert">{{ error() }}</p> }
+  <form [formGroup]="form" (ngSubmit)="submit()" class="admin-editor-form">
+    <section class="admin-panel editor-main-panel">
+      <div class="admin-panel-heading"><div><p class="blog-eyebrow">Article</p><h2>Story and search preview</h2></div><span>* Required</span></div>
+      <div class="form-field"><label for="post-title">Title *</label><input id="post-title" type="text" formControlName="title" maxlength="140"><small>{{ form.controls.title.value.length }}/140</small></div>
+      <div class="form-field"><label for="post-summary">Summary *</label><textarea id="post-summary" rows="4" formControlName="summary" maxlength="320"></textarea><small>{{ form.controls.summary.value.length }}/320 · Used on cards and in search results</small></div>
+      <div class="form-field"><label for="post-content">Article content *</label><app-rich-text-editor id="post-content" formControlName="contentHtml" /><small>Images inserted here are compressed only by the source file and remain in this browser.</small></div>
+    </section>
+
+    <aside class="admin-editor-sidebar">
+      <section class="admin-panel">
+        <p class="blog-eyebrow">Publishing</p><h2>Post settings</h2>
+        <div class="form-field"><label for="post-status">Status *</label><select id="post-status" formControlName="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
+        <div class="form-field"><label for="post-date">Publish date *</label><input id="post-date" type="datetime-local" formControlName="publishedAt"></div>
+        <div class="form-field"><label for="post-author">Author *</label><input id="post-author" type="text" formControlName="author"></div>
+        <div class="form-field"><label for="post-slug">URL slug</label><input id="post-slug" type="text" formControlName="slug" placeholder="Generated from title"><small>Leave blank to generate automatically.</small></div>
+      </section>
+
+      <section class="admin-panel">
+        <p class="blog-eyebrow">Categories</p><h2>Hashtag tags *</h2><p class="form-helper">Each hashtag automatically becomes a filter category. There is no separate category table to maintain.</p>
+        <div class="tag-input-wrap">
+          <div class="editable-tags">@for (tag of tags(); track tag) { <span>#{{ tag }}<button type="button" (click)="removeTag(tag)" [attr.aria-label]="'Remove #' + tag">×</button></span> }</div>
+          <input #tagInput type="text" placeholder="#asphalt, #maintenance" (keydown)="handleTagKey($event, tagInput)" (blur)="addTags(tagInput.value, tagInput)">
+        </div>
+        @if (tagError()) { <p class="field-error">{{ tagError() }}</p> }
+      </section>
+
+      <section class="admin-panel">
+        <p class="blog-eyebrow">Card image</p><h2>Thumbnail *</h2>
+        @if (form.controls.thumbnailUrl.value) { <img class="thumbnail-preview" [src]="form.controls.thumbnailUrl.value" [alt]="form.controls.thumbnailAlt.value || 'Thumbnail preview'"> }
+        <label class="upload-button">Choose image<input class="sr-only" type="file" accept="image/png,image/jpeg,image/gif,image/webp" (change)="selectThumbnail($event)"></label>
+        <div class="form-field"><label for="thumbnail-alt">Image description *</label><input id="thumbnail-alt" type="text" formControlName="thumbnailAlt" maxlength="180"><small>Describe the useful visual content for screen-reader users.</small></div>
+      </section>
+
+      <div class="demo-storage-notice"><strong>Local demo storage</strong><p>Saving writes the article, tags, and uploaded images to IndexedDB on this device. Nothing is uploaded to Austin Surface Pros or an AI provider.</p></div>
+      <div class="editor-save-actions"><button type="submit" class="blog-primary-button" [disabled]="saving()">{{ saving() ? 'Saving…' : (editing() ? 'Save changes' : 'Create field note') }}</button><a routerLink="/admin/blogs">Cancel</a></div>
+    </aside>
+  </form>
+</div>

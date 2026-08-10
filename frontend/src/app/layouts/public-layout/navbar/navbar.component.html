@@ -10,6 +10,7 @@ bg-white
 >
 
 <nav
+aria-label="Primary navigation"
 class="
 mx-auto
 flex
@@ -26,6 +27,7 @@ py-4
 <a
 routerLink="/"
 (click)="closeMenu()"
+aria-label="Austin Surface Pros home"
 class="
 group
 flex
@@ -60,7 +62,7 @@ class="
 hidden
 items-center
 gap-8
-lg:flex
+xl:flex
 "
 >
 
@@ -68,6 +70,7 @@ lg:flex
 <a
 routerLink="/"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -95,6 +98,7 @@ Home
 <a
 routerLink="/about"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -122,6 +126,7 @@ About
 <a
 routerLink="/services"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -149,6 +154,7 @@ Services
 <a
 routerLink="/gallery"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -176,6 +182,7 @@ Gallery
 <a
 routerLink="/resources"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -203,6 +210,7 @@ Resources
 <a
 routerLink="/blog"
 routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 class="
 relative
 font-medium
@@ -239,10 +247,21 @@ class="
 hidden
 items-center
 gap-4
-lg:flex
+xl:flex
 "
 >
 
+
+@if (isDemo) {
+
+@if (demoAuth.isAuthenticated()) {
+<a routerLink="/admin/blogs" class="font-medium text-blue-700 transition hover:text-blue-900">Content Studio</a>
+<button (click)="logout()" type="button" class="font-medium text-gray-600 transition hover:text-blue-600">Sign out</button>
+} @else {
+<a routerLink="/login" class="font-medium text-gray-600 transition hover:text-blue-600">Admin demo</a>
+}
+
+} @else {
 
 @if(currentUser())
 {
@@ -266,6 +285,8 @@ Hi, {{ currentUser()?.fullName }}
 routerLink="/admin"
 
 routerLinkActive="text-blue-600"
+
+ariaCurrentWhenActive="page"
 
 class="
 font-medium
@@ -304,8 +325,9 @@ Logout
 {
 
 <a
-
 routerLink="/login"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 
 class="
 font-medium
@@ -324,6 +346,8 @@ Login
 <a
 
 routerLink="/register"
+routerLinkActive="bg-blue-50"
+ariaCurrentWhenActive="page"
 
 class="
 rounded-lg
@@ -347,11 +371,14 @@ Register
 
 }
 
+}
+
 
 
 <a
-
 routerLink="/contact"
+routerLinkActive="bg-blue-700"
+ariaCurrentWhenActive="page"
 
 class="
 rounded-lg
@@ -383,20 +410,30 @@ Request Estimate
 
 <button
 
+type="button"
+
 (click)="toggleMenu()"
 
+[attr.aria-expanded]="mobileMenuOpen"
+
+aria-controls="mobile-navigation"
+
+[attr.aria-label]="mobileMenuOpen ? 'Close main menu' : 'Open main menu'"
+
 class="
-text-3xl
+h-11
+w-11
+text-2xl
 text-gray-700
 transition
 duration-300
 hover:text-blue-600
-lg:hidden
+xl:hidden
 "
 
 >
 
-☰
+<span aria-hidden="true">{{mobileMenuOpen ? '×' : '☰'}}</span>
 
 </button>
 
@@ -412,7 +449,11 @@ lg:hidden
 @if(mobileMenuOpen)
 {
 
-<div
+<nav
+
+id="mobile-navigation"
+
+aria-label="Mobile navigation"
 
 class="
 border-t
@@ -420,7 +461,7 @@ border-gray-200
 bg-white
 px-6
 py-6
-lg:hidden
+xl:hidden
 "
 
 >
@@ -437,6 +478,8 @@ space-y-5
 
 <a
 routerLink="/"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -450,6 +493,8 @@ Home
 
 <a
 routerLink="/about"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -463,6 +508,8 @@ About
 
 <a
 routerLink="/services"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -476,6 +523,8 @@ Services
 
 <a
 routerLink="/gallery"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -489,6 +538,8 @@ Gallery
 
 <a
 routerLink="/resources"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -502,6 +553,8 @@ Resources
 
 <a
 routerLink="/blog"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -512,6 +565,17 @@ hover:text-blue-600
 Blog
 </a>
 
+
+@if (isDemo) {
+
+@if (demoAuth.isAuthenticated()) {
+<a routerLink="/admin/blogs" (click)="closeMenu()" class="block font-semibold text-blue-700">Content Studio</a>
+<button (click)="logout()" type="button" class="block w-full text-left transition hover:text-blue-600">Sign out</button>
+} @else {
+<a routerLink="/login" (click)="closeMenu()" class="block transition hover:text-blue-600">Admin demo</a>
+}
+
+} @else {
 
 @if(currentUser())
 {
@@ -532,6 +596,8 @@ Hi, {{ currentUser()?.fullName }}
 
 <a
 routerLink="/admin"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -565,6 +631,8 @@ Logout
 
 <a
 routerLink="/login"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -578,6 +646,8 @@ Login
 
 <a
 routerLink="/register"
+routerLinkActive="text-blue-600"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -590,9 +660,13 @@ Register
 
 }
 
+}
+
 
 <a
 routerLink="/contact"
+routerLinkActive="bg-blue-700"
+ariaCurrentWhenActive="page"
 (click)="closeMenu()"
 class="
 block
@@ -617,7 +691,7 @@ Request Estimate
 </div>
 
 
-</div>
+</nav>
 
 }
 

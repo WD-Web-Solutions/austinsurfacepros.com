@@ -7,6 +7,7 @@ import { Observable, finalize } from 'rxjs';
 import { AccountNote, AdminUserSummary } from '../../core/models/admin.model';
 import { AdminService } from '../../core/services/admin.service';
 import { AuthService } from '../../core/services/auth.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,6 +20,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class AdminComponent implements OnInit {
   private readonly adminService = inject(AdminService);
   private readonly authService = inject(AuthService);
+  private readonly seoService = inject(SeoService);
 
   readonly currentUserId = this.authService.currentUser()?.id ?? null;
 
@@ -33,6 +35,14 @@ export class AdminComponent implements OnInit {
   readonly notesLoading = signal(false);
   readonly isAddingNote = signal(false);
   newNoteBody = '';
+
+  constructor() {
+    this.seoService.updatePage(
+      'Account Administration | Austin Surface Pros',
+      'Austin Surface Pros account administration.',
+      'noindex, nofollow'
+    );
+  }
 
   ngOnInit(): void {
     this.loadUsers();

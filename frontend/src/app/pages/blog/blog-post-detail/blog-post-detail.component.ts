@@ -7,6 +7,7 @@ import { finalize } from 'rxjs';
 import { BlogComment, BlogPostDetail } from '../../../core/models/blog.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { BlogService } from '../../../core/services/blog.service';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-blog-post-detail',
@@ -20,6 +21,7 @@ export class BlogPostDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly blogService = inject(BlogService);
   private readonly authService = inject(AuthService);
+  private readonly seoService = inject(SeoService);
 
   readonly currentUser = this.authService.currentUser;
 
@@ -39,6 +41,12 @@ export class BlogPostDetailComponent implements OnInit {
   private slug = '';
 
   ngOnInit(): void {
+    this.seoService.updatePage(
+      'Blog Post | Austin Surface Pros',
+      'Read updates from Austin Surface Pros.',
+      'noindex, follow'
+    );
+
     this.slug = this.route.snapshot.paramMap.get('slug') ?? '';
     this.loadPost();
 
@@ -137,9 +145,21 @@ export class BlogPostDetailComponent implements OnInit {
       .subscribe({
         next: post => {
           this.post.set(post);
+          this.seoService.updatePage(
+            `${post.title} | Austin Surface Pros`,
+            post.excerpt,
+            post.status === 'published' ? 'index, follow' : 'noindex, nofollow'
+          );
           this.loadComments();
         },
-        error: () => this.notFound.set(true)
+        error: () => {
+          this.notFound.set(true);
+          this.seoService.updatePage(
+            'Post Not Found | Austin Surface Pros',
+            'The requested blog post could not be found.',
+            'noindex, follow'
+          );
+        }
       });
   }
 

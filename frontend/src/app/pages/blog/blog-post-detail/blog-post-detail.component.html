@@ -43,6 +43,8 @@
       type="button"
       (click)="toggleSubscription(tag)"
       [disabled]="!currentUser() || isTagPending(tag)"
+      [attr.aria-pressed]="isSubscribed(tag)"
+      [attr.aria-label]="(isSubscribed(tag) ? 'Unfollow ' : 'Follow ') + tag + ' blog posts'"
       class="
       rounded-full
       px-3
@@ -88,14 +90,23 @@
     @if(currentUser())
     {
     <div class="mt-4">
+      <label for="blog-comment" class="font-semibold text-gray-900">
+        Your comment
+      </label>
       <textarea
+        id="blog-comment"
+        name="comment"
         [(ngModel)]="newCommentBody"
         rows="3"
         placeholder="Share your thoughts…"
+        aria-describedby="comment-privacy-note"
         class="
+        mt-2
         w-full
         rounded-lg
         border
+        border-gray-500
+        placeholder:text-gray-600
         px-4
         py-3
         focus:outline-none
@@ -105,8 +116,13 @@
 
       @if(commentError())
       {
-      <p class="mt-1 text-sm text-red-600">{{ commentError() }}</p>
+      <p role="alert" class="mt-1 text-sm text-red-700">{{ commentError() }}</p>
       }
+
+      <p id="comment-privacy-note" class="mt-2 text-sm leading-6 text-gray-600">
+        Your full name, comment, and comment date will be public. See our
+        <a routerLink="/privacy-policy" class="font-semibold text-blue-700 underline">Privacy Policy</a>.
+      </p>
 
       <button
         type="button"
@@ -140,7 +156,7 @@
 
     @if(commentsLoading())
     {
-    <p class="mt-6 text-gray-500">Loading comments…</p>
+    <p role="status" class="mt-6 text-gray-600">Loading comments…</p>
     }
     @else if(comments().length === 0)
     {

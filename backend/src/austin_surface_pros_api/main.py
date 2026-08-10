@@ -83,8 +83,8 @@ def create_app(
         lifespan=lifespan,
     )
     application.state.database = database
-    application.state.contact_request_notifier = contact_request_notifier
     application.state.settings = resolved_settings
+    application.state.contact_request_notifier = contact_request_notifier
 
     if resolved_settings.cors_origins:
         application.add_middleware(

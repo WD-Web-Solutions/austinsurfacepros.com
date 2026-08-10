@@ -1,8 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
 
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { environment } from '../environments/environment';
@@ -19,7 +18,13 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
 
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'top'
+      })
+    ),
 
     {
       provide: CONTACT_SUBMISSION_GATEWAY,

@@ -17,6 +17,7 @@
       <button
         type="button"
         (click)="selectTag(null)"
+        [attr.aria-pressed]="selectedTag() === null"
         class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
         [class.bg-blue-600]="selectedTag() === null"
         [class.text-white]="selectedTag() === null"
@@ -30,6 +31,7 @@
       <button
         type="button"
         (click)="selectTag(tag)"
+        [attr.aria-pressed]="selectedTag() === tag"
         class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
         [class.bg-blue-600]="selectedTag() === tag"
         [class.text-white]="selectedTag() === tag"
@@ -44,12 +46,12 @@
 
     @if(errorMessage())
     {
-    <p class="mt-8 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">{{ errorMessage() }}</p>
+    <p role="alert" class="mt-8 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ errorMessage() }}</p>
     }
 
     @if(isLoading())
     {
-    <p class="mt-10 text-gray-500">Loading posts…</p>
+    <p role="status" class="mt-10 text-gray-600">Loading posts…</p>
     }
     @else if(posts().length === 0)
     {

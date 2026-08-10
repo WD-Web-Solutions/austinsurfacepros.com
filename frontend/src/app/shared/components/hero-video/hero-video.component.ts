@@ -13,8 +13,18 @@ export class HeroVideoComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const video = this.heroVideo?.nativeElement;
     if (!video) return;
+
+    if (typeof window.matchMedia !== 'function') {
+      return;
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      return;
+    }
+
     video.muted = true;
-    video.play().catch(() => {});
+    video.play()?.catch(() => {});
   }
 
 }
