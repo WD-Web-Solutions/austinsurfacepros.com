@@ -8,6 +8,8 @@ import { SERVICES } from '../../core/data/services.data';
 
 import { SeoService } from '../../core/services/seo.service';
 
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
+
 
 
 @Component({
@@ -20,7 +22,9 @@ import { SeoService } from '../../core/services/seo.service';
 
     RouterLink,
 
-    UiCardComponent
+    UiCardComponent,
+
+    HeroVideoComponent
 
   ],
 
@@ -28,7 +32,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './home.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './home.component.css'

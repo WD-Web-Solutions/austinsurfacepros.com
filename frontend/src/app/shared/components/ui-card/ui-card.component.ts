@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 
     './ui-card.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './ui-card.component.css'

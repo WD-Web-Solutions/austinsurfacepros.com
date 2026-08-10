@@ -24,7 +24,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './services.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './services.component.css'

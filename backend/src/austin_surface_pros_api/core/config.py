@@ -1,7 +1,9 @@
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+INSECURE_DEFAULT_JWT_SECRET_KEY = "insecure-local-development-secret"
 
 
 class Settings(BaseSettings):
@@ -17,3 +19,16 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     database_url: str | None = None
     cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:4200"])
+    jwt_secret_key: str = INSECURE_DEFAULT_JWT_SECRET_KEY
+    jwt_algorithm: str = "HS256"
+    jwt_access_token_expires_minutes: int = 60
+    blog_uploads_dir: str = "uploads/blog"
+
+    @model_validator(mode="after")
+    def _require_real_jwt_secret_in_production(self) -> Settings:
+        if (
+            self.environment == "production"
+            and self.jwt_secret_key == INSECURE_DEFAULT_JWT_SECRET_KEY
+        ):
+            raise ValueError("ASP_JWT_SECRET_KEY must be set to a real secret in production")
+        return self

@@ -25,6 +25,7 @@ import {
 } from './contact.service';
 
 import { SeoService } from '../../core/services/seo.service';
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
 
 
 
@@ -36,13 +37,14 @@ import { SeoService } from '../../core/services/seo.service';
 
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    HeroVideoComponent
 ],
 
   templateUrl:
     './contact.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './contact.component.css'
 

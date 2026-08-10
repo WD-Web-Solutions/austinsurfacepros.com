@@ -4,15 +4,21 @@
 <section
 
 class="
+relative
+overflow-hidden
 bg-gray-900
 py-24
 "
 
 >
 
+<app-hero-video></app-hero-video>
+
 <div
 
 class="
+relative
+z-10
 mx-auto
 max-w-7xl
 px-6
@@ -129,12 +135,14 @@ hover:shadow-2xl
 
 class="
 text-5xl
+
+text-blue-600
 "
 
 aria-hidden="true"
 
 >
-{{resource.icon}}
+<i [class]="'fas fa-' + resource.icon"></i>
 </div>
 
 
@@ -247,9 +255,34 @@ text-gray-700
 "
 
 >
-Future articles will cover asphalt maintenance,
+Read our latest articles on asphalt maintenance,
 commercial property improvements, and project planning.
 </p>
+
+
+<a
+
+routerLink="/blog"
+
+class="
+mt-8
+inline-block
+rounded-lg
+bg-blue-600
+px-6
+py-3
+font-semibold
+text-white
+transition
+duration-300
+hover:-translate-y-1
+hover:bg-blue-700
+hover:shadow-xl
+"
+
+>
+Visit the Blog
+</a>
 
 
 </div>

@@ -18,7 +18,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl:
     './app.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
     './app.component.css'
 

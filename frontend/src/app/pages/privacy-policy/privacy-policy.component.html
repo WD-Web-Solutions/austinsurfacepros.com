@@ -1,10 +1,12 @@
-<section class="bg-gray-950 py-20 text-white">
-  <div class="mx-auto max-w-5xl px-6">
+<section class="relative overflow-hidden bg-gray-900 py-20">
+  <app-hero-video></app-hero-video>
+
+  <div class="relative z-10 mx-auto max-w-5xl px-6">
     <p class="text-sm font-semibold uppercase tracking-widest text-orange-400">
       Legal
     </p>
 
-    <h1 class="mt-4 text-5xl font-bold md:text-6xl">
+    <h1 class="mt-4 text-5xl font-bold text-white md:text-6xl">
       Privacy Policy
     </h1>
 
@@ -23,8 +25,9 @@
 
       <ul class="mt-4 space-y-3 pl-6">
         <li>
-          We collect the information you choose to provide when you request an
-          estimate or contact us.
+          We collect information you provide when you request an estimate,
+          create or use an account, comment on blog posts, follow blog topics,
+          or otherwise communicate with us.
         </li>
         <li>
           We use that information to respond to you, provide services, operate
@@ -34,8 +37,8 @@
           We do not sell personal information or use it for targeted advertising.
         </li>
         <li>
-          As of the date above, this website does not use cookies, analytics
-          pixels, advertising trackers, or browser storage.
+          We do not use advertising or analytics trackers. If you sign in, we
+          use browser storage that is necessary to keep you authenticated.
         </li>
       </ul>
     </div>
@@ -49,7 +52,8 @@
         This Privacy Policy explains how Austin Surface Pros ("Austin Surface
         Pros," "we," "us," or "our") collects, uses, discloses, and retains
         personal information when you visit austinsurfacepros.com, request an
-        estimate, or communicate with us about our services. "Personal
+        estimate, create or use an account, interact with the blog, or
+        communicate with us about our services. "Personal
         information" means information that identifies, relates to, or can
         reasonably be linked with an individual.
       </p>
@@ -81,6 +85,24 @@
       </p>
 
       <p class="mt-4 leading-7">
+        When you create an account, we collect your full name, email address,
+        and password. We store a cryptographic hash of the password rather than
+        the password itself. We also maintain an account identifier, role,
+        status, creation date, last-login date, and administrative notes that
+        authorized personnel may add to support or administer the account.
+      </p>
+
+      <p class="mt-4 leading-7">
+        If you comment on a blog post or follow a blog topic, we collect the
+        comment text or selected topic together with your account identifier.
+        Your full name and the date of a comment are displayed publicly with
+        the comment. Blog authors' names are also displayed with their posts.
+        Administrators may upload blog images and create, edit, publish, or
+        remove blog content; uploaded images and associated content are stored
+        for those purposes.
+      </p>
+
+      <p class="mt-4 leading-7">
         Please do not submit Social Security numbers, government identification
         numbers, financial account credentials, medical information, or other
         sensitive personal information through the estimate form.
@@ -100,9 +122,31 @@
       </p>
     </section>
 
+    <section aria-labelledby="policy-browser-storage" class="mt-12">
+      <h2 id="policy-browser-storage" class="text-3xl font-bold text-gray-950">
+        3. Browser storage and authentication
+      </h2>
+
+      <p class="mt-4 leading-7">
+        After registration or login, the site stores an access token and a copy
+        of basic account details—account identifier, full name, email address,
+        and role—in your browser's local storage. The token is sent with
+        authenticated API requests so the site can recognize your session and
+        enforce account permissions. The token has a limited validity period,
+        but the locally stored values may remain until you log out, clear your
+        browser data, or the application removes them.
+      </p>
+
+      <p class="mt-4 leading-7">
+        Do not use the remembered session on a shared or public device. You can
+        remove this browser-stored information by using the Logout control and
+        can also clear it through your browser settings.
+      </p>
+    </section>
+
     <section aria-labelledby="policy-use" class="mt-12">
       <h2 id="policy-use" class="text-3xl font-bold text-gray-950">
-        3. How we use information
+        4. How we use information
       </h2>
 
       <p class="mt-4 leading-7">
@@ -113,6 +157,11 @@
         <li>Responding to questions and estimate requests;</li>
         <li>Evaluating, scheduling, and performing requested services;</li>
         <li>Communicating about an inquiry, estimate, project, or service;</li>
+        <li>Creating, authenticating, securing, and administering accounts;</li>
+        <li>
+          Publishing and moderating blog posts and comments, displaying author
+          attribution, and maintaining topic subscriptions;
+        </li>
         <li>Operating, maintaining, troubleshooting, and securing the website;</li>
         <li>Preventing fraud, misuse, and other harmful activity;</li>
         <li>Maintaining appropriate business and transaction records; and</li>
@@ -127,22 +176,26 @@
 
     <section aria-labelledby="policy-cookies" class="mt-12">
       <h2 id="policy-cookies" class="text-3xl font-bold text-gray-950">
-        4. Cookies and online tracking
+        5. Cookies and online tracking
       </h2>
 
       <p class="mt-4 leading-7">
         As of the date shown at the top of this policy, this website does not set
-        cookies or use browser storage, analytics pixels, advertising trackers,
-        or similar technologies. We also do not use website activity for
+        cookies or use analytics pixels, advertising trackers, or similar
+        technologies. As described above, signed-in users' access tokens and
+        basic account details are stored in local storage for authentication and
+        account operation. We do not use that storage for advertising or
+        cross-site tracking, and we do not use website activity for
         cross-context behavioral or targeted advertising.
       </p>
 
       <p class="mt-4 leading-7">
-        Because we do not currently sell or share website activity for targeted
+        Because the site currently uses no non-essential cookies or tracking
+        technologies and does not sell or share website activity for targeted
         advertising, there is no separate cookie-consent or "Do Not Sell or
-        Share" control on this site. If our practices change, we will update this
-        policy and provide consent or opt-out controls before using those
-        technologies when required by applicable law.
+        Share" control. If our practices change, we will update this policy and
+        provide consent or opt-out controls before using those technologies when
+        required by applicable law.
       </p>
 
       <p class="mt-4 leading-7">
@@ -154,7 +207,7 @@
 
     <section aria-labelledby="policy-disclosure" class="mt-12">
       <h2 id="policy-disclosure" class="text-3xl font-bold text-gray-950">
-        5. When we disclose information
+        6. When we disclose information
       </h2>
 
       <p class="mt-4 leading-7">
@@ -166,8 +219,9 @@
 
       <ul class="mt-4 space-y-3 pl-6">
         <li>
-          Cloud hosting, database, information-technology, security, and website
-          maintenance providers that process information on our behalf;
+          Cloud hosting, database, file-storage, information-technology,
+          security, and website maintenance providers that process information
+          on our behalf;
         </li>
         <li>
           Employees, contractors, and subcontractors who need information to
@@ -194,11 +248,18 @@
         individuals in furtherance of decisions that produce legal or similarly
         significant effects.
       </p>
+
+      <p class="mt-4 leading-7">
+        Information you intentionally publish through the blog is disclosed to
+        other site visitors. In particular, comments display the comment text,
+        your full name, and the comment date. Published posts display the
+        author's name and any included images or content.
+      </p>
     </section>
 
     <section aria-labelledby="policy-retention" class="mt-12">
       <h2 id="policy-retention" class="text-3xl font-bold text-gray-950">
-        6. Retention
+        7. Retention
       </h2>
 
       <p class="mt-4 leading-7">
@@ -211,11 +272,23 @@
         of personal information, we take reasonable steps to make it unreadable
         or unrecoverable, as appropriate.
       </p>
+
+      <p class="mt-4 leading-7">
+        Account information is generally retained while the account remains
+        active and afterward as reasonably needed for security, administration,
+        dispute resolution, and legal compliance. Comments remain until they
+        are deleted by the author or an administrator, and topic subscriptions
+        remain until the user unsubscribes or the related account data is
+        removed. Administrative notes and blog content may be retained as
+        business records. Browser-stored session data remains until logout,
+        browser-data clearing, or application removal, although an access token
+        may expire sooner.
+      </p>
     </section>
 
     <section aria-labelledby="policy-security" class="mt-12">
       <h2 id="policy-security" class="text-3xl font-bold text-gray-950">
-        7. Security
+        8. Security
       </h2>
 
       <p class="mt-4 leading-7">
@@ -225,11 +298,17 @@
         or storage system can be guaranteed to be completely secure, so we
         cannot promise absolute security.
       </p>
+
+      <p class="mt-4 leading-7">
+        Passwords are stored as cryptographic hashes. Authentication tokens are
+        stored in the signed-in user's browser, so users should log out on
+        shared devices and protect access to their browsers and devices.
+      </p>
     </section>
 
     <section aria-labelledby="policy-rights" class="mt-12">
       <h2 id="policy-rights" class="text-3xl font-bold text-gray-950">
-        8. Your privacy choices and rights
+        9. Your privacy choices and rights
       </h2>
 
       <p class="mt-4 leading-7">
@@ -280,7 +359,7 @@
 
     <section aria-labelledby="policy-children" class="mt-12">
       <h2 id="policy-children" class="text-3xl font-bold text-gray-950">
-        9. Children's privacy
+        10. Children's privacy
       </h2>
 
       <p class="mt-4 leading-7">
@@ -294,7 +373,7 @@
 
     <section aria-labelledby="policy-links" class="mt-12">
       <h2 id="policy-links" class="text-3xl font-bold text-gray-950">
-        10. Third-party links
+        11. Third-party links
       </h2>
 
       <p class="mt-4 leading-7">
@@ -306,7 +385,7 @@
 
     <section aria-labelledby="policy-changes" class="mt-12">
       <h2 id="policy-changes" class="text-3xl font-bold text-gray-950">
-        11. Changes to this policy
+        12. Changes to this policy
       </h2>
 
       <p class="mt-4 leading-7">
@@ -319,7 +398,7 @@
 
     <section aria-labelledby="policy-contact" class="mt-12 rounded-2xl bg-gray-100 p-6 md:p-8">
       <h2 id="policy-contact" class="text-3xl font-bold text-gray-950">
-        12. Contact us
+        13. Contact us
       </h2>
 
       <p class="mt-4 leading-7">

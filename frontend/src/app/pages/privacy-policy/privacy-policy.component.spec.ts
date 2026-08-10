@@ -19,6 +19,9 @@ describe('PrivacyPolicyComponent', () => {
     expect(policyText).toContain('Privacy Policy');
     expect(policyText).toContain('estimate request');
     expect(policyText).toContain('does not set cookies');
+    expect(policyText).toContain('access token');
+    expect(policyText).toContain('cryptographic hash');
+    expect(policyText).toContain('displayed publicly');
     expect(policyText).toContain('We do not sell personal information');
     expect(policyText).toContain('Your privacy choices and rights');
   });

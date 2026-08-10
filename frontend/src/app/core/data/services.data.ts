@@ -18,7 +18,7 @@ export const SERVICES: Service[] = [
       'Austin Surface Pros provides commercial asphalt solutions designed to improve safety, appearance, and longevity. Our services include asphalt repairs, resurfacing, maintenance, and property improvements.',
 
     icon:
-      '🛣️',
+      'road',
 
     image:
       '/assets/images/services/asphalt.jpg'
@@ -40,7 +40,7 @@ export const SERVICES: Service[] = [
       'Our parking lot striping services help businesses maintain safe, organized, and professional-looking properties. We provide layouts, ADA markings, re-striping, and custom parking solutions.',
 
     icon:
-      '🅿️',
+      'square-parking',
 
     image:
       '/assets/images/services/striping.jpg'
@@ -64,7 +64,7 @@ export const SERVICES: Service[] = [
       'From repairs to new installations, Austin Surface Pros delivers durable concrete solutions built for commercial environments.',
 
     icon:
-      '🏗️',
+      'trowel',
 
     image:
       '/assets/images/services/concrete.jpg'
@@ -89,7 +89,7 @@ export const SERVICES: Service[] = [
       'Protective coatings help commercial properties maintain durability, appearance, and resistance against heavy traffic and weather conditions.',
 
     icon:
-      '🏢',
+      'shield-alt',
 
     image:
       '/assets/images/services/coatings.jpg'

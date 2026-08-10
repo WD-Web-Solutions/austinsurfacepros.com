@@ -58,8 +58,7 @@ At minimum:
    then perform keyboard and responsive browser checks on affected flows.
 6. Do not expose prototypes or experiments as production routes until they have
    received the same accessibility and functional review. The current
-   `/design-lab`, `/login`, and `/register` routes are development-only for this
-   reason.
+   `/design-lab` route is development-only for this reason.
 7. Do not add accessibility overlays as a substitute for fixing the underlying
    HTML, CSS, and interaction behavior.
 

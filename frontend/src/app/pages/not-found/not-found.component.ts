@@ -22,7 +22,7 @@ import { SeoService } from '../../core/services/seo.service';
 
     './not-found.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './not-found.component.css'

@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { RESOURCES } from '../../core/data/resources.data';
+import { HeroVideoComponent } from '../../shared/components/hero-video/hero-video.component';
 
 import { SeoService } from '../../core/services/seo.service';
 
@@ -12,13 +14,13 @@ import { SeoService } from '../../core/services/seo.service';
 
   standalone: true,
 
-  imports: [],
+  imports: [HeroVideoComponent, RouterLink],
 
   templateUrl:
 
     './resources.component.html',
 
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl:
 
     './resources.component.css'
