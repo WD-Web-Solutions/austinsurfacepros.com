@@ -74,7 +74,8 @@ def add_mixed(doc, pieces, *, after=Pt(7), keep=False):
 
 
 def add_heading(doc, text: str, *, changed=True):
-    paragraph = doc.add_paragraph(style="Agreement Heading")
+    source_heading = next(style for style in doc.styles if style.style_id == "Heading1")
+    paragraph = doc.add_paragraph(style=source_heading)
     paragraph.paragraph_format.keep_with_next = True
     add_text(paragraph, text.upper(), changed=changed, bold=True)
     return paragraph
@@ -184,10 +185,7 @@ def build() -> None:
     normal._element.get_or_add_rPr().get_or_add_rFonts().set(qn("w:ascii"), FONT)
     normal._element.get_or_add_rPr().get_or_add_rFonts().set(qn("w:hAnsi"), FONT)
 
-    if "Agreement Heading" in [style.name for style in doc.styles]:
-        heading_style = doc.styles["Agreement Heading"]
-    else:
-        heading_style = doc.styles.add_style("Agreement Heading", WD_STYLE_TYPE.PARAGRAPH)
+    heading_style = next(style for style in doc.styles if style.style_id == "Heading1")
     heading_style.base_style = normal
     heading_style.font.name = FONT
     heading_style.font.size = BODY_SIZE
