@@ -1,0 +1,8 @@
+:host(.gallery-card) {
+  display: block;
+  height: 100%;
+}
+
+:host(.gallery-card) > div {
+  height: 100%;
+}
