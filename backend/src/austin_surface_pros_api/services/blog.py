@@ -214,9 +214,7 @@ class BlogService:
     async def list_subscriptions(self, user_id: UUID) -> list[TagSubscription]:
         return await self._subscriptions.list_for_user(user_id)
 
-    async def _unique_slug(
-        self, title: str, excluded_post_id: UUID | None = None
-    ) -> str:
+    async def _unique_slug(self, title: str, excluded_post_id: UUID | None = None) -> str:
         base_slug = slugify(title)
         slug = base_slug
         suffix = 2

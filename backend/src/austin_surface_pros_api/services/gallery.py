@@ -204,9 +204,7 @@ class GalleryService:
     ) -> GalleryPhoto:
         photo = await self._required_photo(photo_id)
         duplicate_neighbors = (
-            previous_id is not None
-            and next_id is not None
-            and previous_id == next_id
+            previous_id is not None and next_id is not None and previous_id == next_id
         )
         if previous_id == photo_id or next_id == photo_id or duplicate_neighbors:
             raise InvalidGalleryPhotoError("Reorder neighbors must be distinct photos")
